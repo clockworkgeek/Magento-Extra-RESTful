@@ -2,7 +2,8 @@
 
 Developers are invited to include this reusable extension in their projects for better connectivity.
 Extra RESTful is permissively licensed for this reason.
-Suggestions for more resources to support are welcome, just raise an [issue](issues).
+Suggestions for more resources to support are welcome,
+just raise an [issue](https://github.com/clockworkgeek/Magento-Extra-RESTful/issues).
 
 ### New Attributes
 
