@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<config>
+    <modules>
+        <Clockworkgeek_Extrarestful>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Clockworkgeek_Extrarestful>
+    </modules>
+</config>
