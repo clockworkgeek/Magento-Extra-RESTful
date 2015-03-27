@@ -10,4 +10,4 @@ Suggestions for more resources to support are welcome, just raise an [issue](iss
 - **Catalog Product / Read / Updated At** (`updated_at`)
 - **Catalog Product / Read / Has Options** (`has_options`)
 - **Catalog Product / Read / Has Required Options** (`required_options`)
-- **Customer / Read / Updated At**
+- **Customer / Read / Updated At** (`updated_at`)
