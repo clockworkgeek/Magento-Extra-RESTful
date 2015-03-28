@@ -2,6 +2,7 @@
 <config>
     <api2>
         <resources>
+            <!-- Improve existing resources -->
             <product>
                 <attributes>
                     <created_at>Created At</created_at>
@@ -32,6 +33,62 @@
                     </admin>
                 </exclude_attributes>
             </customer>
+
+            <!-- New resources -->
+            <category translate="title" module="extrarestful">
+                <group>catalog</group>
+                <model>extrarestful/api2_category</model>
+                <working_model>catalog/category</working_model>
+                <title>Category</title>
+                <!-- Sibling (catalog_product) has sort order 50 -->
+                <sort_order>100</sort_order>
+                <privileges>
+                    <admin>
+                        <retrieve>1</retrieve>
+                    </admin>
+                    <customer>
+                        <retrieve>1</retrieve>
+                    </customer>
+                    <guest>
+                        <retrieve>1</retrieve>
+                    </guest>
+                </privileges>
+                <attributes>
+                    <entity_id>Category ID</entity_id>
+                    <parent_id>Parent ID</parent_id>
+                    <created_at>Created At</created_at>
+                    <updated_at>Updated At</updated_at>
+                    <path>Parents Path</path>
+                    <position>Position</position>
+                    <level>Level</level>
+                    <children_count>Children Count</children_count>
+                    <url_path>URL Path</url_path>
+                </attributes>
+                <exclude_attributes>
+                    <admin>
+                        <write>
+                            <entity_id>1</entity_id>
+                            <created_at>1</created_at>
+                            <updated_at>1</updated_at>
+                            <path>1</path>
+                            <level>1</level>
+                            <children_count>1</children_count>
+                            <url_path>1</url_path>
+                        </write>
+                    </admin>
+                </exclude_attributes>
+                <routes>
+                    <route_entity>
+                        <route>/categories/:id</route>
+                        <action_type>entity</action_type>
+                    </route_entity>
+                    <route_collection>
+                        <route>/categories</route>
+                        <action_type>collection</action_type>
+                    </route_collection>
+                </routes>
+                <versions>1</versions>
+            </category>
         </resources>
     </api2>
 </config>

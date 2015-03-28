@@ -5,4 +5,12 @@
             <version>0.0.0</version>
         </Clockworkgeek_Extrarestful>
     </modules>
+
+    <global>
+        <models>
+            <extrarestful>
+                <class>Clockworkgeek_Extrarestful_Model</class>
+            </extrarestful>
+        </models>
+    </global>
 </config>
