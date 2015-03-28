@@ -13,7 +13,11 @@ class Clockworkgeek_Extrarestful_Model_Api2_Category extends Mage_Api2_Model_Res
      */
     public function _retrieve()
     {
-        return $this->_getCategory()->getData();
+        $category = $this->_getCategory()->getData();
+        if (! $category->getId() || ! $category->getIsActive()) {
+            $this->_critical(self::RESOURCE_NOT_FOUND);
+        }
+        return $category;
     }
 
     /**
@@ -28,9 +32,6 @@ class Clockworkgeek_Extrarestful_Model_Api2_Category extends Mage_Api2_Model_Res
         $categoryId = $this->getRequest()->getParam('id');
         $category->load($categoryId);
 
-        if (! $category->getId() || ! $category->getIsActive()) {
-            $this->_critical(self::RESOURCE_NOT_FOUND);
-        }
         return $category;
     }
 
