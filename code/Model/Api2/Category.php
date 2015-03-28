@@ -21,8 +21,13 @@ class Clockworkgeek_Extrarestful_Model_Api2_Category extends Mage_Api2_Model_Res
      */
     protected function _getCategory()
     {
+        /* @var $category Mage_Catalog_Model_Category */
+        $category = Mage::getModel('catalog/category');
+        $category->setStoreId($this->getRequest()->getParam('store'));
+
         $categoryId = $this->getRequest()->getParam('id');
-        $category = Mage::getModel('catalog/category')->load($categoryId);
+        $category->load($categoryId);
+
         if (! $category->getId() || ! $category->getIsActive()) {
             $this->_critical(self::RESOURCE_NOT_FOUND);
         }
@@ -42,6 +47,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Category extends Mage_Api2_Model_Res
     {
         /* @var $categories Mage_Catalog_Model_Resource_Category_Collection */
         $categories = Mage::getResourceModel('catalog/category_collection');
+        $categories->setStoreId($this->getRequest()->getParam('store'));
         $categories->addAttributeToSelect(array_keys(
             $this->getAvailableAttributes($this->getUserType(), Mage_Api2_Model_Resource::OPERATION_ATTRIBUTE_READ)
         ));

@@ -82,10 +82,18 @@
                         <route>/categories/:id</route>
                         <action_type>entity</action_type>
                     </route_entity>
+                    <route_entity_with_store>
+                        <route>/categories/:id/store/:store</route>
+                        <action_type>entity</action_type>
+                    </route_entity_with_store>
                     <route_collection>
                         <route>/categories</route>
                         <action_type>collection</action_type>
                     </route_collection>
+                     <route_collection_with_store>
+                        <route>/categories/store/:store</route>
+                        <action_type>collection</action_type>
+                    </route_collection_with_store>
                 </routes>
                 <versions>1</versions>
             </category>

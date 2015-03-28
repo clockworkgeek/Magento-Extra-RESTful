@@ -17,4 +17,6 @@ just raise an [issue](https://github.com/clockworkgeek/Magento-Extra-RESTful/iss
 
 - **Catalog / Category / Retrieve**
   - `GET /api/rest/categories`
+  - `GET /api/rest/categories/store/:store`
   - `GET /api/rest/categories/:id`
+  - `GET /api/rest/categories/:id/store/:store`
