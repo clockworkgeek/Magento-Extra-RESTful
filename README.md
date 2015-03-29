@@ -15,8 +15,16 @@ just raise an [issue](https://github.com/clockworkgeek/Magento-Extra-RESTful/iss
 
 ### New Resources
 
+- **Catalog / Category / Create**
+  - `POST /api/rest/categories`
+  - `POST /api/rest/categories/store/:store`
 - **Catalog / Category / Retrieve**
   - `GET /api/rest/categories`
   - `GET /api/rest/categories/store/:store`
   - `GET /api/rest/categories/:id`
   - `GET /api/rest/categories/:id/store/:store`
+- **Catalog / Category / Update**
+  - `PUT /api/rest/categories/:id`
+  - `PUT /api/rest/categories/:id/store/:store`
+- **Catalog / Category / Delete**
+  - `DELETE /api/rest/categories/:id`
