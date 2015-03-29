@@ -38,6 +38,10 @@ extends Clockworkgeek_Extrarestful_Model_Api2_Category
     {
         try {
             $category = $this->_getCategory();
+            $storeId = $this->getRequest()->getParam('store');
+            if (! is_null($storeId)) {
+                $category->setStoreId($storeId);
+            }
             $this->_prepareUpdatedCategory($category, $data);
             $category->save();
         } catch (Mage_Core_Exception $e) {
