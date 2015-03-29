@@ -15,6 +15,8 @@ just raise an [issue](https://github.com/clockworkgeek/Magento-Extra-RESTful/iss
 
 ### New Resources
 
+- **Core / Store View / Retrieve**
+  - `GET /api/rest/stores`
 - **Catalog / Category / Create**
   - `POST /api/rest/categories`
   - `POST /api/rest/categories/store/:store`

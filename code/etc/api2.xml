@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
     <api2>
+        <resource_groups>
+            <core translate="title" module="extrarestful">
+                <title>Core</title>
+                <sort_order>1</sort_order>
+            </core>
+        </resource_groups>
+
         <resources>
             <!-- Improve existing resources -->
             <product>
@@ -35,6 +42,32 @@
             </customer>
 
             <!-- New resources -->
+            <store translate="title" module="extrarestful">
+                <group>core</group>
+                <model>extrarestful/api2_store</model>
+                <working_model>core/store</working_model>
+                <title>Store View</title>
+                <sort_order>10</sort_order>
+                <privileges>
+                    <admin>
+                        <retrieve>1</retrieve>
+                    </admin>
+                </privileges>
+                <attributes>
+                    <store_id>Store ID</store_id>
+                    <code>Code</code>
+                    <name>Name</name>
+                    <is_active>Is Active</is_active>
+                </attributes>
+                <routes>
+                    <route_collection>
+                        <route>/stores</route>
+                        <action_type>collection</action_type>
+                    </route_collection>
+                </routes>
+                <versions>1</versions>
+            </store>
+
             <category translate="title" module="extrarestful">
                 <group>catalog</group>
                 <model>extrarestful/api2_category</model>
