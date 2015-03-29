@@ -19,6 +19,7 @@ just raise an [issue](https://github.com/clockworkgeek/Magento-Extra-RESTful/iss
   - `GET /api/rest/stores`
 - **Core / Custom URL Rewrites / Retrieve**
   - `GET /api/rest/rewrites`
+  - `GET /api/rest/rewrites/store/:store`
 - **Catalog / Category / Create**
   - `POST /api/rest/categories`
   - `POST /api/rest/categories/store/:store`
