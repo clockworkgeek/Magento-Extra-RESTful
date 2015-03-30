@@ -53,6 +53,9 @@ class Clockworkgeek_Extrarestful_Model_Api2_Category extends Mage_Api2_Model_Res
         /* @var $categories Mage_Catalog_Model_Resource_Category_Collection */
         $categories = Mage::getResourceModel('catalog/category_collection');
         $categories->setStoreId($this->getRequest()->getParam('store'));
+        if (($parentId = $this->getRequest()->getParam('parent'))) {
+            $categories->addAttributeToFilter('parent_id', $parentId);
+        }
         $categories->addAttributeToSelect(array_keys(
             $this->getAvailableAttributes($this->getUserType(), Mage_Api2_Model_Resource::OPERATION_ATTRIBUTE_READ)
         ));
