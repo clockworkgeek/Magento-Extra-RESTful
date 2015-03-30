@@ -12,6 +12,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Rewrite extends Mage_Api2_Model_Reso
             $rewrites->addStoreFilter($storeId);
         }
 
+        $this->_applyCollectionModifiers($rewrites);
         $collection = $rewrites->load()->toArray();
         return (array) @$collection['items'];
     }
