@@ -181,6 +181,50 @@
                 </routes>
                 <versions>1</versions>
             </category>
+
+            <product_review translate="title" module="extrarestful">
+                <group>catalog</group>
+                <model>extrarestful/api2_review</model>
+                <working_model>review/review</working_model>
+                <title>Review</title>
+                <sort_order>150</sort_order>
+                <privileges>
+                    <admin>
+                        <retrieve>1</retrieve>
+                    </admin>
+                    <customer>
+                        <retrieve>1</retrieve>
+                    </customer>
+                    <guest>
+                        <retrieve>1</retrieve>
+                    </guest>
+                </privileges>
+                <attributes>
+                    <review_id>Review ID</review_id>
+                    <product_id>Product ID</product_id>
+                    <title>Title</title>
+                    <detail>Detail</detail>
+                    <nickname>Customer Nickname</nickname>
+                    <customer_id>Customer ID</customer_id>
+                    <status>Status</status>
+                    <status_id>Status ID</status_id>
+                </attributes>
+                <routes>
+                    <route_collection>
+                        <route>/reviews</route>
+                        <action_type>collection</action_type>
+                    </route_collection>
+                    <route_collection_with_product>
+                        <route>/reviews/product/:product</route>
+                        <action_type>collection</action_type>
+                    </route_collection_with_product>
+                    <route_collection_for_product>
+                        <route>/products/:product/reviews</route>
+                        <action_type>collection</action_type>
+                    </route_collection_for_product>
+                </routes>
+                <versions>1</versions>
+                </product_review>
         </resources>
     </api2>
 </config>
