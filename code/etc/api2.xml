@@ -202,13 +202,21 @@
                 <attributes>
                     <review_id>Review ID</review_id>
                     <product_id>Product ID</product_id>
+                    <created_at>Created At</created_at>
                     <title>Title</title>
                     <detail>Detail</detail>
                     <nickname>Customer Nickname</nickname>
                     <customer_id>Customer ID</customer_id>
                     <status>Status</status>
-                    <status_id>Status ID</status_id>
                 </attributes>
+                <exclude_attributes>
+                    <guest>
+                        <read>
+                            <customer_id>1</customer_id>
+                            <status>1</status>
+                        </read>
+                    </guest>
+                </exclude_attributes>
                 <routes>
                     <route_collection>
                         <route>/reviews</route>
@@ -224,7 +232,7 @@
                     </route_collection_for_product>
                 </routes>
                 <versions>1</versions>
-                </product_review>
+            </product_review>
         </resources>
     </api2>
 </config>

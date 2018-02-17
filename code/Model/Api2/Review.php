@@ -5,6 +5,20 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Mage_Api2_Model_Resou
 
     protected function _retrieveCollection()
     {
+        $reviews = $this->_getReviews();
+        $collection = $reviews->toArray();
+        return (array) @$collection['items'];
+    }
+
+    /**
+     * A collection of Mage_Review_Model_Review objects
+     * 
+     * Requested filters are applied here.
+     *
+     * @return Mage_Review_Model_Resource_Review_Collection
+     */
+    protected function _getReviews()
+    {
         /* @var $reviews Mage_Review_Model_Resource_Review_Collection */
         $reviews = Mage::getResourceModel('review/review_collection');
 
@@ -21,7 +35,6 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Mage_Api2_Model_Resou
         }
         $this->_applyCollectionModifiers($reviews);
 
-        $collection = $reviews->toArray();
-        return (array) @$collection['items'];
+        return $reviews;
     }
 }
