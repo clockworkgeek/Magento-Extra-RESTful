@@ -13,6 +13,11 @@ extends Clockworkgeek_Extrarestful_Model_Api2_Review
      */
     protected function _getReviews()
     {
+        if (!$this->_getStore()->getIsActive()) {
+            // pretend store does not exist to guest
+            $this->_critical('Requested store is invalid', Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
+        }
+
         $reviews = parent::_getReviews();
         $reviews->addStatusFilter(Mage_Review_Model_Review::STATUS_APPROVED);
         return $reviews;

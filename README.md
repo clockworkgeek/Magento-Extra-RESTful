@@ -37,6 +37,8 @@ just raise an [issue](https://github.com/clockworkgeek/Magento-Extra-RESTful/iss
   - `DELETE /api/rest/categories/:id`
 - **Catalog / Review / Retrieve**
   - `GET /api/rest/reviews`
+  - `GET /api/rest/reviews/store/:store`
   - `GET /api/rest/reviews/product/:product`
+  - `GET /api/rest/reviews/product/:product/store/:store`
   - `GET /api/rest/products/:id/reviews`
   

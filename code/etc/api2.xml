@@ -240,10 +240,18 @@
                         <route>/reviews</route>
                         <action_type>collection</action_type>
                     </route_collection>
+                    <route_collection_with_store>
+                        <route>/reviews/store/:store</route>
+                        <action_type>collection</action_type>
+                    </route_collection_with_store>
                     <route_collection_with_product>
                         <route>/reviews/product/:product</route>
                         <action_type>collection</action_type>
                     </route_collection_with_product>
+                    <route_collection_with_product_and_store>
+                        <route>/reviews/product/:product/store/:store</route>
+                        <action_type>collection</action_type>
+                    </route_collection_with_product_and_store>
                     <route_collection_for_product>
                         <route>/products/:product/reviews</route>
                         <action_type>collection</action_type>

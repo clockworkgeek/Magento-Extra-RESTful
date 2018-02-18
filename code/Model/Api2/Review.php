@@ -12,7 +12,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Mage_Api2_Model_Resou
 
     /**
      * A collection of Mage_Review_Model_Review objects
-     * 
+     *
      * Requested filters are applied here.
      *
      * @return Mage_Review_Model_Resource_Review_Collection
