@@ -52,6 +52,12 @@
                     <admin>
                         <retrieve>1</retrieve>
                     </admin>
+                    <customer>
+                        <retrieve>1</retrieve>
+                    </customer>
+                    <guest>
+                        <retrieve>1</retrieve>
+                    </guest>
                 </privileges>
                 <attributes>
                     <store_id>Store ID</store_id>
@@ -59,6 +65,18 @@
                     <name>Name</name>
                     <is_active>Is Active</is_active>
                 </attributes>
+                <exclude_attributes>
+                    <customer>
+                        <read>
+                            <is_active>1</is_active>
+                        </read>
+                    </customer>
+                    <guest>
+                        <read>
+                            <is_active>1</is_active>
+                        </read>
+                    </guest>
+                </exclude_attributes>
                 <routes>
                     <route_collection>
                         <route>/stores</route>
