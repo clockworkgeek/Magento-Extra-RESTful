@@ -6,8 +6,13 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Mage_Api2_Model_Resou
     protected function _retrieveCollection()
     {
         $reviews = $this->_getReviews();
-        $collection = $reviews->toArray();
-        return (array) @$collection['items'];
+        if (Mage::helper('extrarestful')->isCollectionOverflowed($reviews, $this->getRequest())) {
+            return array();
+        }
+        else {
+            $collection = $reviews->toArray();
+            return (array) @$collection['items'];
+        }
     }
 
     /**

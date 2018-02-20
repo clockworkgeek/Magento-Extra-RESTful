@@ -8,7 +8,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Category extends Mage_Api2_Model_Res
 
     /**
      * Retrieve single category by entity ID
-     * 
+     *
      * @return array
      */
     protected function _retrieve()
@@ -41,8 +41,14 @@ class Clockworkgeek_Extrarestful_Model_Api2_Category extends Mage_Api2_Model_Res
 
     protected function _retrieveCollection()
     {
-        $data = $this->_getCategories()->load()->toArray();
-        return isset($data['items']) ? $data['items'] : $data;
+        $categories = $this->_getCategories();
+        if (Mage::helper('extrarestful')->isCollectionOverflowed($categories, $this->getRequest())) {
+            return array();
+        }
+        else {
+            $data = $categories->load()->toArray();
+            return isset($data['items']) ? $data['items'] : $data;
+        }
     }
 
     /**

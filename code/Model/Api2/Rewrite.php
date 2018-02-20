@@ -13,7 +13,12 @@ class Clockworkgeek_Extrarestful_Model_Api2_Rewrite extends Mage_Api2_Model_Reso
         }
 
         $this->_applyCollectionModifiers($rewrites);
-        $collection = $rewrites->load()->toArray();
-        return (array) @$collection['items'];
+        if (Mage::helper('extrarestful')->isCollectionOverflowed($rewrites, $this->getRequest())) {
+            return array();
+        }
+        else {
+            $collection = $rewrites->load()->toArray();
+            return (array) @$collection['items'];
+        }
     }
 }
