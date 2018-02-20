@@ -46,8 +46,6 @@ class Clockworkgeek_Extrarestful_Model_Api2_Categorytree extends Mage_Api2_Model
         // do not apply collection modifiers like normal, only filter params and a default sort
         $categories->addOrderField('position');
         $this->_applyFilter($categories);
-        Mage::log(__METHOD__);
-        Mage::log((string) $categories->getSelect());
         return $categories;
     }
 
