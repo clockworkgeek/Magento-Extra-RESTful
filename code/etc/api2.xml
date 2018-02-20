@@ -200,6 +200,31 @@
                 <versions>1</versions>
             </category>
 
+            <category_tree translate="title" module="extrarestful">
+                <group>category</group>
+                <model>extrarestful/api2_categorytree</model>
+                <working_model>catalog/category</working_model>
+                <title>Category Tree</title>
+                <sort_order>101</sort_order>
+                <privileges>
+                    <guest>
+                        <retrieve>1</retrieve>
+                    </guest>
+                </privileges>
+                <routes>
+                    <route_tree>
+                        <route>/category_trees</route>
+                        <!-- collection since there may actually be several trees -->
+                        <action_type>collection</action_type>
+                    </route_tree>
+                    <route_tree_with_store>
+                        <route>/category_trees/store/:store</route>
+                        <action_type>collection</action_type>
+                    </route_tree_with_store>
+                </routes>
+                <versions>1</versions>
+            </category_tree>
+
             <product_review translate="title" module="extrarestful">
                 <group>catalog</group>
                 <model>extrarestful/api2_review</model>

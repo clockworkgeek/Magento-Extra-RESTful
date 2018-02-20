@@ -30,6 +30,12 @@ just raise an [issue](https://github.com/clockworkgeek/Magento-Extra-RESTful/iss
   - `GET /api/rest/categories/parent/:parent/store/:store`
   - `GET /api/rest/categories/:id`
   - `GET /api/rest/categories/:id/store/:store`
+  - `GET /api/rest/category_trees`  
+  (Category tree is a convenient representation  of a normally flat list.
+  Its access can be controlled as a separate resource but uses the same attributes.
+  [Page size and sort order](http://devdocs.magento.com/guides/m1x/api/rest/get_filters.html) do not work on trees.)
+  - `GET /api/rest/category_trees/store/:store`  
+  (Categories can be filtered by the store they are assigned to.)
 - **Catalog / Category / Update**
   - `PUT /api/rest/categories/:id`
   - `PUT /api/rest/categories/:id/store/:store`
