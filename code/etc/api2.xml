@@ -250,6 +250,7 @@
                     <detail>Detail</detail>
                     <nickname>Customer Nickname</nickname>
                     <customer_id>Customer ID</customer_id>
+                    <ratings>Ratings</ratings>
                     <status>Status</status>
                 </attributes>
                 <exclude_attributes>
