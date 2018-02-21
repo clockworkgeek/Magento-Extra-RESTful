@@ -38,6 +38,8 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Mage_Api2_Model_Resou
         if (! is_null($storeId = $this->getRequest()->getParam('store'))) {
             $reviews->addStoreFilter($storeId);
         }
+
+        $reviews->addFilterToMap('status', 'status_code');
         $this->_applyCollectionModifiers($reviews);
 
         return $reviews;
