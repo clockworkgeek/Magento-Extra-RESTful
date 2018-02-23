@@ -22,4 +22,14 @@ extends Clockworkgeek_Extrarestful_Model_Api2_Review
         $reviews->addStatusFilter(Mage_Review_Model_Review::STATUS_APPROVED);
         return $reviews;
     }
+
+    protected function _create($data)
+    {
+        if (!Mage::getStoreConfigFlag('catalog/review/allow_guest')) {
+            $this->_critical(self::RESOURCE_METHOD_NOT_ALLOWED);
+        }
+        else {
+            return parent::_create($data);
+        }
+    }
 }

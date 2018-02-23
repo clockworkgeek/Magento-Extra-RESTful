@@ -25,7 +25,7 @@ extends Clockworkgeek_Extrarestful_Model_Api2_Review
     /**
      * A collection of approved review objects
      *
-     * Guests do not get to see pending or rejected reviews.
+     * Customers do not get to see pending or rejected reviews.
      *
      * @see Clockworkgeek_Extrarestful_Model_Api2_Review::_getReviews()
      */
@@ -50,5 +50,11 @@ extends Clockworkgeek_Extrarestful_Model_Api2_Review
             $this->getApiUser()->getUserId()
         ));
         return $reviews;
+    }
+
+    protected function _create($data)
+    {
+        $data['customer_id'] = $this->getApiUser()->getUserId();
+        return parent::_create($data);
     }
 }

@@ -233,12 +233,17 @@
                 <sort_order>150</sort_order>
                 <privileges>
                     <admin>
+                        <create>1</create>
                         <retrieve>1</retrieve>
+                        <update>1</update>
+                        <delete>1</delete>
                     </admin>
                     <customer>
+                        <create>1</create>
                         <retrieve>1</retrieve>
                     </customer>
                     <guest>
+                        <create>1</create>
                         <retrieve>1</retrieve>
                     </guest>
                 </privileges>
@@ -252,13 +257,36 @@
                     <customer_id>Customer ID</customer_id>
                     <ratings>Ratings</ratings>
                     <status>Status</status>
+                    <stores>Visible In Stores</stores>
                 </attributes>
                 <exclude_attributes>
+                    <admin>
+                        <write>
+                            <created_at>1</created_at>
+                            <review_id>1</review_id>
+                        </write>
+                    </admin>
+                    <customer>
+                        <write>
+                            <created_at>1</created_at>
+                            <customer_id>1</customer_id>
+                            <review_id>1</review_id>
+                            <status>1</status>
+                            <stores>1</stores>
+                        </write>
+                    </customer>
                     <guest>
                         <read>
                             <customer_id>1</customer_id>
                             <status>1</status>
                         </read>
+                        <write>
+                            <created_at>1</created_at>
+                            <customer_id>1</customer_id>
+                            <review_id>1</review_id>
+                            <status>1</status>
+                            <stores>1</stores>
+                        </write>
                     </guest>
                 </exclude_attributes>
                 <routes>
@@ -266,6 +294,10 @@
                         <route>/reviews</route>
                         <action_type>collection</action_type>
                     </route_collection>
+                    <route_entity>
+                        <route>/reviews/:review</route>
+                        <action_type>entity</action_type>
+                    </route_entity>
                     <route_collection_with_store>
                         <route>/reviews/store/:store</route>
                         <action_type>collection</action_type>
