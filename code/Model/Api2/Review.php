@@ -140,6 +140,12 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Mage_Api2_Model_Resou
 
         $review = $this->_getReview();
         if ($review->isObjectNew()) {
+            if (!$productId) {
+                $this->_error(
+                    Mage::helper('extrarestful')->__('Product ID can\'t be empty'),
+                    Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
+            }
+
             $storeId = $this->_getStore()->getId();
             // default values
             $review->setData(array(
@@ -152,12 +158,6 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Mage_Api2_Model_Resou
         }
         // overwrite with user values
         $review->addData($data);
-
-        if (!$review->getEntityPkValue()) {
-            $this->_error(
-                Mage::helper('extrarestful')->__('Product ID can\'t be empty'),
-                Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
-        }
 
         if (isset($data['ratings'])) {
             $review->setRatings($this->_getRatingOptions($data['ratings']));

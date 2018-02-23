@@ -264,12 +264,14 @@
                         <write>
                             <created_at>1</created_at>
                             <review_id>1</review_id>
+                            <product_id>1</product_id>
                         </write>
                     </admin>
                     <customer>
                         <write>
                             <created_at>1</created_at>
                             <customer_id>1</customer_id>
+                            <product_id>1</product_id>
                             <review_id>1</review_id>
                             <status>1</status>
                             <stores>1</stores>
@@ -283,6 +285,7 @@
                         <write>
                             <created_at>1</created_at>
                             <customer_id>1</customer_id>
+                            <product_id>1</product_id>
                             <review_id>1</review_id>
                             <status>1</status>
                             <stores>1</stores>
