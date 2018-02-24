@@ -6,6 +6,10 @@
                 <title>Core</title>
                 <sort_order>1</sort_order>
             </core>
+            <cms translate="title" module="extrarestful">
+                <title>CMS</title>
+                <sort_order>200</sort_order>
+            </cms>
         </resource_groups>
 
         <resources>
@@ -321,6 +325,54 @@
                 </routes>
                 <versions>1</versions>
             </product_review>
+
+            <cms_block translate="title" module="extrarestful">
+                <group>cms</group>
+                <model>extrarestful/api2_block</model>
+                <working_model>cms/block</working_model>
+                <title>Block</title>
+                <sort_order>10</sort_order>
+                <privileges>
+                    <customer>
+                        <retrieve>1</retrieve>
+                    </customer>
+                    <guest>
+                        <retrieve>1</retrieve>
+                    </guest>
+                </privileges>
+                <attributes>
+                    <block_id>Block ID</block_id>
+                    <content>Content</content>
+                    <identifier>Identifier</identifier>
+                    <is_active>Is Active</is_active>
+                    <stores>Stores</stores>
+                    <title>Title</title>
+                    <update_time>Updated At</update_time>
+                </attributes>
+                <exclude_attributes>
+                    <customer>
+                        <read>
+                            <is_active>1</is_active>
+                        </read>
+                    </customer>
+                    <guest>
+                        <read>
+                            <is_active>1</is_active>
+                        </read>
+                    </guest>
+                </exclude_attributes>
+                <routes>
+                    <route_entity>
+                        <route>/cms/blocks/:block</route>
+                        <action_type>entity</action_type>
+                    </route_entity>
+                    <route_entity_with_store>
+                        <route>/cms/blocks/:block/store/:store</route>
+                        <action_type>entity</action_type>
+                    </route_entity_with_store>
+                </routes>
+                <versions>1</versions>
+            </cms_block>
         </resources>
     </api2>
 </config>
