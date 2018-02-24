@@ -151,6 +151,7 @@
                     <position>Position</position>
                     <level>Level</level>
                     <children_count>Children Count</children_count>
+                    <product_count>Product Count</product_count>
                     <url_path>URL Path</url_path>
                 </attributes>
                 <exclude_attributes>

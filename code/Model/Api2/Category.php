@@ -17,6 +17,10 @@ class Clockworkgeek_Extrarestful_Model_Api2_Category extends Mage_Api2_Model_Res
         if (! $category->getIsActive()) {
             $this->_critical(self::RESOURCE_NOT_FOUND);
         }
+        if (in_array('product_count', $this->getFilter()->getAttributesToInclude())) {
+            $count = $this->getProductCounts(array($category->getId()));
+            $category->setProductCount((int) @$count[$category->getId()]);
+        }
         return $category->getData();
     }
 
@@ -46,7 +50,14 @@ class Clockworkgeek_Extrarestful_Model_Api2_Category extends Mage_Api2_Model_Res
             return array();
         }
         else {
-            $data = $categories->load()->toArray();
+            $categories->load();
+            if (in_array('product_count', $this->getFilter()->getAttributesToInclude())) {
+                $counts = $this->getProductCounts($categories->getLoadedIds());
+                foreach ($categories as $category) {
+                    $category->setProductCount((int) @$counts[$category->getId()]);
+                }
+            }
+            $data = $categories->toArray();
             return isset($data['items']) ? $data['items'] : $data;
         }
     }
@@ -76,6 +87,27 @@ class Clockworkgeek_Extrarestful_Model_Api2_Category extends Mage_Api2_Model_Res
 
         $this->_applyCollectionModifiers($categories);
         return $categories;
+    }
+
+    /**
+     * @param array $categoryIds
+     * @return array
+     */
+    public function getProductCounts($categoryIds)
+    {
+        // cannot use Mage_Catalog_Model_Resource_Product_Collection::addCountToCategories
+        // it "correctly" applies is_anchor logic which doesn't fit the API
+        /* @var $products Mage_Catalog_Model_Resource_Product_Collection */
+        $products = Mage::getResourceModel('catalog/product_collection');
+        $products->addStoreFilter($this->_getStore()->getId())
+            ->setStoreId($this->_getStore()->getId())
+            ->addAttributeToFilter('visibility', array(
+                'neq' => Mage_Catalog_Model_Product_Visibility::VISIBILITY_NOT_VISIBLE))
+            ->addAttributeToFilter('status', array('eq' => Mage_Catalog_Model_Product_Status::STATUS_ENABLED));
+        $select = $products->getProductCountSelect();
+        $select->where('count_table.category_id IN (?)', $categoryIds);
+        $select->where('count_table.is_parent = 1');
+        return $products->getConnection()->fetchPairs($select);
     }
 
     /**

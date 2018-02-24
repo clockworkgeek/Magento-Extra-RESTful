@@ -6,9 +6,24 @@
 class Clockworkgeek_Extrarestful_Model_Api2_Categorytree extends Mage_Api2_Model_Resource
 {
 
+    /**
+     * @var Clockworkgeek_Extrarestful_Model_Api2_Category
+     */
+    protected $_source;
+
     protected function _retrieveCollection()
     {
-        $data = $this->_getCategories()->load()->toArray();
+        $categories = $this->_getCategories();
+        if (in_array('product_count', $this->getFilter()->getAttributesToInclude())) {
+            $counts = $this->_source->getProductCounts($categories->getAllIds());
+            foreach ($categories as $category) {
+                $category->setProductCount((int) @$counts[$category->getId()]);
+            }
+        }
+        else {
+            $categories->load();
+        }
+        $data = $categories->toArray();
         return isset($data['items']) ? $data['items'] : $data;
     }
 
@@ -18,9 +33,8 @@ class Clockworkgeek_Extrarestful_Model_Api2_Categorytree extends Mage_Api2_Model
     protected function _getCategories()
     {
         // borrow attribute filters from other category resource
-        /* @var $source Clockworkgeek_Extrarestful_Model_Api2_Category */
-        $source = $this->_getSubModel('category', $this->getRequest()->getParams());
-        $this->setFilter(Mage::getModel('api2/acl_filter', $source));
+        $this->_source = $this->_getSubModel('category', $this->getRequest()->getParams());
+        $this->setFilter(Mage::getModel('api2/acl_filter', $this->_source));
 
         // in case of store specific values like localisation
         /* @var $categories Mage_Catalog_Model_Resource_Category_Collection */
@@ -40,7 +54,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Categorytree extends Mage_Api2_Model
 
         // get available attributes from other resource again
         $categories->addAttributeToSelect(array_keys(
-            $source->getAvailableAttributes($this->getUserType(), Mage_Api2_Model_Resource::OPERATION_ATTRIBUTE_READ)
+            $this->_source->getAvailableAttributes($this->getUserType(), Mage_Api2_Model_Resource::OPERATION_ATTRIBUTE_READ)
         ));
 
         // do not apply collection modifiers like normal, only filter params and a default sort
