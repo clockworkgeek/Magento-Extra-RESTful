@@ -5,10 +5,13 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Mage_Api2_Model_Resou
 
     protected function _retrieve()
     {
-        $reviews = new Varien_Data_Collection();
-        $reviews->addItem($this->_getReview());
-        $this->_addRatingsToReviews($reviews);
-        return $reviews->getFirstItem()->getData();
+        $review = $this->_getReview();
+        if (in_array('ratings', $this->getFilter()->getAttributesToInclude())) {
+            $reviews = new Varien_Data_Collection();
+            $reviews->addItem($review);
+            $this->_addRatingsToReviews($reviews);
+        }
+        return $review->getData();
     }
 
     /**
@@ -31,7 +34,9 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Mage_Api2_Model_Resou
             return array();
         }
         else {
-            $this->_addRatingsToReviews($reviews);
+            if (in_array('ratings', $this->getFilter()->getAttributesToInclude())) {
+                $this->_addRatingsToReviews($reviews);
+            }
             $collection = $reviews->toArray();
             return (array) @$collection['items'];
         }
@@ -60,7 +65,9 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Mage_Api2_Model_Resou
         if (! is_null($storeId = $this->getRequest()->getParam('store'))) {
             $reviews->addStoreFilter($storeId);
         }
-        $reviews->addStoreData();
+        if (in_array('stores', $this->getFilter()->getAttributesToInclude())) {
+            $reviews->addStoreData();
+        }
 
         $reviews->addFilterToMap('status', 'status_code');
         $this->_applyCollectionModifiers($reviews);
