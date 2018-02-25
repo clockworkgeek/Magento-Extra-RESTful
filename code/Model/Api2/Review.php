@@ -19,7 +19,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Mage_Api2_Model_Resou
      */
     protected function _getReview()
     {
-        $reviewId = $this->getRequest()->getParam('review');
+        $reviewId = $this->getRequest()->getParam('id');
         $review = Mage::getModel('review/review')->load($reviewId);
         if ($reviewId != $review->getId()) {
             $this->_critical(self::RESOURCE_NOT_FOUND);

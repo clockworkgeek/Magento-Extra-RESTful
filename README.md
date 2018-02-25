@@ -49,16 +49,16 @@ just raise an [issue](https://github.com/clockworkgeek/Magento-Extra-RESTful/iss
   - `POST /api/rest/products/:id/reviews`
 - **Catalog / Review / Retrieve**
   - `GET /api/rest/reviews`
-  - `GET /api/rest/reviews/:review`
+  - `GET /api/rest/reviews/:id`
   - `GET /api/rest/reviews/store/:store`
   - `GET /api/rest/reviews/product/:product`
   - `GET /api/rest/reviews/product/:product/store/:store`
   - `GET /api/rest/products/:id/reviews`
 - **Catalog / Review / Update**
   - `PUT /api/rest/reviews`
-  - `PUT /api/rest/reviews/:review`
+  - `PUT /api/rest/reviews/:id`
 - **Catalog / Review / Delete**
-  - `DELETE /api/rest/reviews/:review`
+  - `DELETE /api/rest/reviews/:id`
 - **CMS / Block / Create**
   - `POST /api/rest/cms/blocks`
 - **CMS / Block / Retrieve**

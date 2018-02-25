@@ -19,7 +19,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Block_Rest_Admin_V1 extends Mage_Api
      */
     protected function _getBlock()
     {
-        $blockId = $this->getRequest()->getParam('block');
+        $blockId = $this->getRequest()->getParam('id');
         /* @var $block Mage_Cms_Model_Block */
         $block = Mage::getModel('cms/block')
             ->setStoreId($this->_getStore()->getId())
