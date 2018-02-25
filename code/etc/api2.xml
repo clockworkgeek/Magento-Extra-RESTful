@@ -334,7 +334,10 @@
                 <sort_order>10</sort_order>
                 <privileges>
                     <admin>
+                        <create>1</create>
                         <retrieve>1</retrieve>
+                        <update>1</update>
+                        <delete>1</delete>
                     </admin>
                     <customer>
                         <retrieve>1</retrieve>
@@ -353,6 +356,12 @@
                     <update_time>Updated At</update_time>
                 </attributes>
                 <exclude_attributes>
+                    <admin>
+                        <write>
+                            <block_id>1</block_id>
+                            <update_time>1</update_time>
+                        </write>
+                    </admin>
                     <customer>
                         <read>
                             <is_active>1</is_active>

@@ -59,8 +59,15 @@ just raise an [issue](https://github.com/clockworkgeek/Magento-Extra-RESTful/iss
   - `PUT /api/rest/reviews/:review`
 - **Catalog / Review / Delete**
   - `DELETE /api/rest/reviews/:review`
+- **CMS / Block / Create**
+  - `POST /api/rest/cms/blocks`
 - **CMS / Block / Retrieve**
   - `GET /api/rest/cms/blocks`
   - `GET /api/rest/cms/blocks/:id`
   - `GET /api/rest/cms/blocks/:id/store/:store`  
   (`:id` can be number or 'identifier'. Will output as HTML if "text/html" is in the Accept header)
+- **CMS / Block / Update**
+  - `PUT /api/rest/cms/blocks/:id`
+- **CMS / Block / Delete**
+  - `DELETE /api/rest/cms/blocks/:id`
+  
