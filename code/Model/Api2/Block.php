@@ -7,7 +7,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Block extends Mage_Api2_Model_Resour
     {
         $block = Mage::getModel('cms/block')
             ->setStoreId($this->_getStore()->getId())
-            ->load($this->getRequest()->getParam('block'));
+            ->load($this->getRequest()->getParam('id'));
         if ($block->isObjectNew()) {
             $this->_critical(self::RESOURCE_NOT_FOUND);
         }
