@@ -389,6 +389,60 @@
                 </routes>
                 <versions>1</versions>
             </cms_block>
+
+            <cms_page translate="title" module="extrarestful">
+                <group>cms</group>
+                <model>extrarestful/api2_page</model>
+                <working_model>cms/page</working_model>
+                <title>Page</title>
+                <sort_order>20</sort_order>
+                <privileges>
+                    <admin>
+                        <create>1</create>
+                        <retrieve>1</retrieve>
+                        <update>1</update>
+                        <delete>1</delete>
+                    </admin>
+                </privileges>
+                <attributes>
+                    <content>Content</content>
+                    <content_heading>Content Heading</content_heading>
+                    <custom_layout_update_xml>Custom Layout Update XML</custom_layout_update_xml>
+                    <custom_root_template>Custom Layout</custom_root_template>
+                    <custom_theme>Custom Theme</custom_theme>
+                    <custom_theme_from>Custom Design From</custom_theme_from>
+                    <custom_theme_to>Custom Design To</custom_theme_to>
+                    <identifier>Identifier</identifier>
+                    <is_active>Is Active</is_active>
+                    <layout_update_xml>Layout Update XML</layout_update_xml>
+                    <meta_description>Meta Description</meta_description>
+                    <meta_keywords>Meta Keywords</meta_keywords>
+                    <page_id>Page ID</page_id>
+                    <root_template>Layout</root_template>
+                    <stores>Stores</stores>
+                    <title>Title</title>
+                    <update_time>Updated At</update_time>
+                </attributes>
+                <exclude_attributes>
+                    <admin>
+                        <write>
+                            <page_id>1</page_id>
+                            <update_time>1</update_time>
+                        </write>
+                    </admin>
+                </exclude_attributes>
+                <routes>
+                    <route_entity>
+                        <route>/cms/pages/:id</route>
+                        <action_type>entity</action_type>
+                    </route_entity>
+                    <route_collection>
+                        <route>/cms/pages</route>
+                        <action_type>collection</action_type>
+                    </route_collection>
+                </routes>
+                <versions>1</versions>
+            </cms_page>
         </resources>
     </api2>
 </config>

@@ -70,4 +70,14 @@ just raise an [issue](https://github.com/clockworkgeek/Magento-Extra-RESTful/iss
   - `PUT /api/rest/cms/blocks/:id`
 - **CMS / Block / Delete**
   - `DELETE /api/rest/cms/blocks/:id`
+- **CMS / Page / Create**
+  - `POST /api/rest/cms/pages`
+- **CMS / Page / Retrieve**
+  - `GET /api/rest/cms/pages`
+  - `GET /api/rest/cms/pages/:id`
+  (`:id` can be number or 'identifier')
+- **CMS / Page / Update**
+  - `PUT /api/rest/cms/pages/:id`
+- **CMS / Page / Delete**
+  - `DELETE /api/rest/cms/pages/:id`
   
