@@ -34,7 +34,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Category extends Mage_Api2_Model_Res
         $category->setStoreId($this->getRequest()->getParam('store'));
 
         $categoryId = $this->getRequest()->getParam('id');
-        $category->load($categoryId);
+        $category->load($categoryId, $this->getFilter()->getAttributesToInclude());
 
         if (! $category->getId()) {
             $this->_critical(self::RESOURCE_NOT_FOUND);

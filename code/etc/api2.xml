@@ -149,7 +149,6 @@
                 <attributes>
                     <entity_id>Category ID</entity_id>
                     <parent_id>Parent ID</parent_id>
-                    <created_at>Created At</created_at>
                     <updated_at>Updated At</updated_at>
                     <path>Parents Path</path>
                     <position>Position</position>
@@ -162,7 +161,6 @@
                     <admin>
                         <write>
                             <entity_id>1</entity_id>
-                            <created_at>1</created_at>
                             <updated_at>1</updated_at>
                             <path>1</path>
                             <level>1</level>
