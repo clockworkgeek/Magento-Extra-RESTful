@@ -84,9 +84,8 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Mage_Api2_Model_Resou
      */
     protected function _addRatingsToReviews(Varien_Data_Collection $reviews)
     {
-        /* @var $emulation Mage_Core_Model_App_Emulation */
-        $emulation = Mage::getModel('core/app_emulation');
-        $environment = $emulation->startEnvironmentEmulation((int) $this->getRequest()->getParam('store'));
+        $oldStore = Mage::app()->getStore()->getId();
+        Mage::app()->setCurrentStore((int) $this->getRequest()->getParam('store'));
 
         /* @var $allRatings Mage_Rating_Model_Resource_Rating_Option_Vote_Collection */
         $allRatings = Mage::getModel('rating/rating_option_vote')->getCollection();
@@ -112,7 +111,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Mage_Api2_Model_Resou
             }
         }
 
-        $emulation->stopEnvironmentEmulation($environment);
+        Mage::app()->setCurrentStore($oldStore);
     }
 
     /**
