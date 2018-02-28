@@ -27,20 +27,7 @@ extends Clockworkgeek_Extrarestful_Model_Api2_Review
     protected function _getCollection()
     {
         $reviews = parent::_getCollection();
-        $reviews->join(
-            array('statuses' => $reviews->getTable('review/review_status')),
-            'main_table.status_id=statuses.status_id',
-            array('status' => 'status_code'));
-        $reviews->addFilterToMap('status', 'status_code');
-
-        // status is approved OR customer is current user
-        $reviews->addFieldToFilter(array(
-            'main_table.status_id',
-            'detail.customer_id'
-        ), array(
-            Mage_Review_Model_Review::STATUS_APPROVED,
-            $this->getApiUser()->getUserId()
-        ));
+        $reviews->addActiveCustomer($this->getApiUser()->getUserId());
         return $reviews;
     }
 

@@ -3,6 +3,10 @@
 class Clockworkgeek_Extrarestful_Model_Api2_Review extends Clockworkgeek_Extrarestful_Model_Api2_Abstract
 {
 
+    /**
+     * @return Clockworkgeek_Extrarestful_Model_Review
+     * @see Clockworkgeek_Extrarestful_Model_Api2_Abstract::_loadModel()
+     */
     protected function _loadModel()
     {
         $review = parent::_loadModel();
@@ -15,15 +19,15 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Clockworkgeek_Extrare
     }
 
     /**
-     * A collection of Mage_Review_Model_Review objects
+     * A collection of Clockworkgeek_Extrarestful_Model_Review objects
      *
      * Requested filters are applied here.
      *
-     * @return Mage_Review_Model_Resource_Review_Collection
+     * @return Clockworkgeek_Extrarestful_Model_Resource_Review_Collection
      */
     protected function _getCollection()
     {
-        /* @var $reviews Mage_Review_Model_Resource_Review_Collection */
+        /* @var $reviews Clockworkgeek_Extrarestful_Model_Resource_Review_Collection */
         $reviews = parent::_getCollection();
 
         // product reviews only
@@ -37,6 +41,9 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Clockworkgeek_Extrare
         $reviews->addStoreFilter($this->_getStore()->getId());
         if (in_array('stores', $this->getFilter()->getAttributesToInclude())) {
             $reviews->addStoreData();
+        }
+        if (in_array('status', $this->getFilter()->getAttributesToInclude())) {
+            $reviews->addStatusCodes();
         }
 
         return $reviews;
