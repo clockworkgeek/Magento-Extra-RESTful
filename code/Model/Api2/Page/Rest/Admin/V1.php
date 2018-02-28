@@ -58,19 +58,12 @@ class Clockworkgeek_Extrarestful_Model_Api2_Page_Rest_Admin_V1 extends Clockwork
         return $page->save();
     }
 
-    protected function _loadCollection(Varien_Data_Collection_Db $pages)
+    protected function _getCollection()
     {
-        if (in_array('stores', $this->getFilter()->getAttributesToInclude())) {
-            $pages->getSelect()
-                ->joinLeft(
-                array('store_table' => $pages->getTable('cms/page_store')),
-                'store_table.page_id=main_table.page_id',
-                'GROUP_CONCAT(store_id) AS stores')
-                ->group('main_table.page_id');
-            foreach ($pages as $page) {
-                // if no stores then set an empty array
-                $page->setStores(array_filter(explode(',', $page->getStores()), 'strlen'));
-            }
+        $pages = parent::_getCollection();
+        if (!is_null($storeId = $this->getRequest()->getParam('store'))) {
+            $pages->addStoreFilter($storeId);
         }
+        return $pages;
     }
 }
