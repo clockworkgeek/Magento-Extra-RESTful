@@ -8,11 +8,11 @@ extends Clockworkgeek_Extrarestful_Model_Api2_Categorytree
      * Guests may not see inactive categories
      *
      * {@inheritDoc}
-     * @see Clockworkgeek_Extrarestful_Model_Api2_Categorytree::_getCategories()
+     * @see Clockworkgeek_Extrarestful_Model_Api2_Categorytree::_getCollection()
      */
-    protected function _getCategories()
+    protected function _getCollection()
     {
-        $categories = parent::_getCategories();
+        $categories = parent::_getCollection();
         $categories->addIsActiveFilter();
         return $categories;
     }

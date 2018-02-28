@@ -3,63 +3,46 @@
 /**
  * Generic API methods here, specialise elsewhere
  */
-class Clockworkgeek_Extrarestful_Model_Api2_Categorytree extends Mage_Api2_Model_Resource
+class Clockworkgeek_Extrarestful_Model_Api2_Categorytree extends Clockworkgeek_Extrarestful_Model_Api2_Category
 {
 
     /**
-     * @var Clockworkgeek_Extrarestful_Model_Api2_Category
+     * Retrieve data without pagination
+     *
+     * @see Mage_Api2_Model_Resource::_retrieveCollection()
      */
-    protected $_source;
-
     protected function _retrieveCollection()
     {
-        $categories = $this->_getCategories();
-        if (in_array('product_count', $this->getFilter()->getAttributesToInclude())) {
-            $counts = $this->_source->getProductCounts($categories->getAllIds());
-            foreach ($categories as $category) {
-                $category->setProductCount((int) @$counts[$category->getId()]);
-            }
-        }
-        else {
-            $categories->load();
-        }
+        $categories = $this->_getCollection();
+        // filter no paging
+        $this->_applyFilter($categories);
+        // add product counts
+        $this->_loadCollection($categories);
         $data = $categories->toArray();
-        return isset($data['items']) ? $data['items'] : $data;
+        return (array) (@$data['items'] ?: $data);
     }
 
     /**
      * @return Mage_Catalog_Model_Resource_Category_Collection
      */
-    protected function _getCategories()
+    protected function _getCollection()
     {
         // borrow attribute filters from other category resource
-        $this->_source = $this->_getSubModel('category', $this->getRequest()->getParams());
-        $this->setFilter(Mage::getModel('api2/acl_filter', $this->_source));
+        /** @var $source Clockworkgeek_Extrarestful_Model_Api2_Category */
+        $source = $this->_getSubModel('category', $this->getRequest()->getParams());
+        $this->setFilter($source->getFilter());
 
-        // in case of store specific values like localisation
-        /* @var $categories Mage_Catalog_Model_Resource_Category_Collection */
-        $categories = Mage::getResourceModel('catalog/category_collection');
-        $storeId = $this->getRequest()->getParam('store');
-        $categories->setStoreId($storeId);
+        $categories = parent::_getCollection();
 
+        $storeId = $this->_getStore()->getId();
         if ($storeId) {
             // exclude wrong trees
             $rootCategoryId = Mage::app()->getStore($storeId)->getRootCategoryId();
             $categories->addFieldToFilter('path', array('regexp' => '1/'.$rootCategoryId.'(/|$)'));
         }
-        else {
-            // global root must always be hidden
-            $categories->addFieldToFilter('path', array('neq' => '1'));
-        }
 
-        // get available attributes from other resource again
-        $categories->addAttributeToSelect(array_keys(
-            $this->_source->getAvailableAttributes($this->getUserType(), Mage_Api2_Model_Resource::OPERATION_ATTRIBUTE_READ)
-        ));
-
-        // do not apply collection modifiers like normal, only filter params and a default sort
+        // final order will be different after placing in a tree, but still affected by 'position'
         $categories->addOrderField('position');
-        $this->_applyFilter($categories);
         return $categories;
     }
 
