@@ -1,38 +1,11 @@
 <?php
 
-class Clockworkgeek_Extrarestful_Model_Api2_Block_Rest_Admin_V1 extends Mage_Api2_Model_Resource
+class Clockworkgeek_Extrarestful_Model_Api2_Block_Rest_Admin_V1 extends Clockworkgeek_Extrarestful_Model_Api2_Block
 {
 
-    protected function _create($data)
+    protected function _saveModel($data)
     {
-        $block = $this->_saveBlock($data);
-        return $this->_getLocation($block);
-    }
-
-    protected function _retrieve()
-    {
-        return $this->_getBlock()->getData();
-    }
-
-    /**
-     * @return Mage_Cms_Model_Block
-     */
-    protected function _getBlock()
-    {
-        $blockId = $this->getRequest()->getParam('id');
-        /* @var $block Mage_Cms_Model_Block */
-        $block = Mage::getModel('cms/block')
-            ->setStoreId($this->_getStore()->getId())
-            ->load($blockId);
-        if ($blockId != $block->getId() && $blockId != $block->getIdentifier()) {
-            $this->_critical(self::RESOURCE_NOT_FOUND);
-        }
-        return $block;
-    }
-
-    protected function _saveBlock($data)
-    {
-        $block = $this->_getBlock();
+        $block = $this->_loadModel();
         $block->addData($data);
 
         // validate
@@ -59,42 +32,19 @@ class Clockworkgeek_Extrarestful_Model_Api2_Block_Rest_Admin_V1 extends Mage_Api
         return $block->save();
     }
 
-    protected function _retrieveCollection()
+    protected function _loadCollection(Varien_Data_Collection_Db $blocks)
     {
-        /* @var $blocks Mage_Cms_Model_Resource_Block_Collection */
-        $blocks = Mage::getResourceModel('cms/block_collection');
-        if ($this->getRequest()->getParam('store')) {
-            $blocks->addStoreFilter($this->_getStore());
-        }
-        $this->_applyCollectionModifiers($blocks);
-        if (Mage::helper('extrarestful')->isCollectionOverflowed($blocks, $this->getRequest())) {
-            return array();
-        }
-        else {
-            if (in_array('stores', $this->getFilter()->getAttributesToInclude())) {
-                $blocks->join(
-                    array('store_table' => 'cms/block_store'),
-                    'store_table.block_id=main_table.block_id',
-                    'GROUP_CONCAT(store_id) AS stores');
-                $blocks->getSelect()->group('main_table.block_id');
-                foreach ($blocks as $block) {
-                    // if no stores then set an empty array
-                    $block->setStores(array_filter(explode(',', $block->getStores()), 'strlen'));
-                }
+        if (in_array('stores', $this->getFilter()->getAttributesToInclude())) {
+            $blocks->getSelect()
+                ->joinLeft(
+                array('store_table' => $blocks->getTable('cms/block_store')),
+                'store_table.block_id=main_table.block_id',
+                'GROUP_CONCAT(store_id) AS stores')
+                ->group('main_table.block_id');
+            foreach ($blocks as $block) {
+                // if no stores then set an empty array
+                $block->setStores(array_filter(explode(',', $block->getStores()), 'strlen'));
             }
-
-            $collection = $blocks->toArray();
-            return @$collection['items'];
         }
-    }
-
-    protected function _update($data)
-    {
-        $this->_saveBlock($data);
-    }
-
-    protected function _delete()
-    {
-        $this->_getBlock()->delete();
     }
 }

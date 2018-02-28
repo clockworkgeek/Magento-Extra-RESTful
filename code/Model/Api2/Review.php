@@ -1,45 +1,17 @@
 <?php
 
-class Clockworkgeek_Extrarestful_Model_Api2_Review extends Mage_Api2_Model_Resource
+class Clockworkgeek_Extrarestful_Model_Api2_Review extends Clockworkgeek_Extrarestful_Model_Api2_Abstract
 {
 
-    protected function _retrieve()
+    protected function _loadModel()
     {
-        $review = $this->_getReview();
+        $review = parent::_loadModel();
         if (in_array('ratings', $this->getFilter()->getAttributesToInclude())) {
             $reviews = new Varien_Data_Collection();
             $reviews->addItem($review);
             $this->_addRatingsToReviews($reviews);
         }
-        return $review->getData();
-    }
-
-    /**
-     * @return Mage_Review_Model_Review
-     */
-    protected function _getReview()
-    {
-        $reviewId = $this->getRequest()->getParam('id');
-        $review = Mage::getModel('review/review')->load($reviewId);
-        if ($reviewId != $review->getId()) {
-            $this->_critical(self::RESOURCE_NOT_FOUND);
-        }
         return $review;
-    }
-
-    protected function _retrieveCollection()
-    {
-        $reviews = $this->_getReviews();
-        if (Mage::helper('extrarestful')->isCollectionOverflowed($reviews, $this->getRequest())) {
-            return array();
-        }
-        else {
-            if (in_array('ratings', $this->getFilter()->getAttributesToInclude())) {
-                $this->_addRatingsToReviews($reviews);
-            }
-            $collection = $reviews->toArray();
-            return (array) @$collection['items'];
-        }
     }
 
     /**
@@ -49,10 +21,10 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Mage_Api2_Model_Resou
      *
      * @return Mage_Review_Model_Resource_Review_Collection
      */
-    protected function _getReviews()
+    protected function _getCollection()
     {
         /* @var $reviews Mage_Review_Model_Resource_Review_Collection */
-        $reviews = Mage::getResourceModel('review/review_collection');
+        $reviews = parent::_getCollection();
 
         // product reviews only
         // category and customer reviews are possible although unlikely
@@ -62,17 +34,20 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Mage_Api2_Model_Resou
         $reviews->addFilterToMap('product_id', 'entity_pk_value');
         $reviews->addExpressionFieldToSelect('product_id', 'entity_pk_value', array());
 
-        if (! is_null($storeId = $this->getRequest()->getParam('store'))) {
-            $reviews->addStoreFilter($storeId);
-        }
+        $reviews->addStoreFilter($this->_getStore()->getId());
         if (in_array('stores', $this->getFilter()->getAttributesToInclude())) {
             $reviews->addStoreData();
         }
 
-        $reviews->addFilterToMap('status', 'status_code');
-        $this->_applyCollectionModifiers($reviews);
-
         return $reviews;
+    }
+
+    protected function _loadCollection(Varien_Data_Collection_Db $reviews)
+    {
+        if (in_array('ratings', $this->getFilter()->getAttributesToInclude())) {
+            $this->_addRatingsToReviews($reviews);
+        }
+        parent::_loadCollection($reviews);
     }
 
     /**
@@ -117,18 +92,17 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Mage_Api2_Model_Resou
     /**
      * Validates and instantiates a review object
      *
-     * Whether a newly constructed object or a recently loaded one,
-     * the result is ready to be saved.
-     *
      * @param array $data
      * @return Mage_Review_Model_Review
      * @throws Mage_Api2_Exception
      */
-    protected function _prepareReview($data)
+    protected function _saveModel($data)
     {
         if ($productId = (@$data['product_id'] ?: $this->getRequest()->getParam('product'))) {
-            $product = Mage::getModel('catalog/product')->load($productId);
-            if ($product->isObjectNew()) {
+            // checking getSize() is quicker than loading a whole entity
+            $products = Mage::getResourceModel('catalog/product_collection');
+            $products->addIdFilter($productId);
+            if ($products->getSize() == 0) {
                 $this->_error(
                     Mage::helper('extrarestful')->__('Product doesn\'t exist'),
                     Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
@@ -144,7 +118,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Mage_Api2_Model_Resou
             }
         }
 
-        $review = $this->_getReview();
+        $review = $this->_loadModel();
         if ($review->isObjectNew()) {
             if (!$productId) {
                 $this->_error(
@@ -156,7 +130,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Mage_Api2_Model_Resou
             // default values
             $review->setData(array(
                 'entity_id' => $review->getEntityIdByCode(Mage_Review_Model_Review::ENTITY_PRODUCT_CODE),
-                'entity_pk_value' => $product->getId(),
+                'entity_pk_value' => $productId,
                 'status_id' => Mage_Review_Model_Review::STATUS_PENDING,
                 'store_id' => $storeId,
                 'stores' => $storeId
@@ -175,8 +149,32 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Mage_Api2_Model_Resou
                 $this->_error($message, Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
             }
         }
-        if ($this->getResponse()->isException()) {
-            $this->_critical(self::RESOURCE_REQUEST_DATA_INVALID);
+        if (!$this->getResponse()->isException()) {
+            $review->save();
+
+            if (is_array($review->getRatings())) {
+                // this bit copied from Mage_Adminhtml_Catalog_Product_ReviewController::saveAction
+                $votes = Mage::getModel('rating/rating_option_vote')
+                    ->getResourceCollection()
+                    ->setReviewFilter($review->getId())
+                    ->addOptionInfo()
+                    ->load()
+                    ->addRatingOptions();
+                foreach ($review->getRatings() as $ratingId=>$optionId) {
+                    if($vote = $votes->getItemByColumnValue('rating_id', $ratingId)) {
+                        Mage::getModel('rating/rating')
+                            ->setVoteId($vote->getId())
+                            ->setReviewId($review->getId())
+                            ->updateOptionVote($optionId);
+                    } else {
+                        Mage::getModel('rating/rating')
+                            ->setRatingId($ratingId)
+                            ->setReviewId($review->getId())
+                            ->addOptionVote($optionId, $review->getEntityPkValue());
+                    }
+                }
+            }
+            $review->aggregate();
         }
 
         return $review;
@@ -223,23 +221,5 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Mage_Api2_Model_Resou
         }
 
         return $optionIds;
-    }
-
-    protected function _create($data)
-    {
-        $review = $this->_prepareReview($data);
-        $review->save();
-
-        if (is_array($review->getRatings())) {
-            foreach ($review->getRatings() as $ratingId => $optionId) {
-                Mage::getModel('rating/rating')
-                    ->setRatingId($ratingId)
-                    ->setReviewId($review->getId())
-                    ->addOptionVote($optionId, $review->getProductId());
-            }
-        }
-        $review->aggregate();
-
-        return $this->_getLocation($review);
     }
 }

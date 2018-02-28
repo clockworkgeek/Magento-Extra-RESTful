@@ -1,95 +1,69 @@
 <?php
 
-/**
- * Generic API methods here, specialise elsewhere
- */
-class Clockworkgeek_Extrarestful_Model_Api2_Category extends Mage_Api2_Model_Resource
+class Clockworkgeek_Extrarestful_Model_Api2_Category extends Clockworkgeek_Extrarestful_Model_Api2_Abstract
 {
 
-    /**
-     * Retrieve single category by entity ID
-     *
-     * @return array
-     */
-    protected function _retrieve()
+    public function getWorkingModel()
     {
-        $category = $this->_getCategory();
-        if (! $category->getIsActive()) {
-            $this->_critical(self::RESOURCE_NOT_FOUND);
-        }
+        $category = parent::getWorkingModel();
+        $category->setStoreId($this->_getStore()->getId());
+        return $category;
+    }
+
+    /**
+     * Load product count after loading category
+     *
+     * @return Mage_Catalog_Model_Category
+     * @see Clockworkgeek_Extrarestful_Model_Api2_Abstract::_loadModel()
+     */
+    protected function _loadModel()
+    {
+        $category = parent::_loadModel();
         if (in_array('product_count', $this->getFilter()->getAttributesToInclude())) {
             $count = $this->getProductCounts(array($category->getId()));
             $category->setProductCount((int) @$count[$category->getId()]);
         }
-        return $category->getData();
-    }
-
-    /**
-     * @return Mage_Catalog_Model_Category
-     */
-    protected function _getCategory()
-    {
-        /* @var $category Mage_Catalog_Model_Category */
-        $category = Mage::getModel('catalog/category');
-        $category->setStoreId($this->getRequest()->getParam('store'));
-
-        $categoryId = $this->getRequest()->getParam('id');
-        $category->load($categoryId, $this->getFilter()->getAttributesToInclude());
-
-        if (! $category->getId()) {
-            $this->_critical(self::RESOURCE_NOT_FOUND);
-        }
-
         return $category;
     }
 
-    protected function _retrieveCollection()
+    /**
+     * Load product count after loading categories
+     *
+     * @see Clockworkgeek_Extrarestful_Model_Api2_Abstract::_loadCollection()
+     */
+    protected function _loadCollection(Varien_Data_Collection_Db $categories)
     {
-        $categories = $this->_getCategories();
-        if (Mage::helper('extrarestful')->isCollectionOverflowed($categories, $this->getRequest())) {
-            return array();
-        }
-        else {
-            $categories->load();
-            if (in_array('product_count', $this->getFilter()->getAttributesToInclude())) {
-                $counts = $this->getProductCounts($categories->getLoadedIds());
-                foreach ($categories as $category) {
-                    $category->setProductCount((int) @$counts[$category->getId()]);
-                }
+        parent::_loadCollection($categories);
+
+        if (in_array('product_count', $this->getFilter()->getAttributesToInclude())) {
+            $counts = $this->getProductCounts($categories->getLoadedIds());
+            foreach ($categories as $category) {
+                $category->setProductCount((int) @$counts[$category->getId()]);
             }
-            $data = $categories->toArray();
-            return isset($data['items']) ? $data['items'] : $data;
         }
     }
 
     /**
      * @return Mage_Catalog_Model_Resource_Category_Collection
      */
-    protected function _getCategories()
+    protected function _getCollection()
     {
-        /* @var $categories Mage_Catalog_Model_Resource_Category_Collection */
-        $categories = Mage::getResourceModel('catalog/category_collection');
-        $categories->setStoreId($this->getRequest()->getParam('store'));
+        /** @var $categories Mage_Catalog_Model_Resource_Category_Collection */
+        $categories = parent::_getCollection();
+        $categories->setStoreId($this->_getStore()->getId());
         if (($parentId = $this->getRequest()->getParam('parent'))) {
             $categories->addAttributeToFilter('parent_id', $parentId);
         }
-        $categories->addAttributeToSelect(array_keys(
-            $this->getAvailableAttributes($this->getUserType(), Mage_Api2_Model_Resource::OPERATION_ATTRIBUTE_READ)
-        ));
 
         // global root must always be hidden
         $categories->addFieldToFilter('path', array('neq' => '1'));
 
-        // if not admin, filter is_active
-        if (Mage_Api2_Model_Auth_User_Admin::USER_TYPE != $this->getUserType()) {
-            $categories->addIsActiveFilter();
-        }
-
-        $this->_applyCollectionModifiers($categories);
         return $categories;
     }
 
     /**
+     * Returns an associative array of categories and their immediate child counts
+     *
      * @param array $categoryIds
      * @return array
      */

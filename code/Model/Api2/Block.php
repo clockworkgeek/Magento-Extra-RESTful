@@ -1,21 +1,27 @@
 <?php
 
-class Clockworkgeek_Extrarestful_Model_Api2_Block extends Mage_Api2_Model_Resource
+class Clockworkgeek_Extrarestful_Model_Api2_Block extends Clockworkgeek_Extrarestful_Model_Api2_Abstract
 {
 
-    protected function _retrieve()
+    /**
+     * @return Mage_Cms_Model_Block
+     */
+    protected function _loadModel()
     {
-        $block = Mage::getModel('cms/block')
-            ->setStoreId($this->_getStore()->getId())
-            ->load($this->getRequest()->getParam('id'));
-        if ($block->isObjectNew()) {
-            $this->_critical(self::RESOURCE_NOT_FOUND);
-        }
         $this->setFilter(Mage::getModel('extrarestful/api2_block_filter', $this));
         if ($this->_needsRenderer()) {
             $this->setRenderer(Mage::getModel('extrarestful/api2_block_renderer'));
         }
-        return $block->getData();
+
+        $blockId = $this->getRequest()->getParam('id');
+        /* @var $block Mage_Cms_Model_Block */
+        $block = $this->getWorkingModel()
+            ->setStoreId($this->_getStore()->getId())
+            ->load($blockId);
+        if ($blockId != $block->getId() && $blockId != $block->getIdentifier()) {
+            $this->_critical(self::RESOURCE_NOT_FOUND);
+        }
+        return $block;
     }
 
     /**
