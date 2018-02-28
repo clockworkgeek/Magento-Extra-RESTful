@@ -96,6 +96,24 @@ class Clockworkgeek_Extrarestful_Model_Api2_Abstract extends Mage_Api2_Model_Res
     }
 
     /**
+     * Set a <code>Content-Length</code> header when possible
+     *
+     * This is more efficient than chunked transfers which have a small overhead per chunk.
+     *
+     * @see Mage_Api2_Model_Resource::_render()
+     */
+    protected function _render($data)
+    {
+        parent::_render($data);
+
+        $response = $this->getResponse();
+        if ($response->canSendHeaders()) {
+            $length = array_sum(array_map('strlen', $response->getBody(true)));
+            $response->setHeader('Content-Length', $length, true);
+        }
+    }
+
+    /**
      * Loads an instance of working model with an ID of <code>:id</code>
      *
      * <code>:id</code> is parsed from the URL which matches a route from <code>api2.xml</code>.
