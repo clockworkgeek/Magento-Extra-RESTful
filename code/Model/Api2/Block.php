@@ -24,6 +24,15 @@ class Clockworkgeek_Extrarestful_Model_Api2_Block extends Clockworkgeek_Extrares
         return $block;
     }
 
+    protected function _getCollection()
+    {
+        $blocks = parent::_getCollection();
+        if (!is_null($storeId = $this->getRequest()->getParam('store'))) {
+            $blocks->addStoreFilter($storeId);
+        }
+        return $blocks;
+    }
+
     /**
      * True if "text/html" is present and higher priority than other recognised mime types
      *

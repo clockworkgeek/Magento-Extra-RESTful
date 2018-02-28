@@ -15,7 +15,11 @@
         <models>
             <extrarestful>
                 <class>Clockworkgeek_Extrarestful_Model</class>
+                <resourceModel>extrarestful_resource</resourceModel>
             </extrarestful>
+            <extrarestful_resource>
+                <class>Clockworkgeek_Extrarestful_Model_Resource</class>
+            </extrarestful_resource>
         </models>
     </global>
 </config>

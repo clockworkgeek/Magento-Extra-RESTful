@@ -31,20 +31,4 @@ class Clockworkgeek_Extrarestful_Model_Api2_Block_Rest_Admin_V1 extends Clockwor
         // success
         return $block->save();
     }
-
-    protected function _loadCollection(Varien_Data_Collection_Db $blocks)
-    {
-        if (in_array('stores', $this->getFilter()->getAttributesToInclude())) {
-            $blocks->getSelect()
-                ->joinLeft(
-                array('store_table' => $blocks->getTable('cms/block_store')),
-                'store_table.block_id=main_table.block_id',
-                'GROUP_CONCAT(store_id) AS stores')
-                ->group('main_table.block_id');
-            foreach ($blocks as $block) {
-                // if no stores then set an empty array
-                $block->setStores(array_filter(explode(',', $block->getStores()), 'strlen'));
-            }
-        }
-    }
 }
