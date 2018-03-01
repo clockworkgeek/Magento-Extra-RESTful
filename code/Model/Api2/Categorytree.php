@@ -79,4 +79,14 @@ class Clockworkgeek_Extrarestful_Model_Api2_Categorytree extends Clockworkgeek_E
         }
         return parent::_render($data);
     }
+
+    /**
+     * Do not show EAV attributes for category tree since it inherits from category list
+     *
+     * @see Clockworkgeek_Extrarestful_Model_Api2_Category::_getResourceAttributes()
+     */
+    protected function _getResourceAttributes()
+    {
+        return array();
+    }
 }
