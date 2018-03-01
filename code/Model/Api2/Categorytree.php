@@ -7,6 +7,13 @@ class Clockworkgeek_Extrarestful_Model_Api2_Categorytree extends Clockworkgeek_E
 {
 
     /**
+     * Association data from category IDs to parent IDs
+     *
+     * @var array
+     */
+    protected $_parents;
+
+    /**
      * Retrieve data without pagination
      *
      * @see Mage_Api2_Model_Resource::_retrieveCollection()
@@ -18,6 +25,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Categorytree extends Clockworkgeek_E
         $this->_applyFilter($categories);
         // add product counts
         $this->_loadCollection($categories);
+        $this->_loadParents($categories);
         $data = $categories->toArray();
         return (array) (@$data['items'] ?: $data);
     }
@@ -40,6 +48,21 @@ class Clockworkgeek_Extrarestful_Model_Api2_Categorytree extends Clockworkgeek_E
     }
 
     /**
+     * Keep ancestor information separate from collection data
+     *
+     * This makes it possible for <code>parent_id</code> to be filtered out
+     * and yet still correctly render the tree.
+     *
+     * @param Varien_Data_Collection_Db $categories
+     */
+    protected function _loadParents(Varien_Data_Collection_Db $categories)
+    {
+        $query = $categories->getSelect();
+        $query->reset(Zend_Db_Select::COLUMNS)->columns(array('entity_id','parent_id'));
+        $this->_parents = $categories->getConnection()->fetchPairs($query);
+    }
+
+    /**
      * Rearrange list into a tree after filter object has applied collectionOut()
      *
      * {@inheritDoc}
@@ -48,13 +71,13 @@ class Clockworkgeek_Extrarestful_Model_Api2_Categorytree extends Clockworkgeek_E
     protected function _render($categories)
     {
         $data = array();
-        foreach ($categories as &$category) {
-            if (@$category['level'] <= 1) {
-                unset($category['parent_id']);
-                $data[] = &$category;
-            }
-            elseif ($parent = @$category['parent_id']) {
+        foreach ($categories as $categoryId => &$category) {
+            $parent = @$this->_parents[$categoryId];
+            if (isset($categories[$parent])) {
                 $categories[$parent]['children'][] = &$category;
+            }
+            else {
+                $data[] = &$category;
             }
         }
         return parent::_render($data);
