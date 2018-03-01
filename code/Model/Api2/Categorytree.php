@@ -34,13 +34,6 @@ class Clockworkgeek_Extrarestful_Model_Api2_Categorytree extends Clockworkgeek_E
 
         $categories = parent::_getCollection();
 
-        $storeId = $this->_getStore()->getId();
-        if ($storeId) {
-            // exclude wrong trees
-            $rootCategoryId = Mage::app()->getStore($storeId)->getRootCategoryId();
-            $categories->addFieldToFilter('path', array('regexp' => '1/'.$rootCategoryId.'(/|$)'));
-        }
-
         // final order will be different after placing in a tree, but still affected by 'position'
         $categories->addOrderField('position');
         return $categories;

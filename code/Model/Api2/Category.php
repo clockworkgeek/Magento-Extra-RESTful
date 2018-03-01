@@ -55,8 +55,17 @@ class Clockworkgeek_Extrarestful_Model_Api2_Category extends Clockworkgeek_Extra
             $categories->addAttributeToFilter('parent_id', $parentId);
         }
 
-        // global root must always be hidden
-        $categories->addFieldToFilter('path', array('neq' => '1'));
+
+        $storeId = $this->_getStore()->getId();
+        if ($storeId) {
+            // exclude wrong trees
+            $rootCategoryId = Mage::app()->getStore($storeId)->getRootCategoryId();
+            $categories->addFieldToFilter('path', array('regexp' => '1/'.$rootCategoryId.'(/|$)'));
+        }
+        else {
+            // global root must always be hidden
+            $categories->addFieldToFilter('path', array('neq' => '1'));
+        }
 
         return $categories;
     }
