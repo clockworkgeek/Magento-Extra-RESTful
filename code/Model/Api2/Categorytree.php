@@ -40,14 +40,6 @@ class Clockworkgeek_Extrarestful_Model_Api2_Categorytree extends Clockworkgeek_E
     }
 
     /**
-     * @return array|Mage_Core_Model_Store[]
-     */
-    protected function _getStores()
-    {
-        return Mage::app()->getStores();
-    }
-
-    /**
      * Rearrange list into a tree after filter object has applied collectionOut()
      *
      * {@inheritDoc}
@@ -59,11 +51,6 @@ class Clockworkgeek_Extrarestful_Model_Api2_Categorytree extends Clockworkgeek_E
         foreach ($categories as &$category) {
             if (@$category['level'] <= 1) {
                 unset($category['parent_id']);
-                foreach ($this->_getStores() as $store) {
-                    if ($store->getRootCategoryId() == @$category['entity_id']) {
-                        $category['stores'][] = $store->getId();
-                    }
-                }
                 $data[] = &$category;
             }
             elseif ($parent = @$category['parent_id']) {
