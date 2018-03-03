@@ -26,7 +26,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Categorytree extends Clockworkgeek_E
         // add product counts
         $this->_loadCollection($categories);
         $this->_loadParents($categories);
-        $data = $categories->toArray();
+        $data = $categories->walk('toArray');
         return (array) (@$data['items'] ?: $data);
     }
 
