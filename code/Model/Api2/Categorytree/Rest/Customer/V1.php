@@ -12,7 +12,7 @@ extends Clockworkgeek_Extrarestful_Model_Api2_Categorytree
      */
     protected function _getCollection()
     {
-        $categories = parent::_getCategories();
+        $categories = parent::_getCollection();
         $categories->addIsActiveFilter();
         return $categories;
     }

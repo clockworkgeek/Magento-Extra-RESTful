@@ -249,6 +249,9 @@
                 <title>Category Tree</title>
                 <sort_order>101</sort_order>
                 <privileges>
+                    <customer>
+                        <retrieve>1</retrieve>
+                    </customer>
                     <guest>
                         <retrieve>1</retrieve>
                     </guest>
