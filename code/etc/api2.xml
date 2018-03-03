@@ -42,6 +42,11 @@
                             <updated_at>1</updated_at>
                         </write>
                     </admin>
+                    <customer>
+                        <read>
+                            <entity_id>0</entity_id>
+                        </read>
+                    </customer>
                 </exclude_attributes>
             </customer>
 

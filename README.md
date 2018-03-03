@@ -11,6 +11,7 @@ just raise an [issue](https://github.com/clockworkgeek/Magento-Extra-RESTful/iss
 - **Catalog Product / Read / Updated At** (`updated_at`)
 - **Catalog Product / Read / Has Options** (`has_options`)
 - **Catalog Product / Read / Has Required Options** (`required_options`)
+- **Customer / Read / Customer ID** (`entity_id`)
 - **Customer / Read / Updated At** (`updated_at`)
 
 ### New Resources
