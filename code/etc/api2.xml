@@ -68,7 +68,32 @@
                     <code>Code</code>
                     <name>Name</name>
                     <is_active>Is Active</is_active>
+                    <!-- Config values -->
+                    <general_locale_code>Configuration: Locale</general_locale_code>
+                    <general_locale_timezone>Configuration: Timezone</general_locale_timezone>
+                    <unsecure_base_url>Unsecure Base URL</unsecure_base_url>
+                    <secure_base_url>Secure Base URL</secure_base_url>
                 </attributes>
+                <entity_only_attributes>
+                    <admin>
+                        <read>
+                            <general_locale_code>1</general_locale_code>
+                            <general_locale_timezone>1</general_locale_timezone>
+                        </read>
+                    </admin>
+                    <customer>
+                        <read>
+                            <general_locale_code>1</general_locale_code>
+                            <general_locale_timezone>1</general_locale_timezone>
+                        </read>
+                    </customer>
+                    <guest>
+                        <read>
+                            <general_locale_code>1</general_locale_code>
+                            <general_locale_timezone>1</general_locale_timezone>
+                        </read>
+                    </guest>
+                </entity_only_attributes>
                 <exclude_attributes>
                     <customer>
                         <read>
@@ -86,6 +111,10 @@
                         <route>/stores</route>
                         <action_type>collection</action_type>
                     </route_collection>
+                    <route_entity>
+                        <route>/stores/:id</route>
+                        <action_type>entity</action_type>
+                    </route_entity>
                 </routes>
                 <versions>1</versions>
             </store>
