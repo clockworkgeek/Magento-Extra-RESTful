@@ -60,20 +60,19 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Clockworkgeek_Extrare
     /**
      * Adds a keyed object to every review where keys are localised titles and values are percentages
      *
-     * This causes collection to load.
-     *
-     * @param Mage_Review_Model_Resource_Review_Collection $reviews
+     * @param Varien_Data_Collection $reviews
      */
     protected function _addRatingsToReviews(Varien_Data_Collection $reviews)
     {
         $oldStore = Mage::app()->getStore()->getId();
-        Mage::app()->setCurrentStore((int) $this->getRequest()->getParam('store'));
+        $newStore = $this->_getStore()->getId();
+        Mage::app()->setCurrentStore($newStore);
 
         /* @var $allRatings Mage_Rating_Model_Resource_Rating_Option_Vote_Collection */
         $allRatings = Mage::getModel('rating/rating_option_vote')->getCollection();
 
         // join title fields
-        $allRatings->addRatingInfo($this->getRequest()->getParam('store'));
+        $allRatings->addRatingInfo($newStore);
 
         // limit to our subset for efficiency
         $allRatings->addFieldToFilter('review_id', array('in' => $reviews->getColumnValues('review_id')));
