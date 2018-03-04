@@ -1,0 +1,6 @@
+<?php
+
+class Clockworkgeek_Extrarestful_Model_Api2_Product_Option_Rest_Admin_V1
+extends Clockworkgeek_Extrarestful_Model_Api2_Product_Option
+{
+}

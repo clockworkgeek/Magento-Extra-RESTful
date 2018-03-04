@@ -270,6 +270,61 @@
                 <versions>1</versions>
             </category_tree>
 
+            <product_custom_options translate="title" module="extrarestful">
+                <group>catalog_product</group>
+                <model>extrarestful/api2_product_option</model>
+                <working_model>catalog/product_option</working_model>
+                <title>Product Custom Option</title>
+                <sort_order>100</sort_order>
+                <privileges>
+                    <admin>
+                        <retrieve>1</retrieve>
+                    </admin>
+                    <customer>
+                        <retrieve>1</retrieve>
+                    </customer>
+                    <guest>
+                        <retrieve>1</retrieve>
+                    </guest>
+                </privileges>
+                <attributes>
+                    <option_id>Option ID</option_id>
+                    <type>Type</type>
+                    <is_require>Is Required</is_require>
+                    <title>Title</title>
+                    <sku>SKU</sku>
+                    <max_characters>Maximum Characters</max_characters>
+                    <file_extension>File Extension</file_extension>
+                    <image_size_x>Image Size X</image_size_x>
+                    <image_size_y>Image Size Y</image_size_y>
+                    <sort_order>Sort Order</sort_order>
+                </attributes>
+                <force_attributes>
+                    <guest>
+                        <values>1</values>
+                    </guest>
+                </force_attributes>
+                <routes>
+                    <route_collection>
+                        <route>/products/:product/options</route>
+                        <action_type>collection</action_type>
+                    </route_collection>
+                    <route_entity>
+                        <route>/products/:product/options/:id</route>
+                        <action_type>entity</action_type>
+                    </route_entity>
+                    <route_collection_with_store>
+                        <route>/products/:product/options/store/:store</route>
+                        <action_type>collection</action_type>
+                    </route_collection_with_store>
+                    <route_entity_with_store>
+                        <route>/products/:product/options/:id/store/:store</route>
+                        <action_type>entity</action_type>
+                    </route_entity_with_store>
+                </routes>
+                <versions>1</versions>
+            </product_custom_options>
+
             <product_review translate="title" module="extrarestful">
                 <group>catalog</group>
                 <model>extrarestful/api2_review</model>
