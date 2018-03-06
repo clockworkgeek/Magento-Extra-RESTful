@@ -64,15 +64,13 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Clockworkgeek_Extrare
      */
     protected function _addRatingsToReviews(Varien_Data_Collection $reviews)
     {
-        $oldStore = Mage::app()->getStore()->getId();
-        $newStore = $this->_getStore()->getId();
-        Mage::app()->setCurrentStore($newStore);
+        $storeId = $this->_getStore()->getId();
 
         /* @var $allRatings Mage_Rating_Model_Resource_Rating_Option_Vote_Collection */
         $allRatings = Mage::getModel('rating/rating_option_vote')->getCollection();
 
         // join title fields
-        $allRatings->addRatingInfo($newStore);
+        $allRatings->addRatingInfo($storeId);
 
         // limit to our subset for efficiency
         $allRatings->addFieldToFilter('review_id', array('in' => $reviews->getColumnValues('review_id')));
@@ -91,8 +89,6 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Clockworkgeek_Extrare
                 $review->setRatings($ratings);
             }
         }
-
-        Mage::app()->setCurrentStore($oldStore);
     }
 
     /**

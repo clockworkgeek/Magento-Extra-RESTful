@@ -3,13 +3,6 @@
 class Clockworkgeek_Extrarestful_Model_Api2_Category extends Clockworkgeek_Extrarestful_Model_Api2_Abstract
 {
 
-    public function getWorkingModel()
-    {
-        $category = parent::getWorkingModel();
-        $category->setStoreId($this->_getStore()->getId());
-        return $category;
-    }
-
     /**
      * Load product count after loading category
      *
@@ -48,29 +41,19 @@ class Clockworkgeek_Extrarestful_Model_Api2_Category extends Clockworkgeek_Extra
      */
     protected function _getCollection()
     {
-        /** @var $flatHelper Mage_Catalog_Helper_Category_Flat */
-        $flatHelper = Mage::helper('catalog/category_flat');
-        $storeId = $this->_getStore()->getId();
-        if ($flatHelper->isAvailable() && $flatHelper->isBuilt($storeId)) {
-            // current store affects the flat table chosen
-            $oldStore = Mage::app()->getStore()->getId();
-            Mage::app()->setCurrentStore($storeId);
-            /** @var $categories Mage_Catalog_Model_Resource_Category_Flat_Collection */
-            $categories = Mage::getResourceModel('catalog/category_flat_collection');
+        /** @var $categories Mage_Catalog_Model_Resource_Category_Collection */
+        $categories = parent::_getCollection();
+        if ($categories instanceof Mage_Catalog_Model_Resource_Category_Flat_Collection) {
             // filter's getAttributesToInclude can include too much, such as product_count
             // here '*' limits to just flat table's columns
             $categories->addAttributeToSelect('*');
-            Mage::app()->setCurrentStore($oldStore);
         }
-        else {
-            /** @var $categories Mage_Catalog_Model_Resource_Category_Collection */
-            $categories = parent::_getCollection();
-            $categories->setStoreId($storeId);
-        }
+
         if (($parentId = $this->getRequest()->getParam('parent'))) {
             $categories->addAttributeToFilter('parent_id', $parentId);
         }
 
+        $storeId = $this->_getStore()->getId();
         if ($storeId) {
             // exclude wrong trees
             $rootCategoryId = Mage::app()->getStore($storeId)->getRootCategoryId();

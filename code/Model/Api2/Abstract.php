@@ -12,6 +12,11 @@ class Clockworkgeek_Extrarestful_Model_Api2_Abstract extends Mage_Api2_Model_Res
         if ($this->getUserType() != Mage_Api2_Model_Auth_User_Admin::USER_TYPE && !$this->_getStore()->getIsActive()) {
             $this->_critical(self::RESOURCE_NOT_FOUND);
         }
+        else {
+            // set a store context here because it's tiresome doing everywhere that's needed
+            Mage::app()->setCurrentStore($this->_getStore()->getId());
+            // is Mage_Core_Model_App::addEventArea() needed here?
+        }
 
         return $this;
     }
