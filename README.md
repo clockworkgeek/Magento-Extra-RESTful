@@ -43,6 +43,11 @@ just raise an [issue](https://github.com/clockworkgeek/Magento-Extra-RESTful/iss
   - `PUT /api/rest/categories/:id/store/:store`
 - **Catalog / Category / Delete**
   - `DELETE /api/rest/categories/:id`
+- **Catalog / Extra RESTful Products / Read**
+  - `GET /api/rest/extraproducts`
+  - `GET /api/rest/extraproducts/:id`
+  - `GET /api/rest/extraproducts/store/:store`
+  - `GET /api/rest/extraproducts/:id/store/:store`
 - **Catalog / Product Custom Option / Read**
   - `GET /api/rest/products/:product/options`
   - `GET /api/rest/products/:product/options/:id`

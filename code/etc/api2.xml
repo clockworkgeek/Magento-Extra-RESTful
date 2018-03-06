@@ -16,9 +16,7 @@
             <!-- Improve existing resources -->
             <product>
                 <attributes>
-                    <created_at>Created At</created_at>
                     <updated_at>Updated At</updated_at>
-                    <has_options>Has Options</has_options>
                     <required_options>Has Required Options</required_options>
                 </attributes>
                 <exclude_attributes>
@@ -158,6 +156,41 @@
                 </routes>
                 <versions>1</versions>
             </rewrite>
+
+            <extra_product translate="title" module="extrarestful">
+                <group>catalog_product</group>
+                <model>extrarestful/api2_product</model>
+                <working_model>catalog/product</working_model>
+                <title>Extra RESTful Product</title>
+                <sort_order>20</sort_order>
+                <privileges>
+                    <customer>
+                        <retrieve>1</retrieve>
+                    </customer>
+                    <guest>
+                        <retrieve>1</retrieve>
+                    </guest>
+                </privileges>
+                <routes>
+                    <route_entity>
+                        <route>/extraproducts/:id</route>
+                        <action_type>entity</action_type>
+                    </route_entity>
+                    <route_entity_with_store>
+                        <route>/extraproducts/:id/store/:store</route>
+                        <action_type>entity</action_type>
+                    </route_entity_with_store>
+                    <route_collection>
+                        <route>/extraproducts</route>
+                        <action_type>collection</action_type>
+                    </route_collection>
+                    <route_collection_with_store>
+                        <route>/extraproducts/store/:store</route>
+                        <action_type>collection</action_type>
+                    </route_collection_with_store>
+                </routes>
+                <versions>1</versions>
+            </extra_product>
 
             <category translate="title" module="extrarestful">
                 <group>catalog</group>
