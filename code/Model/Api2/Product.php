@@ -36,6 +36,17 @@ class Clockworkgeek_Extrarestful_Model_Api2_Product extends Clockworkgeek_Extrar
     {
         $product = parent::_loadModel();
         $this->_prepareProduct($product);
+
+        // state attribute labels used to arrange products associated with a Configurable
+        // clients should be able to deduce arrangement from this and `GET /api/rest/products/:product/associated`
+        if ($product->isConfigurable() && in_array('super_attributes', $this->getFilter()->getAttributesToInclude())) {
+            $attrs = array();
+            foreach ($product->getTypeInstance(true)->getConfigurableAttributes($product) as $attr) {
+                $attrs[$attr->getProductAttribute()->getAttributeCode()] = $attr->getLabel();
+            }
+            $product->setSuperAttributes($attrs);
+        }
+
         return $product;
     }
 
