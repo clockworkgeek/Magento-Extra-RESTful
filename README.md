@@ -59,6 +59,9 @@ just raise an [issue](https://github.com/clockworkgeek/Magento-Extra-RESTful/iss
 - **Catalog / Up-sells / Retrieve**
   - `GET /api/rest/products/:product/upsells`
   - `GET /api/rest/products/:product/upsells/store/:store`
+- **Catalog / Cross-sells / Retrieve**
+  - `GET /api/rest/products/:product/crosssells`
+  - `GET /api/rest/products/:product/crosssells/store/:store`
 - **Catalog / Review / Create**
   - `POST /api/rest/reviews`
   - `POST /api/rest/reviews/store/:store`
