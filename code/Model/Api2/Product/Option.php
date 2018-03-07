@@ -9,7 +9,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Product_Option extends Clockworkgeek
         /** @var $product Mage_Catalog_Model_Product */
         $product = Mage::getModel('catalog/product');
         $product->setStoreId($this->_getStore()->getId());
-        $product->load($productId);
+        $product->load($productId, array('entity_id'));
         if ($productId != $product->getId()) {
             $this->_critical(self::RESOURCE_NOT_FOUND);
         }
