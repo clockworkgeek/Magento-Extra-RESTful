@@ -1,0 +1,6 @@
+<?php
+
+class Clockworkgeek_Extrarestful_Model_Api2_Product_Associated_Rest_Guest_V1 extends Clockworkgeek_Extrarestful_Model_Api2_Product_Associated
+{
+    use Clockworkgeek_Extrarestful_Model_Api2_Product_GuestTrait;
+}
