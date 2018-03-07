@@ -1,0 +1,6 @@
+<?php
+
+class Clockworkgeek_Extrarestful_Model_Api2_Product_Upsell_Rest_Customer_V1 extends Clockworkgeek_Extrarestful_Model_Api2_Product_Upsell
+{
+    use Clockworkgeek_Extrarestful_Model_Api2_Product_CustomerTrait;
+}

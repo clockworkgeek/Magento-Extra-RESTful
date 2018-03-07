@@ -384,6 +384,32 @@
                 <versions>1</versions>
             </product_relation>
 
+            <product_upsells translate="title" module="extrarestful">
+                <group>catalog_product</group>
+                <model>extrarestful/api2_product_upsell</model>
+                <title>Up-sells</title>
+                <sort_order>120</sort_order>
+                <privileges>
+                    <customer>
+                        <retrieve>1</retrieve>
+                    </customer>
+                    <guest>
+                        <retrieve>1</retrieve>
+                    </guest>
+                </privileges>
+                <routes>
+                    <route_collection>
+                        <route>/products/:product/upsells</route>
+                        <action_type>collection</action_type>
+                    </route_collection>
+                    <route_collection_with_store>
+                        <route>/products/:product/upsells/store/:store</route>
+                        <action_type>collection</action_type>
+                    </route_collection_with_store>
+                </routes>
+                <versions>1</versions>
+            </product_upsells>
+
             <product_review translate="title" module="extrarestful">
                 <group>catalog</group>
                 <model>extrarestful/api2_review</model>
