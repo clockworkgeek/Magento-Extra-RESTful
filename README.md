@@ -7,9 +7,7 @@ just raise an [issue](https://github.com/clockworkgeek/Magento-Extra-RESTful/iss
 
 ### New Attributes
 
-- **Catalog Product / Read / Created At** (`created_at`)
 - **Catalog Product / Read / Updated At** (`updated_at`)
-- **Catalog Product / Read / Has Options** (`has_options`)
 - **Catalog Product / Read / Has Required Options** (`required_options`)
 - **Customer / Read / Customer ID** (`entity_id`)
 - **Customer / Read / Updated At** (`updated_at`)
@@ -62,10 +60,10 @@ just raise an [issue](https://github.com/clockworkgeek/Magento-Extra-RESTful/iss
 - **Catalog / Cross-sells / Retrieve**
   - `GET /api/rest/products/:product/crosssells`
   - `GET /api/rest/products/:product/crosssells/store/:store`
-- **Catalog / Associated Products / Retrieve**
-  - `GET /api/rest/products/:product/associated`
-  - `GET /api/rest/products/:product/associated/store/:store`  
+- **Catalog / Associated Products / Retrieve**  
   (Only for "Grouped" and "Configurable" products)
+  - `GET /api/rest/products/:product/associated`
+  - `GET /api/rest/products/:product/associated/store/:store`
 - **Catalog / Review / Create**
   - `POST /api/rest/reviews`
   - `POST /api/rest/reviews/store/:store`
@@ -99,7 +97,7 @@ just raise an [issue](https://github.com/clockworkgeek/Magento-Extra-RESTful/iss
   - `POST /api/rest/cms/pages`
 - **CMS / Page / Retrieve**
   - `GET /api/rest/cms/pages`
-  - `GET /api/rest/cms/pages/:id`
+  - `GET /api/rest/cms/pages/:id`  
   (`:id` can be number or 'identifier')
 - **CMS / Page / Update**
   - `PUT /api/rest/cms/pages/:id`
