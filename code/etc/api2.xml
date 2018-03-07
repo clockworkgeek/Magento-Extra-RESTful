@@ -287,6 +287,32 @@
                 <versions>1</versions>
             </category>
 
+            <category_products translate="title" module="extrarestful">
+                <group>category</group>
+                <model>extrarestful/api2_category_product</model>
+                <title>Category Products</title>
+                <sort_order>120</sort_order>
+                <privileges>
+                    <customer>
+                        <retrieve>1</retrieve>
+                    </customer>
+                    <guest>
+                        <retrieve>1</retrieve>
+                    </guest>
+                </privileges>
+                <routes>
+                    <route_collection>
+                        <route>/categories/:category/products</route>
+                        <action_type>collection</action_type>
+                    </route_collection>
+                    <route_collection_with_store>
+                        <route>/categories/:category/products/store/:store</route>
+                        <action_type>collection</action_type>
+                    </route_collection_with_store>
+                </routes>
+                <versions>1</versions>
+            </category_products>
+
             <category_tree translate="title" module="extrarestful">
                 <group>category</group>
                 <model>extrarestful/api2_categorytree</model>

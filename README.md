@@ -20,27 +20,6 @@ just raise an [issue](https://github.com/clockworkgeek/Magento-Extra-RESTful/iss
 - **Core / Custom URL Rewrites / Retrieve**
   - `GET /api/rest/rewrites`
   - `GET /api/rest/rewrites/store/:store`
-- **Catalog / Category / Create**
-  - `POST /api/rest/categories`
-  - `POST /api/rest/categories/store/:store`
-- **Catalog / Category / Retrieve**
-  - `GET /api/rest/categories`
-  - `GET /api/rest/categories/store/:store`
-  - `GET /api/rest/categories/parent/:parent`
-  - `GET /api/rest/categories/parent/:parent/store/:store`
-  - `GET /api/rest/categories/:id`
-  - `GET /api/rest/categories/:id/store/:store`
-  - `GET /api/rest/category_trees`  
-  (Category tree is a convenient representation  of a normally flat list.
-  Its access can be controlled as a separate resource but uses the same attributes.
-  [Page size and sort order](http://devdocs.magento.com/guides/m1x/api/rest/get_filters.html) do not work on trees.)
-  - `GET /api/rest/category_trees/store/:store`  
-  (Categories can be filtered by the store they are assigned to.)
-- **Catalog / Category / Update**
-  - `PUT /api/rest/categories/:id`
-  - `PUT /api/rest/categories/:id/store/:store`
-- **Catalog / Category / Delete**
-  - `DELETE /api/rest/categories/:id`
 - **Catalog / Extra RESTful Products / Retrieve**
   - `GET /api/rest/extraproducts`
   - `GET /api/rest/extraproducts/:id`
@@ -64,6 +43,30 @@ just raise an [issue](https://github.com/clockworkgeek/Magento-Extra-RESTful/iss
   (Only for "Grouped" and "Configurable" products)
   - `GET /api/rest/products/:product/associated`
   - `GET /api/rest/products/:product/associated/store/:store`
+- **Catalog / Category / Create**
+  - `POST /api/rest/categories`
+  - `POST /api/rest/categories/store/:store`
+- **Catalog / Category / Retrieve**
+  - `GET /api/rest/categories`
+  - `GET /api/rest/categories/store/:store`
+  - `GET /api/rest/categories/parent/:parent`
+  - `GET /api/rest/categories/parent/:parent/store/:store`
+  - `GET /api/rest/categories/:id`
+  - `GET /api/rest/categories/:id/store/:store`
+  - `GET /api/rest/category_trees`  
+  (Category tree is a convenient representation  of a normally flat list.
+  Its access can be controlled as a separate resource but uses the same attributes.
+  [Page size and sort order](http://devdocs.magento.com/guides/m1x/api/rest/get_filters.html) do not work on trees.)
+  - `GET /api/rest/category_trees/store/:store`  
+  (Categories can be filtered by the store they are assigned to.)
+- **Catalog / Category / Update**
+  - `PUT /api/rest/categories/:id`
+  - `PUT /api/rest/categories/:id/store/:store`
+- **Catalog / Category / Delete**
+  - `DELETE /api/rest/categories/:id`
+- **Catalog / Category Products / Retrieve**
+  - `GET /api/rest/categories/:category/products`
+  - `GET /api/rest/categories/:category/products/store/:store`
 - **Catalog / Review / Create**
   - `POST /api/rest/reviews`
   - `POST /api/rest/reviews/store/:store`
