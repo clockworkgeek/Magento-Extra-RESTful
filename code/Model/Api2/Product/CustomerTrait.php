@@ -30,7 +30,6 @@ trait Clockworkgeek_Extrarestful_Model_Api2_Product_CustomerTrait
         return $this;
     }
 
-
     protected function _getCollection()
     {
         $products = parent::_getCollection();
