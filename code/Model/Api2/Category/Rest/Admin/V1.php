@@ -4,6 +4,16 @@ class Clockworkgeek_Extrarestful_Model_Api2_Category_Rest_Admin_V1
 extends Clockworkgeek_Extrarestful_Model_Api2_Category
 {
 
+    /**
+     * Unfiltered products because admin can see everything
+     *
+     * @return Mage_Catalog_Model_Resource_Product_Collection
+     */
+    protected function _getProductCollection()
+    {
+        return Mage::getResourceModel('catalog/product_collection');
+    }
+
     protected function _saveModel($data)
     {
         $category = parent::_loadModel();

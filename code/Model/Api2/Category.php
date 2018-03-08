@@ -13,8 +13,9 @@ class Clockworkgeek_Extrarestful_Model_Api2_Category extends Clockworkgeek_Extra
     {
         $category = parent::_loadModel();
         if (in_array('product_count', $this->getFilter()->getAttributesToInclude())) {
-            $count = $this->getProductCounts(array($category->getId()));
-            $category->setProductCount((int) @$count[$category->getId()]);
+            $products = $this->_getProductCollection();
+            $products->addCategoryFilter($category);
+            $category->setProductCount($products->getSize());
         }
         return $category;
     }
@@ -29,10 +30,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Category extends Clockworkgeek_Extra
         parent::_loadCollection($categories);
 
         if (in_array('product_count', $this->getFilter()->getAttributesToInclude())) {
-            $counts = $this->getProductCounts($categories->getAllIds());
-            foreach ($categories as $category) {
-                $category->setProductCount((int) @$counts[$category->getId()]);
-            }
+            $this->_getProductCollection()->addCountToCategories($categories);
         }
     }
 
@@ -68,26 +66,20 @@ class Clockworkgeek_Extrarestful_Model_Api2_Category extends Clockworkgeek_Extra
     }
 
     /**
-     * Returns an associative array of categories and their immediate child counts
+     * Products which are likely to be seen in catalog
      *
-     * @param array $categoryIds
-     * @return array
+     * @return Mage_Catalog_Model_Resource_Product_Collection
      */
-    public function getProductCounts($categoryIds)
+    protected function _getProductCollection()
     {
-        // cannot use Mage_Catalog_Model_Resource_Product_Collection::addCountToCategories
-        // it "correctly" applies is_anchor logic which doesn't fit the API
-        /* @var $products Mage_Catalog_Model_Resource_Product_Collection */
-        $products = Mage::getResourceModel('catalog/product_collection');
-        $products->addStoreFilter($this->_getStore()->getId())
-            ->setStoreId($this->_getStore()->getId())
-            ->addAttributeToFilter('visibility', array(
-                'neq' => Mage_Catalog_Model_Product_Visibility::VISIBILITY_NOT_VISIBLE))
-            ->addAttributeToFilter('status', array('eq' => Mage_Catalog_Model_Product_Status::STATUS_ENABLED));
-        $select = $products->getProductCountSelect();
-        $select->where('count_table.category_id IN (?)', $categoryIds);
-        $select->where('count_table.is_parent = 1');
-        return $products->getConnection()->fetchPairs($select);
+        return Mage::getResourceModel('catalog/product_collection')->setVisibility(array(
+            Mage_Catalog_Model_Product_Visibility::VISIBILITY_IN_CATALOG,
+            Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH
+        ))
+        // because price index table is inner joined and indexes can be out of date,
+        // this is necessary for a accurate count.
+        // actual customer group probably won't affect join so use this ID for all
+        ->addPriceData(Mage_Customer_Model_Group::NOT_LOGGED_IN_ID);
     }
 
     /**
