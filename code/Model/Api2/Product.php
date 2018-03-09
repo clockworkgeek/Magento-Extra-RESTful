@@ -14,6 +14,46 @@
 class Clockworkgeek_Extrarestful_Model_Api2_Product extends Clockworkgeek_Extrarestful_Model_Api2_Abstract
 {
 
+    /**
+     * Translate localised filter values to internal option IDs
+     *
+     * This needs to be done before filters are acted on.
+     * Specified store is given to attributes with source models so they may load correct values.
+     */
+    public function setRequest(Mage_Api2_Model_Request $request)
+    {
+        parent::setRequest($request);
+
+        $filter = $request->getFilter();
+        if (is_array($filter)) {
+            /** @var $product Mage_Catalog_Model_Product */
+            $product = $this->getWorkingModel();
+            $attributes = array();
+            // cannot use $this->_getStore() yet but need to internationalise option text
+            $storeId = Mage::app()->getStore($request->getParam('store'))->getId();
+            /** @var $attr Mage_Catalog_Model_Resource_Eav_Attribute */
+            foreach ($product->getResource()->getEntityType()->getAttributeCollection() as $attr) {
+                if ($attr->usesSource()) {
+                    $attr->setStoreId($storeId);
+                    $attributes[$attr->getAttributeCode()] = $attr;
+                }
+            }
+            foreach ($filter as &$rule) {
+                $attributeCode = (string) @$rule['attribute'];
+                if (($attr = @$attributes[$attributeCode])) {
+                    $source = $attr->getSource();
+                    array_walk_recursive($rule, function(&$value, $operator) use ($source) {
+                        if (($operator !== 'attribute') && ($option = $source->getOptionId($value))) {
+                            $value = $option;
+                        }
+                    });
+                }
+            }
+            $request->setQuery(Mage_Api2_Model_Request::QUERY_PARAM_FILTER, $filter);
+        }
+        return $this;
+    }
+
     public function getFilter()
     {
         if (!$this->_filter) {
