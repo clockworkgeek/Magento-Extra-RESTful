@@ -3,6 +3,23 @@
 class Clockworkgeek_Extrarestful_Model_Api2_Abstract extends Mage_Api2_Model_Resource
 {
 
+    protected $_links = array();
+
+    /**
+     * Adds a URI to be included in a Link: header
+     *
+     * Example:
+     * <code>addLink('/some/collection?page=2', 'next')</code>
+     *
+     * @param string $uri
+     * @param string $rel
+     * @see https://tools.ietf.org/html/rfc5988
+     */
+    public function addLink($uri, $rel)
+    {
+        $this->_links[$uri][] = $rel;
+    }
+
     public function setApiUser(Mage_Api2_Model_Auth_User_Abstract $apiUser)
     {
         parent::setApiUser($apiUser);
@@ -57,15 +74,41 @@ class Clockworkgeek_Extrarestful_Model_Api2_Abstract extends Mage_Api2_Model_Res
      * Returns a nested array yet to be filtered
      *
      * If there are no records then an empty array is still necessary.
+     * Also adds URIs to the Link header if applicable
      *
      * @see Mage_Api2_Model_Resource::_retrieveCollection()
+     * @see Clockworkgeek_Extrarestful_Model_Api2_Abstract::addLink($uri, $rel)
      */
     protected function _retrieveCollection()
     {
         $collection = $this->_getCollection();
         $this->_applyCollectionModifiers($collection);
 
-        if ($this->getRequestedOffset() >= $collection->getSize()) {
+        // relative links for pagination
+        // if there is "Resource collection paging error" it will happen before this point
+        $pageNum = $this->getRequest()->getPageNumber() ?: 1;
+        $prevPage = $pageNum - 1;
+        $nextPage = $pageNum + 1;
+        $lastPage = $collection->getLastPageNumber();
+        if ($pageNum > 1) {
+            // page is null to overwrite current page value
+            $this->addLink($this->_getCollectionLocation(array('page' => null)), 'first');
+        }
+        if ($prevPage == 1) {
+            $this->addLink($this->_getCollectionLocation(array('page' => null)), 'prev');
+        }
+        elseif ($prevPage > 1 && $prevPage <= $lastPage) {
+            $this->addLink($this->_getCollectionLocation(array('page' => $prevPage)), 'prev');
+        }
+        if ($nextPage >= 1 && $nextPage <= $lastPage) {
+            $this->addLink($this->_getCollectionLocation(array('page' => $nextPage)), 'next');
+        }
+        if ($pageNum < $lastPage) {
+            $this->addLink($this->_getCollectionLocation(array('page' => $lastPage)), 'last');
+        }
+
+        if ($pageNum != $collection->getCurPage()) {
+            // requested page is outside available range
             return array();
         }
         else {
@@ -105,6 +148,8 @@ class Clockworkgeek_Extrarestful_Model_Api2_Abstract extends Mage_Api2_Model_Res
      *
      * This is more efficient than chunked transfers which have a small overhead per chunk.
      *
+     * Also add any accrued links to the Link: header
+     *
      * @see Mage_Api2_Model_Resource::_render()
      */
     protected function _render($data)
@@ -115,6 +160,15 @@ class Clockworkgeek_Extrarestful_Model_Api2_Abstract extends Mage_Api2_Model_Res
         if ($response->canSendHeaders()) {
             $length = array_sum(array_map('strlen', $response->getBody(true)));
             $response->setHeader('Content-Length', $length, true);
+        }
+
+        if ($this->_links) {
+            $links = array();
+            foreach ($this->_links as $uri => $rels) {
+                $links[] = '<'.$uri.'>;rel="'.implode(' ', $rels).'"';
+            }
+            // comma separated link-slugs
+            $response->setHeader('Link', implode(', ', $links));
         }
     }
 
@@ -187,17 +241,55 @@ class Clockworkgeek_Extrarestful_Model_Api2_Abstract extends Mage_Api2_Model_Res
     }
 
     /**
-     * Determine if requested range is past collection's available range
+     * Builds a URI that matches the current resource and parameters
      *
-     * e.g. If limit=10 & page=2 then offset will be 10.
-     * The previous 10 entities are #0 to #9.
+     * Attempts to match parameters to routes with variables.
+     * Unused parameters are formed into a query string instead.
+     * Result is an absolute path without host, this is how ancestor does it.
      *
-     * @return integer
+     * @param array $params
+     * @return string
+     * @see Mage_Api2_Model_Resource::_getLocation
      */
-    protected function getRequestedOffset()
+    protected function _getCollectionLocation($params = array())
     {
-        $pageSize = (int) $this->getRequest()->getPageSize() ?: Mage_Api2_Model_Resource::PAGE_SIZE_DEFAULT;
-        $pageNum = ((int) $this->getRequest()->getPageNumber() ?: 1) - 1;
-        return $pageSize * $pageNum;
+        // + operator ignores duplicate keys in right hand side
+        $params += array_diff_key(
+            $this->getRequest()->getParams(),
+            array('type'=>0, 'action_type'=>0, 'model'=>0));
+        /* @var $apiTypeRoute Mage_Api2_Model_Route_ApiType */
+        $apiTypeRoute = Mage::getModel('api2/route_apiType');
+        $queries = array_diff_key(array_filter($params, 'strlen'), array_flip($apiTypeRoute->getVariables()));
+
+        // find the most complete route
+        $xpath = 'resources/'.$this->getResourceType().'/routes/*[action_type/text()="collection"]';
+        $numVars = -1;
+        $bestRoute = null;
+        foreach ($this->getConfig()->getXpath($xpath) as $node) {
+            $route = new Zend_Controller_Router_Route($node->route);
+            $vars = $route->getVariables();
+            // skip if it requires variables we don't have
+            if (count($vars) > $numVars && !array_diff($vars, array_keys($queries))) {
+                $bestRoute = $route;
+                $numVars = count($vars);
+            }
+        }
+        if (!$bestRoute) {
+            $this->_critical('There is no suitable route for '.$this->getResourceType(), Mage_Api2_Model_Server::HTTP_INTERNAL_ERROR);
+        }
+        $queries = array_diff_key($queries, array_flip($bestRoute->getVariables()));
+
+        // form the path part
+        $chain = $apiTypeRoute->chain($bestRoute);
+        $params['api_type'] = $this->getRequest()->getApiType();
+        $uri = '/' . $chain->assemble($params);
+
+        if ($queries) {
+            // normalise and append query params
+            ksort($queries);
+            $uri .= '?' . http_build_query($queries);
+        }
+
+        return $uri;
     }
 }
