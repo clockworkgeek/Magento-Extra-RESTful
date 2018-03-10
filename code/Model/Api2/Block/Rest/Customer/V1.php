@@ -8,4 +8,4 @@ extends Clockworkgeek_Extrarestful_Model_Api2_Block
     {
         $this->_critical(self::RESOURCE_NOT_FOUND);
     }
-    }
+}
