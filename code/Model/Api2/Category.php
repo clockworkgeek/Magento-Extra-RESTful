@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Exposes catalog categories
+ *
+ * <code>product_count</code> is the number of enabled products in each category,
+ * and it's child categories if it is an anchor type.
+ * Only categories in the configured category tree for a store are shown.
+ * The store is either as specified or the default store if not specified by a public user.
+ *
+ * @author Daniel Deady <daniel@clockworkgeek.com>
+ * @license MIT
+ */
 class Clockworkgeek_Extrarestful_Model_Api2_Category extends Clockworkgeek_Extrarestful_Model_Api2_Abstract
 {
 

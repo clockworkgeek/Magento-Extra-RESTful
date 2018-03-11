@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Guests may only post reviews if allowed in "System > Configuration > Catalog > Product Reviews"
+ *
+ * @author Daniel Deady <daniel@clockworkgeek.com>
+ * @license MIT
+ */
 class Clockworkgeek_Extrarestful_Model_Api2_Review_Rest_Guest_V1
 extends Clockworkgeek_Extrarestful_Model_Api2_Review
 {

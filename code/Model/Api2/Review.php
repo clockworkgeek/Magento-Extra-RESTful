@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Exposes catalog product reviews
+ *
+ * Adds a <code>ratings</code> object to every review where keys are localised titles and values are percentages.
+ *
+ * @author Daniel Deady <daniel@clockworkgeek.com>
+ * @license MIT
+ */
 class Clockworkgeek_Extrarestful_Model_Api2_Review extends Clockworkgeek_Extrarestful_Model_Api2_Abstract
 {
 
@@ -27,7 +35,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Clockworkgeek_Extrare
      */
     protected function _getCollection()
     {
-        /* @var $reviews Clockworkgeek_Extrarestful_Model_Resource_Review_Collection */
+        /** @var $reviews Clockworkgeek_Extrarestful_Model_Resource_Review_Collection */
         $reviews = parent::_getCollection();
 
         // product reviews only
@@ -66,7 +74,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Clockworkgeek_Extrare
     {
         $storeId = $this->_getStore()->getId();
 
-        /* @var $allRatings Mage_Rating_Model_Resource_Rating_Option_Vote_Collection */
+        /** @var $allRatings Mage_Rating_Model_Resource_Rating_Option_Vote_Collection */
         $allRatings = Mage::getModel('rating/rating_option_vote')->getCollection();
 
         // join title fields
@@ -78,10 +86,10 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Clockworkgeek_Extrare
         // sort similar to order as added by admin for no particular reason
         $allRatings->addOrder('position', 'asc')->addOrder('rating.rating_id', 'asc');
 
-        /* @var $review Mage_Review_Model_Review */
+        /** @var $review Mage_Review_Model_Review */
         foreach ($reviews as $review) {
             $ratings = array();
-            /* @var $rating Mage_Rating_Model_Rating */
+            /** @var $rating Mage_Rating_Model_Rating */
             foreach ($allRatings->getItemsByColumnValue('review_id', $review->getId()) as $rating) {
                 $ratings[$rating->getRatingCode()] = $rating->getPercent();
             }
@@ -112,7 +120,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Clockworkgeek_Extrare
         }
 
         if (@$data['status'] && !is_numeric($data['status'])) {
-            /* @var $statuses Mage_Review_Model_Resource_Review_Status_Collection */
+            /** @var $statuses Mage_Review_Model_Resource_Review_Status_Collection */
             $statuses = Mage::getResourceSingleton('review/review_status_collection');
             $status = $statuses->getItemByColumnValue('status_code', $data['status']);
             if ($status) {
@@ -196,7 +204,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Clockworkgeek_Extrare
     {
         $helper = Mage::helper('extrarestful');
         $storeId = $this->_getStore()->getId();
-        /* @var $ratings Mage_Rating_Model_Resource_Rating_Collection */
+        /** @var $ratings Mage_Rating_Model_Resource_Rating_Collection */
         static $allRatings;
         if (!$allRatings) {
             $allRatings = Mage::getResourceModel('rating/rating_collection');
@@ -206,7 +214,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Clockworkgeek_Extrare
 
         $optionIds = array();
         foreach ($ratings as $code => $percentage) {
-            /* @var $rating Mage_Rating_Model_Rating */
+            /** @var $rating Mage_Rating_Model_Rating */
             if ($rating = $allRatings->getItemByColumnValue('rating_code', $code)) {
                 if (!is_numeric($percentage) || $percentage < 0 || $percentage > 100) {
                     $this->_error($helper->__($code.' isn\'t a percentage'), Mage_Api2_Model_Server::HTTP_BAD_REQUEST);

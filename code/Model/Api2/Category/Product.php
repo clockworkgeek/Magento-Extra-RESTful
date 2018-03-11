@@ -1,11 +1,14 @@
 <?php
 
 /**
- * Products within a given category
+ * Exposes products within a given category
  *
  * Accessible at <code>/api/rest/categories/:category/products</code>.
  * <code>:category</code> must exist.
- * IF category is an anchor type then products in it's child categories are included too.
+ * If category is an anchor type then products in it's child categories are included too.
+ *
+ * @author Daniel Deady <daniel@clockworkgeek.com>
+ * @license MIT
  */
 class Clockworkgeek_Extrarestful_Model_Api2_Category_Product extends Clockworkgeek_Extrarestful_Model_Api2_Product
 {

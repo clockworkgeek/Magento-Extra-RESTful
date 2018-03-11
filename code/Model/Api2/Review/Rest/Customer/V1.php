@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Customers may only see approved reviews and any they posted themselves
+ *
+ * @author Daniel Deady <daniel@clockworkgeek.com>
+ * @license MIT
+ */
 class Clockworkgeek_Extrarestful_Model_Api2_Review_Rest_Customer_V1
 extends Clockworkgeek_Extrarestful_Model_Api2_Review
 {
@@ -11,7 +17,7 @@ extends Clockworkgeek_Extrarestful_Model_Api2_Review
      */
     protected function _loadCollection(Varien_Data_Collection_Db $reviews)
     {
-        /* @var $review Mage_Review_Model_Review */
+        /** @var $review Mage_Review_Model_Review */
         foreach ($reviews as $review) {
             if ($review->getCustomerId() != $this->getApiUser()->getUserId()) {
                 $review->unsCustomerId()->unsStatus();

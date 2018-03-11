@@ -7,6 +7,9 @@
  * <code>:product</code> must exist.
  * Unlike SOAP the client is not bothered with details of the links, it just works.
  * Collection is sorted by admin controlled position.
+ *
+ * @author Daniel Deady <daniel@clockworkgeek.com>
+ * @license MIT
  */
 class Clockworkgeek_Extrarestful_Model_Api2_Product_Crosssell extends Clockworkgeek_Extrarestful_Model_Api2_Product
 {

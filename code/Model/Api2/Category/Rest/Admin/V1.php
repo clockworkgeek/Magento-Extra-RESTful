@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @author Daniel Deady <daniel@clockworkgeek.com>
+ * @license MIT
+ */
 class Clockworkgeek_Extrarestful_Model_Api2_Category_Rest_Admin_V1
 extends Clockworkgeek_Extrarestful_Model_Api2_Category
 {
@@ -21,7 +25,7 @@ extends Clockworkgeek_Extrarestful_Model_Api2_Category
 
         // autocorrect path if new parent is submitted
         if (isset($data['parent_id'])) {
-            /* @var $parent Mage_Catalog_Model_Category */
+            /** @var $parent Mage_Catalog_Model_Category */
             $parent = Mage::getModel('catalog/category')->load($data['parent_id']);
             $category->setPath($parent->getPath());
         }

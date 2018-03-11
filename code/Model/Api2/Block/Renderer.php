@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Renders just the content of a block as HTML
+ *
+ * @author Daniel Deady <daniel@clockworkgeek.com>
+ * @license MIT
+ */
 class Clockworkgeek_Extrarestful_Model_Api2_Block_Renderer implements Mage_Api2_Model_Renderer_Interface
 {
     /**

@@ -2,6 +2,9 @@
 
 /**
  * Guests can only see 'visible' and 'enabled' products
+ *
+ * @author Daniel Deady <daniel@clockworkgeek.com>
+ * @license MIT
  */
 trait Clockworkgeek_Extrarestful_Model_Api2_Product_GuestTrait
 {

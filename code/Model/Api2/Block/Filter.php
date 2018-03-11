@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Translates CMS directives using a template filter
+ *
+ * @author Daniel Deady <daniel@clockworkgeek.com>
+ * @license MIT
+ */
 class Clockworkgeek_Extrarestful_Model_Api2_Block_Filter extends Mage_Api2_Model_Acl_Filter
 {
 

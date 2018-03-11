@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Outputs CMS blocks as HTML fragments
+ *
+ * @author Daniel Deady <daniel@clockworkgeek.com>
+ * @license MIT
+ */
 class Clockworkgeek_Extrarestful_Model_Api2_Block extends Clockworkgeek_Extrarestful_Model_Api2_Abstract
 {
 
@@ -14,7 +20,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Block extends Clockworkgeek_Extrares
         }
 
         $blockId = $this->getRequest()->getParam('id');
-        /* @var $block Mage_Cms_Model_Block */
+        /** @var $block Mage_Cms_Model_Block */
         $block = $this->getWorkingModel()
             ->setStoreId($this->_getStore()->getId())
             ->load($blockId);

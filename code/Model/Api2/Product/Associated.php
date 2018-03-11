@@ -10,6 +10,9 @@
  * TODO: Change product prices to reflect admin-entered super product pricing.
  * Or perhaps not.
  * It is a very silly system.
+ *
+ * @author Daniel Deady <daniel@clockworkgeek.com>
+ * @license MIT
  */
 class Clockworkgeek_Extrarestful_Model_Api2_Product_Associated extends Clockworkgeek_Extrarestful_Model_Api2_Product
 {

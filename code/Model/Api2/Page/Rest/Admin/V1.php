@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @author Daniel Deady <daniel@clockworkgeek.com>
+ * @license MIT
+ */
 class Clockworkgeek_Extrarestful_Model_Api2_Page_Rest_Admin_V1 extends Clockworkgeek_Extrarestful_Model_Api2_Page
 {
 
@@ -9,7 +13,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Page_Rest_Admin_V1 extends Clockwork
     protected function _loadModel()
     {
         $pageId = $this->getRequest()->getParam('id');
-        /* @var $page Mage_Cms_Model_Page */
+        /** @var $page Mage_Cms_Model_Page */
         $page = $this->getWorkingModel()
             ->setStoreId($this->_getStore()->getId())
             ->load($pageId);

@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @author Daniel Deady <daniel@clockworkgeek.com>
+ * @license MIT
+ */
 class Clockworkgeek_Extrarestful_Model_Cms_Block extends Mage_Cms_Model_Block
 {
 

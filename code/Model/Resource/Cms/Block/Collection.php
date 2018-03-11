@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Modified block collection that adds store data automatically
+ *
+ * @author Daniel Deady <daniel@clockworkgeek.com>
+ * @license MIT
+ */
 class Clockworkgeek_Extrarestful_Model_Resource_Cms_Block_Collection extends Mage_Cms_Model_Resource_Block_Collection
 {
 

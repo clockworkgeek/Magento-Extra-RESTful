@@ -1,7 +1,11 @@
 <?php
 
 /**
- * Generic API methods here, specialise elsewhere
+ * Lists categories but without paging and rearranged into a tree
+ *
+ * @author Daniel Deady <daniel@clockworkgeek.com>
+ * @license MIT
+ * @see Clockworkgeek_Extrarestful_Model_Api2_Category
  */
 class Clockworkgeek_Extrarestful_Model_Api2_Categorytree extends Clockworkgeek_Extrarestful_Model_Api2_Category
 {

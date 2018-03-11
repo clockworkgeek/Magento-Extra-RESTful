@@ -8,6 +8,9 @@
  * but addresses must be handled too because they determine region.
  *
  * Can start a session because Mage_Catalog_Model_Product_Type_Price triggers an event.
+ *
+ * @author Daniel Deady <daniel@clockworkgeek.com>
+ * @license MIT
  */
 trait Clockworkgeek_Extrarestful_Model_Api2_Product_CustomerTrait
 {

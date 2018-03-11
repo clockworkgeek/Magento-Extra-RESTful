@@ -1,5 +1,20 @@
 <?php
 
+/**
+ * Useful base class for working with Varien models and collections in an API
+ *
+ * This class handles the usual CRUD operations automatically.
+ * Descendants typically override <code>_loadModel</code>, <code>_saveModel</code>,
+ * <code>_getCollection</code>, and <code>_loadCollection</code>.
+ * Various enhancements are supplied too, such as better pagination.
+ *
+ * @author Daniel Deady <daniel@clockworkgeek.com>
+ * @license MIT
+ * @see Clockworkgeek_Extrarestful_Model_Api2_Abstract::_loadModel
+ * @see Clockworkgeek_Extrarestful_Model_Api2_Abstract::_saveModel
+ * @see Clockworkgeek_Extrarestful_Model_Api2_Abstract::_getCollection
+ * @see Clockworkgeek_Extrarestful_Model_Api2_Abstract::_loadCollection
+ */
 class Clockworkgeek_Extrarestful_Model_Api2_Abstract extends Mage_Api2_Model_Resource
 {
 
@@ -259,7 +274,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Abstract extends Mage_Api2_Model_Res
         $params += array_diff_key(
             $this->getRequest()->getParams(),
             array('type'=>0, 'action_type'=>0, 'model'=>0));
-        /* @var $apiTypeRoute Mage_Api2_Model_Route_ApiType */
+        /** @var $apiTypeRoute Mage_Api2_Model_Route_ApiType */
         $apiTypeRoute = Mage::getModel('api2/route_apiType');
         $queries = array_diff_key(array_filter($params, 'strlen'), array_flip($apiTypeRoute->getVariables()));
 

@@ -4,12 +4,15 @@
  * An almost replacement for <code>/api/rest/products</code>
  *
  * Some important differences are:
- * <li>Dropdown and multiselect type attributes are replaced with their localised values
+ * <li>Dropdown and multiselect type attributes are replaced with and filtered by their localised values
  * <li>Product URLs are correct for the specified store
  * <li>Flat tables are used for performance reasons
  * <li>No <code>buy_now_url</code> because it's not RESTful
  * <li>Carefully avoids sessions
  * <li>All inherited benefits like better pagination
+ *
+ * @author Daniel Deady <daniel@clockworkgeek.com>
+ * @license MIT
  */
 class Clockworkgeek_Extrarestful_Model_Api2_Product extends Clockworkgeek_Extrarestful_Model_Api2_Abstract
 {
@@ -59,6 +62,9 @@ class Clockworkgeek_Extrarestful_Model_Api2_Product extends Clockworkgeek_Extrar
         return $this;
     }
 
+    /**
+     * Gets the filter of parent product resource
+     */
     public function getFilter()
     {
         if (!$this->_filter) {

@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Exposes products' custom options
+ *
+ * Each option has a type like "text" or "drop_down" which describes an input field.
+ * The client should ensure the user fills these in when ordering a product.
+ *
+ * Certain product types, like Bundle, cannot have custom options but that is not enforced here.
+ *
+ * @author Daniel Deady <daniel@clockworkgeek.com>
+ * @license MIT
+ */
 class Clockworkgeek_Extrarestful_Model_Api2_Product_Option extends Clockworkgeek_Extrarestful_Model_Api2_Abstract
 {
 
