@@ -27,7 +27,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Categorytree extends Clockworkgeek_E
         $this->_loadCollection($categories);
         $this->_loadParents($categories);
         $data = $categories->walk('toArray');
-        return (array) (@$data['items'] ?: $data);
+        return (array) $data;
     }
 
     /**
