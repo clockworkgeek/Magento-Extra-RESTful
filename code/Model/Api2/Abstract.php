@@ -114,7 +114,9 @@ class Clockworkgeek_Extrarestful_Model_Api2_Abstract extends Mage_Api2_Model_Res
         else {
             $this->_loadCollection($collection);
             $data = $collection->toArray();
-            return (array) (@$data['items'] ?: $data);
+            // an array with non-consecutive keys is an unordered object when rendered as JSON
+            // array_values effectively gives new keys and preserves order to the client
+            return array_values((array) (@$data['items'] ?: $data));
         }
     }
 
