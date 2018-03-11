@@ -15,6 +15,11 @@ class Clockworkgeek_Extrarestful_Model_Api2_Product extends Clockworkgeek_Extrar
 {
 
     /**
+     * @var Mage_Catalog_Model_Api2_Product
+     */
+    protected $_source;
+
+    /**
      * Translate localised filter values to internal option IDs
      *
      * This needs to be done before filters are acted on.
@@ -57,8 +62,8 @@ class Clockworkgeek_Extrarestful_Model_Api2_Product extends Clockworkgeek_Extrar
     public function getFilter()
     {
         if (!$this->_filter) {
-            $source = $this->_getSubModel('product', $this->getRequest()->getParams());
-            $filter = $source->getFilter();
+            $this->_source = $this->_getSubModel('product', $this->getRequest()->getParams());
+            $filter = $this->_source->getFilter();
             $this->setFilter($filter);
         }
         return $this->_filter;
@@ -194,5 +199,13 @@ class Clockworkgeek_Extrarestful_Model_Api2_Product extends Clockworkgeek_Extrar
         // false for address/customer group means do not use
         // null would mean look it up using session, which is not applicable here
         return Mage::helper('tax')->getPrice($product, $price, $withTax, false, false, false);
+    }
+
+    public function getAvailableAttributes($userType, $operation)
+    {
+        if ($this->_source) {
+            return $this->_source->getAvailableAttributes($userType, $operation);
+        }
+        return parent::getAvailableAttributes($userType, $operation);
     }
 }
