@@ -52,5 +52,20 @@ class Clockworkgeek_Extrarestful_Model_Api2_Product_Option extends Clockworkgeek
                 $option->setData('values', $values);
             }
         }
+
+        foreach ($options as $option) {
+            if ($option->getType() != 'file') {
+                $option->unsFileExtension()->unsImageSizeX()->unsImageSizeY();
+            }
+            if (!in_array($option->getType(), array('field', 'area'))) {
+                $option->unsMaxCharacters();
+            }
+            if (in_array($option->getType(), array('drop_down', 'radio', 'checkbox', 'multiple'))) {
+                $option->unsPrice()->unsPriceType();
+            }
+            else {
+                $option->unsValues();
+            }
+        }
     }
 }
