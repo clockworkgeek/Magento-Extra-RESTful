@@ -21,10 +21,10 @@ just raise an [issue](https://github.com/clockworkgeek/Magento-Extra-RESTful/iss
   - `GET /api/rest/rewrites`
   - `GET /api/rest/rewrites/store/:store`
 - **Catalog / Product Custom Option / Retrieve**
+  - `GET /api/rest/options/:id`
+  - `GET /api/rest/options/:id/store/:store`
   - `GET /api/rest/products/:product/options`
-  - `GET /api/rest/products/:product/options/:id`
   - `GET /api/rest/products/:product/options/store/:store`
-  - `GET /api/rest/products/:product/options/:id/store/:store`
 - **Catalog / Related Products / Retrieve**
   - `GET /api/rest/products/:product/related`
   - `GET /api/rest/products/:product/related/store/:store`

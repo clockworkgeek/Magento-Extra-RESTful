@@ -335,6 +335,8 @@
                     <file_extension>File Extension</file_extension>
                     <image_size_x>Image Size X</image_size_x>
                     <image_size_y>Image Size Y</image_size_y>
+                    <price>Price</price>
+                    <price_type>Price Type</price_type>
                     <sort_order>Sort Order</sort_order>
                 </attributes>
                 <force_attributes>
@@ -343,22 +345,22 @@
                     </guest>
                 </force_attributes>
                 <routes>
+                    <route_entity>
+                        <route>/options/:id</route>
+                        <action_type>entity</action_type>
+                    </route_entity>
+                    <route_entity_with_store>
+                        <route>/options/:id/store/:store</route>
+                        <action_type>entity</action_type>
+                    </route_entity_with_store>
                     <route_collection>
                         <route>/products/:product/options</route>
                         <action_type>collection</action_type>
                     </route_collection>
-                    <route_entity>
-                        <route>/products/:product/options/:id</route>
-                        <action_type>entity</action_type>
-                    </route_entity>
                     <route_collection_with_store>
                         <route>/products/:product/options/store/:store</route>
                         <action_type>collection</action_type>
                     </route_collection_with_store>
-                    <route_entity_with_store>
-                        <route>/products/:product/options/:id/store/:store</route>
-                        <action_type>entity</action_type>
-                    </route_entity_with_store>
                 </routes>
                 <versions>1</versions>
             </product_custom_options>
