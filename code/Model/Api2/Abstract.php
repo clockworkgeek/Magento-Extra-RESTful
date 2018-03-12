@@ -98,6 +98,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Abstract extends Mage_Api2_Model_Res
     {
         $collection = $this->_getCollection();
         $this->_applyCollectionModifiers($collection);
+        $this->_loadCollection($collection);
 
         // relative links for pagination
         // if there is "Resource collection paging error" it will happen before this point
@@ -127,7 +128,6 @@ class Clockworkgeek_Extrarestful_Model_Api2_Abstract extends Mage_Api2_Model_Res
             return array();
         }
         else {
-            $this->_loadCollection($collection);
             $data = $collection->walk('toArray');
             // an array with non-consecutive keys is an unordered object when rendered as JSON
             // array_values effectively gives new keys and preserves order to the client
