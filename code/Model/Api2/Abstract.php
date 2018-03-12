@@ -274,6 +274,9 @@ class Clockworkgeek_Extrarestful_Model_Api2_Abstract extends Mage_Api2_Model_Res
         $params += array_diff_key(
             $this->getRequest()->getParams(),
             array('type'=>0, 'action_type'=>0, 'model'=>0));
+        if (is_array(@$params['attrs'])) {
+            $params['attrs'] = implode(',', $params['attrs']);
+        }
         /** @var $apiTypeRoute Mage_Api2_Model_Route_ApiType */
         $apiTypeRoute = Mage::getModel('api2/route_apiType');
         $queries = array_diff_key($params, array_flip($apiTypeRoute->getVariables()));
