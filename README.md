@@ -81,20 +81,16 @@ All collections in Extra RESTful have the following further advantages:
   - `GET /api/rest/categories/:category/products`
   - `GET /api/rest/categories/:category/products/store/:store`
 - **Catalog / Review / Create**
-  - `POST /api/rest/reviews`
-  - `POST /api/rest/reviews/store/:store`
-  - `POST /api/rest/reviews/product/:product`
-  - `POST /api/rest/reviews/product/:product/store/:store`
-  - `POST /api/rest/products/:id/reviews`
+  - `POST /api/rest/products/:product/reviews`
+  - `POST /api/rest/products/:product/reviews/store/:store`
 - **Catalog / Review / Retrieve**
   - `GET /api/rest/reviews`
-  - `GET /api/rest/reviews/:id`
   - `GET /api/rest/reviews/store/:store`
-  - `GET /api/rest/reviews/product/:product`
-  - `GET /api/rest/reviews/product/:product/store/:store`
-  - `GET /api/rest/products/:id/reviews`
+  - `GET /api/rest/reviews/:id`
+  - `GET /api/rest/reviews/:id/store/:store`
+  - `GET /api/rest/products/:product/reviews`
+  - `GET /api/rest/products/:product/reviews/store/:store`
 - **Catalog / Review / Update**
-  - `PUT /api/rest/reviews`
   - `PUT /api/rest/reviews/:id`
 - **Catalog / Review / Delete**
   - `DELETE /api/rest/reviews/:id`

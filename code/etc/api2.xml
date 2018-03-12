@@ -541,30 +541,30 @@
                     </guest>
                 </exclude_attributes>
                 <routes>
-                    <route_collection>
-                        <route>/reviews</route>
-                        <action_type>collection</action_type>
-                    </route_collection>
                     <route_entity>
                         <route>/reviews/:id</route>
                         <action_type>entity</action_type>
                     </route_entity>
+                    <route_entity_with_store>
+                        <route>/reviews/:id/store/:store</route>
+                        <action_type>entity</action_type>
+                    </route_entity_with_store>
+                    <route_collection>
+                        <route>/reviews</route>
+                        <action_type>collection</action_type>
+                    </route_collection>
                     <route_collection_with_store>
                         <route>/reviews/store/:store</route>
                         <action_type>collection</action_type>
                     </route_collection_with_store>
-                    <route_collection_with_product>
-                        <route>/reviews/product/:product</route>
-                        <action_type>collection</action_type>
-                    </route_collection_with_product>
-                    <route_collection_with_product_and_store>
-                        <route>/reviews/product/:product/store/:store</route>
-                        <action_type>collection</action_type>
-                    </route_collection_with_product_and_store>
                     <route_collection_for_product>
                         <route>/products/:product/reviews</route>
                         <action_type>collection</action_type>
                     </route_collection_for_product>
+                    <route_collection_for_product_with_store>
+                        <route>/products/:product/reviews/store/:store</route>
+                        <action_type>collection</action_type>
+                    </route_collection_for_product_with_store>
                 </routes>
                 <versions>1</versions>
             </product_review>
