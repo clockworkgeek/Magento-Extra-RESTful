@@ -68,7 +68,13 @@ class Clockworkgeek_Extrarestful_Model_Api2_Product extends Clockworkgeek_Extrar
     public function getFilter()
     {
         if (!$this->_filter) {
+            // we want 'product' v1, this resource is (probably) 'product' v2
+            // to avoid fetching another copy of self, temporarily fake the version number
+            $currVersion = $this->getVersion();
+            $this->setVersion(1);
             $this->_source = $this->_getSubModel('product', $this->getRequest()->getParams());
+            $this->setVersion($currVersion);
+
             $filter = $this->_source->getFilter();
             $this->setFilter($filter);
         }
@@ -107,6 +113,18 @@ class Clockworkgeek_Extrarestful_Model_Api2_Product extends Clockworkgeek_Extrar
         $products = parent::_getCollection();
         $products->addStoreFilter($this->_getStore()->getId())
             ->addAttributeToSelect($this->getFilter()->getAttributesToInclude());
+
+        // when the route is '/api/rest/products/category/:category_id'
+        // see Clockworkgeek_Extrarestful_Model_Api2_Category_Product for '/api/rest/categories/:category/products'
+        if ($categoryId = $this->getRequest()->getParam('category_id')) {
+            $category = Mage::getModel('catalog/category')->load($categoryId);
+            if ($category->isObjectNew()) {
+                $this->_critical(self::RESOURCE_NOT_FOUND);
+            }
+            // mimic V1 behaviour and don't list child-categories' products
+            $category->setIsAnchor(false);
+            $products->addCategoryFilter($category);
+        }
 
         if (in_array('image_url', $this->getFilter()->getAttributesToInclude())) {
             // addAttributeToSelect does not work with flat tables

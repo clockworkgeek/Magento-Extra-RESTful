@@ -20,6 +20,16 @@
             <extrarestful_resource>
                 <class>Clockworkgeek_Extrarestful_Model_Resource</class>
             </extrarestful_resource>
+
+            <catalog>
+                <rewrite>
+                    <!-- Position self as version 2 of products -->
+                    <api2_product_rest_guest_v2>Clockworkgeek_Extrarestful_Model_Api2_Product_Rest_Guest_V2</api2_product_rest_guest_v2>
+                    <api2_product_rest_customer_v2>Clockworkgeek_Extrarestful_Model_Api2_Product_Rest_Customer_V2</api2_product_rest_customer_v2>
+                    <!-- Don't change version 1 write actions, just reuse as version 2 -->
+                    <api2_product_rest_admin_v2>Mage_Catalog_Model_Api2_Product_Rest_Admin_V1</api2_product_rest_admin_v2>
+                </rewrite>
+            </catalog>
         </models>
     </global>
 </config>
