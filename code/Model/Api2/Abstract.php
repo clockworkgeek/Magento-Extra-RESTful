@@ -276,7 +276,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Abstract extends Mage_Api2_Model_Res
             array('type'=>0, 'action_type'=>0, 'model'=>0));
         /** @var $apiTypeRoute Mage_Api2_Model_Route_ApiType */
         $apiTypeRoute = Mage::getModel('api2/route_apiType');
-        $queries = array_diff_key(array_filter($params, 'strlen'), array_flip($apiTypeRoute->getVariables()));
+        $queries = array_diff_key($params, array_flip($apiTypeRoute->getVariables()));
 
         // find the most complete route
         $xpath = 'resources/'.$this->getResourceType().'/routes/*[action_type/text()="collection"]';
