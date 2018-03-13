@@ -177,15 +177,15 @@ class Clockworkgeek_Extrarestful_Model_Api2_Abstract extends Mage_Api2_Model_Res
         if ($response->canSendHeaders()) {
             $length = array_sum(array_map('strlen', $response->getBody(true)));
             $response->setHeader('Content-Length', $length, true);
-        }
 
-        if ($this->_links) {
-            $links = array();
-            foreach ($this->_links as $uri => $rels) {
-                $links[] = '<'.$uri.'>;rel="'.implode(' ', $rels).'"';
+            if ($this->_links) {
+                $links = array();
+                foreach ($this->_links as $uri => $rels) {
+                    $links[] = '<'.$uri.'>;rel="'.implode(' ', $rels).'"';
+                }
+                // comma separated link-slugs
+                $response->setHeader('Link', implode(', ', $links));
             }
-            // comma separated link-slugs
-            $response->setHeader('Link', implode(', ', $links));
         }
     }
 
