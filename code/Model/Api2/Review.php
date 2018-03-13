@@ -23,6 +23,12 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Clockworkgeek_Extrare
             $reviews->addItem($review);
             $this->_addRatingsToReviews($reviews);
         }
+
+        if ($lastMod = strtotime($review->getCreatedAt())) {
+            // not strictly LAST modified but a review is expected to change very little
+            $this->getResponse()->setHeader('Last-Modified', date('r', $lastMod));
+        }
+
         return $review;
     }
 

@@ -35,6 +35,32 @@ class Clockworkgeek_Extrarestful_Model_Api2_Abstract extends Mage_Api2_Model_Res
         $this->_links[$uri][] = $rel;
     }
 
+    /**
+     * Set some common sense caching guidelines
+     *
+     * If response will be public add Authorization to Vary.
+     * This allows next private request to bypass proxy but still be cached at user's end.
+     *
+     * @param int $maxAge
+     * @return Clockworkgeek_Extrarestful_Model_Api2_Abstract
+     */
+    public function addCacheHeaders($maxAge)
+    {
+        $maxAge = intval($maxAge) ?: 3600;
+        if ($this->getRequest()->getHeader('Authorization')) {
+            $scope = 'private,max-age='.$maxAge;
+            $vary = 'Accept,Version';
+        }
+        else {
+            $scope = 'public,max-age='.$maxAge;
+            $vary = 'Accept,Authorization,Version';
+        }
+        $this->getResponse()->setHeader('Cache-Control', $scope, true);
+        $this->getResponse()->setHeader('Vary', $vary, true);
+
+        return $this;
+    }
+
     public function setApiUser(Mage_Api2_Model_Auth_User_Abstract $apiUser)
     {
         parent::setApiUser($apiUser);
@@ -82,7 +108,9 @@ class Clockworkgeek_Extrarestful_Model_Api2_Abstract extends Mage_Api2_Model_Res
      */
     protected function _retrieve()
     {
-        return $this->_loadModel()->getData();
+        $model = $this->_loadModel();
+        $this->addCacheHeaders($model->getCollection()->getCacheLifetime());
+        return $model->getData();
     }
 
     /**
@@ -99,6 +127,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Abstract extends Mage_Api2_Model_Res
         $collection = $this->_getCollection();
         $this->_applyCollectionModifiers($collection);
         $this->_loadCollection($collection);
+        $this->addCacheHeaders($collection->getCacheLifetime());
 
         // relative links for pagination
         // if there is "Resource collection paging error" it will happen before this point

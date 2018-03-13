@@ -27,6 +27,11 @@ class Clockworkgeek_Extrarestful_Model_Api2_Block extends Clockworkgeek_Extrares
         if ($blockId != $block->getId() && $blockId != $block->getIdentifier()) {
             $this->_critical(self::RESOURCE_NOT_FOUND);
         }
+
+        if ($lastMod = strtotime($block->getUpdateTime())) {
+            $this->getResponse()->setHeader('Last-Modified', date('r', $lastMod));
+        }
+
         return $block;
     }
 

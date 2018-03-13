@@ -22,12 +22,18 @@ class Clockworkgeek_Extrarestful_Model_Api2_Category extends Clockworkgeek_Extra
      */
     protected function _loadModel()
     {
+        /** @var $category Mage_Catalog_Model_Category */
         $category = parent::_loadModel();
         if (in_array('product_count', $this->getFilter()->getAttributesToInclude())) {
             $products = $this->_getProductCollection();
             $products->addCategoryFilter($category);
             $category->setProductCount($products->getSize());
         }
+
+        if ($lastMod = strtotime($category->getUpdatedAt())) {
+            $this->getResponse()->setHeader('Last-Modified', date('r', $lastMod));
+        }
+
         return $category;
     }
 

@@ -104,6 +104,10 @@ class Clockworkgeek_Extrarestful_Model_Api2_Product extends Clockworkgeek_Extrar
             $product->setSuperAttributes($attrs);
         }
 
+        if ($lastMod = strtotime($product->getUpdatedAt())) {
+            $this->getResponse()->setHeader('Last-Modified', date('r', $lastMod));
+        }
+
         return $product;
     }
 

@@ -23,6 +23,11 @@ class Clockworkgeek_Extrarestful_Model_Api2_Page_Rest_Admin_V1 extends Clockwork
         if (!$page->hasStores()) {
             $page->setStores((array) $page->getStoreId());
         }
+
+        if ($lastMod = strtotime($page->getUpdateTime())) {
+            $this->getResponse()->setHeader('Last-Modified', date('r', $lastMod));
+        }
+
         return $page;
     }
 

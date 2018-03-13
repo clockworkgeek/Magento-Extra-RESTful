@@ -12,7 +12,8 @@ All Extra RESTful resources have the following advantages over core resources:
 - No sessions.
 - No cookies.
 - No `Pragma` header.
-- A `Content-Length` header instead of chunked encoding.
+- A `Content-Length` instead of chunked encoding.
+- `Cache-Control` and `Vary` headers.
 
 All collections in Extra RESTful have the following further advantages:
 
