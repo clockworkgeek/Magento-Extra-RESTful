@@ -185,6 +185,9 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Clockworkgeek_Extrare
                 }
             }
             $review->aggregate();
+
+            // 202 Accepted because review isn't approved/published yet
+            $this->getResponse()->setHttpResponseCode(202);
         }
 
         return $review;

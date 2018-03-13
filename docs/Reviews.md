@@ -33,9 +33,13 @@ Host: example.com
     },
     "title": "This is a title"
 }
+
+HTTP/1.1 202 Accepted
+Location: /api/rest/reviews/80
 ```
 
-The ratings' percentage will be rounded up to the next multiple of 20 because Magento is written to always use five stars.
+The ratings' percentage will be rounded up to the next multiple of 20 because Magento always uses five stars.
+The response is "202 Accepted" because the new review isn't public yet but will be at the given location.
 
 ## Retrieve
 
