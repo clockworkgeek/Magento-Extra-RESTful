@@ -30,7 +30,7 @@ Version: 1
 - `GET /api/rest/products?category_id=:category_id`
 
 These routes filter the products list by `:category_id` but only considers products which are immediate children of the target category.
-Unless you specifically need this behaviour you are advised to use these routes instead:
+Unless you specifically need this behaviour you are advised to use [these routes](https://github.com/clockworkgeek/Magento-Extra-RESTful/blob/master/docs/Categories.md#category-products) instead:
 
 - `GET /api/rest/categories/:category/products`
 - `GET /api/rest/categories/:category/products/store/:store`

@@ -23,6 +23,20 @@ All collections in Extra RESTful have the following further advantages:
 - A [`Link` header](https://tools.ietf.org/html/rfc5988) for easier pagination.  
   (This is similar to [GitHub's API](https://developer.github.com/v3/guides/traversing-with-pagination/) except URIs are relative to the site's base URL)
 
-### Documentation
+### Altered Resources
 
-See the `docs` directory for resource specific information.
+- [Products](https://github.com/clockworkgeek/Magento-Extra-RESTful/blob/master/docs/Products.md#products)
+- [Customers](https://github.com/clockworkgeek/Magento-Extra-RESTful/blob/master/docs/Customers.md)
+
+### New Resources
+
+- [Product Custom Options](https://github.com/clockworkgeek/Magento-Extra-RESTful/blob/master/docs/Products.md#product-custom-options)
+- [Related Products / Up-sells / Cross-sells](https://github.com/clockworkgeek/Magento-Extra-RESTful/blob/master/docs/Products.md#related-products--up-sells--cross-sells)
+- [Associated Products](https://github.com/clockworkgeek/Magento-Extra-RESTful/blob/master/docs/Products.md#associated-products)
+- [Product Reviews](https://github.com/clockworkgeek/Magento-Extra-RESTful/blob/master/docs/Reviews.md#product-reviews)
+- [Categories and Category Trees](https://github.com/clockworkgeek/Magento-Extra-RESTful/blob/master/docs/Categories.md#categories)
+- [Category Products](https://github.com/clockworkgeek/Magento-Extra-RESTful/blob/master/docs/Categories.md#category-products)
+- [Stores](https://github.com/clockworkgeek/Magento-Extra-RESTful/blob/master/docs/Stores.md#stores)
+- [URL Rewrites](https://github.com/clockworkgeek/Magento-Extra-RESTful/blob/master/docs/URLRewrites.md#url-rewrites)
+- [CMS Blocks](https://github.com/clockworkgeek/Magento-Extra-RESTful/blob/master/docs/Blocks.md#cms-blocks)
+- [CMS Pages](https://github.com/clockworkgeek/Magento-Extra-RESTful/blob/master/docs/Pages.md#cms-pages)

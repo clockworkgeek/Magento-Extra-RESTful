@@ -47,7 +47,7 @@ This resource is intended for fetching all categories in one request and so for 
 - `include_in_menu`: Either "0" or "1".
 - `is_active`: Either "0" or "1". Only visible to admin users.
 - `is_anchor`: Either "0" or "1".
-- `landing_page`: A CMS block ID. Not applicable if `display_mode` is "PRODUCTS".
+- `landing_page`: A [CMS block](https://github.com/clockworkgeek/Magento-Extra-RESTful/blob/master/docs/Blocks.md#cms-blocks) ID. Not applicable if `display_mode` is "PRODUCTS".
 - `level`: A 'root' category is "1", it's children are all "2", and so on…
 - `meta_description`
 - `meta_keywords`
@@ -72,7 +72,7 @@ The preferred alternative is the following resources which accurately match the 
 - `GET /api/rest/categories/:category/products/store/:store`
 
 The product records returned are Extra RESTful products.
-See `docs/Products.md` for more information.
+See [docs/Products.md](https://github.com/clockworkgeek/Magento-Extra-RESTful/blob/master/docs/Products.md) for more information.
 
 ## Create / Update
 
@@ -102,7 +102,7 @@ The most important here are `name`, `parent_id` and `url_key`.
 - `include_in_menu`: **Required**. Either "0" or "1".
 - `is_active`: **Required**. Either "0" or "1".
 - `is_anchor`: Either "0" or "1".
-- `landing_page`: A CMS block ID. Not applicable if `display_mode` is "PRODUCTS".
+- `landing_page`: A [CMS block](https://github.com/clockworkgeek/Magento-Extra-RESTful/blob/master/docs/Blocks.md#cms-blocks) ID. Not applicable if `display_mode` is "PRODUCTS".
 - `meta_description`
 - `meta_keywords`
 - `meta_title`
