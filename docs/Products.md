@@ -22,6 +22,19 @@ Host: example.com
 Version: 1
 ```
 
+## Category Products
+
+- `GET /api/rest/products/category/:category_id`
+- `GET /api/rest/products/category/:category_id/store/:store`
+- `GET /api/rest/products/store/:store/category/:category_id`
+- `GET /api/rest/products?category_id=:category_id`
+
+These routes filter the products list by `:category_id` but only considers products which are immediate children of the target category.
+Unless you specifically need this behaviour you are advised to use these routes instead:
+
+- `GET /api/rest/categories/:category/products`
+- `GET /api/rest/categories/:category/products/store/:store`
+
 ## Product Custom Options
 
 - `GET /api/rest/products/:product/options`
