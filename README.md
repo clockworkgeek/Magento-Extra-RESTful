@@ -97,22 +97,22 @@ All collections in Extra RESTful have the following further advantages:
 - **CMS / Block / Create**
   - `POST /api/rest/cms/blocks`
 - **CMS / Block / Retrieve**
-  - `GET /api/rest/cms/blocks`
-  - `GET /api/rest/cms/blocks/:id`
-  - `GET /api/rest/cms/blocks/:id/store/:store`  
+  - `GET /api/rest/blocks`
+  - `GET /api/rest/blocks/:id`
+  - `GET /api/rest/blocks/:id/store/:store`  
   (`:id` can be number or 'identifier'. Will output as HTML if "text/html" is in the Accept header)
 - **CMS / Block / Update**
-  - `PUT /api/rest/cms/blocks/:id`
+  - `PUT /api/rest/blocks/:id`
 - **CMS / Block / Delete**
-  - `DELETE /api/rest/cms/blocks/:id`
+  - `DELETE /api/rest/blocks/:id`
 - **CMS / Page / Create**
-  - `POST /api/rest/cms/pages`
+  - `POST /api/rest/pages`
 - **CMS / Page / Retrieve**
-  - `GET /api/rest/cms/pages`
-  - `GET /api/rest/cms/pages/:id`  
+  - `GET /api/rest/pages`
+  - `GET /api/rest/pages/:id`  
   (`:id` can be number or 'identifier')
 - **CMS / Page / Update**
-  - `PUT /api/rest/cms/pages/:id`
+  - `PUT /api/rest/pages/:id`
 - **CMS / Page / Delete**
-  - `DELETE /api/rest/cms/pages/:id`
+  - `DELETE /api/rest/pages/:id`
   

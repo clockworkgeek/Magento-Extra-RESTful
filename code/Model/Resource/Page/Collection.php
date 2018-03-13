@@ -6,12 +6,12 @@
  * @author Daniel Deady <daniel@clockworkgeek.com>
  * @license MIT
  */
-class Clockworkgeek_Extrarestful_Model_Resource_Cms_Page_Collection extends Mage_Cms_Model_Resource_Page_Collection
+class Clockworkgeek_Extrarestful_Model_Resource_Page_Collection extends Mage_Cms_Model_Resource_Page_Collection
 {
 
     protected function _construct()
     {
-        $this->_init('extrarestful/cms_page');
+        $this->_init('extrarestful/page');
         $this->addFilterToMap('page_id', 'main_table.page_id');
         $this->addFilterToMap('store', 'store_table.store_id');
     }

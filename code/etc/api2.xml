@@ -572,7 +572,7 @@
             <cms_block translate="title" module="extrarestful">
                 <group>cms</group>
                 <model>extrarestful/api2_block</model>
-                <working_model>extrarestful/cms_block</working_model>
+                <working_model>extrarestful/block</working_model>
                 <title>Block</title>
                 <sort_order>10</sort_order>
                 <privileges>
@@ -618,15 +618,15 @@
                 </exclude_attributes>
                 <routes>
                     <route_entity>
-                        <route>/cms/blocks/:id</route>
+                        <route>/blocks/:id</route>
                         <action_type>entity</action_type>
                     </route_entity>
                     <route_entity_with_store>
-                        <route>/cms/blocks/:id/store/:store</route>
+                        <route>/blocks/:id/store/:store</route>
                         <action_type>entity</action_type>
                     </route_entity_with_store>
                     <route_collection>
-                        <route>/cms/blocks</route>
+                        <route>/blocks</route>
                         <action_type>collection</action_type>
                     </route_collection>
                 </routes>
@@ -636,7 +636,7 @@
             <cms_page translate="title" module="extrarestful">
                 <group>cms</group>
                 <model>extrarestful/api2_page</model>
-                <working_model>extrarestful/cms_page</working_model>
+                <working_model>extrarestful/page</working_model>
                 <title>Page</title>
                 <sort_order>20</sort_order>
                 <privileges>
@@ -676,11 +676,11 @@
                 </exclude_attributes>
                 <routes>
                     <route_entity>
-                        <route>/cms/pages/:id</route>
+                        <route>/pages/:id</route>
                         <action_type>entity</action_type>
                     </route_entity>
                     <route_collection>
-                        <route>/cms/pages</route>
+                        <route>/pages</route>
                         <action_type>collection</action_type>
                     </route_collection>
                 </routes>
