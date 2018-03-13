@@ -17,6 +17,8 @@ extends Clockworkgeek_Extrarestful_Model_Api2_Review
      */
     protected function _loadCollection(Varien_Data_Collection_Db $reviews)
     {
+        parent::_loadCollection($reviews);
+
         /** @var $review Mage_Review_Model_Review */
         foreach ($reviews as $review) {
             if ($review->getCustomerId() != $this->getApiUser()->getUserId()) {
