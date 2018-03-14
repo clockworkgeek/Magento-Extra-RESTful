@@ -1,0 +1,13 @@
+{
+  "name":"clockworkgeek/magento-extrarestful",
+  "type":"magento-module",
+  "license":"MIT",
+  "homepage":"https://github.com/clockworkgeek/Magento-Extra-RESTful",
+  "description":"Many more REST resources for Magento's API",
+  "authors":[
+    {
+      "name":"Daniel Deady",
+      "email":"daniel@clockworkgeek.com"
+    }
+  ]
+}
