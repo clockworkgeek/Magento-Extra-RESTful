@@ -28,14 +28,19 @@ extends Clockworkgeek_Extrarestful_Model_Api2_Review
     }
 
     /**
-     * Customers do not get to see pending or rejected reviews.
+     * Customers do not get to see pending or rejected reviews for products
      *
      * @see Clockworkgeek_Extrarestful_Model_Api2_Review::_getReviews()
      */
     protected function _getCollection()
     {
         $reviews = parent::_getCollection();
-        $reviews->addActiveCustomer($this->getApiUser()->getUserId());
+        if ($this->getRequest()->getParam('product')) {
+            $reviews->addStatusFilter(Mage_Review_Model_Review::STATUS_APPROVED);
+        }
+        else {
+            $reviews->addActiveCustomer($this->getApiUser()->getUserId());
+        }
         return $reviews;
     }
 
