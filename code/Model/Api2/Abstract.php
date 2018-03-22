@@ -49,11 +49,14 @@ class Clockworkgeek_Extrarestful_Model_Api2_Abstract extends Mage_Api2_Model_Res
         $maxAge = intval($maxAge) ?: 3600;
         if ($this->getRequest()->getHeader('Authorization')) {
             $scope = 'private,max-age='.$maxAge;
-            $vary = 'Accept,Version';
+            $vary = 'Accept';
         }
         else {
             $scope = 'public,max-age='.$maxAge;
-            $vary = 'Accept,Authorization,Version';
+            $vary = 'Accept,Authorization';
+        }
+        if (count($this->getConfig()->getVersions($this->getResourceType())) > 1) {
+            $vary .= ',Version';
         }
         $this->getResponse()->setHeader('Cache-Control', $scope, true);
         $this->getResponse()->setHeader('Vary', $vary, true);
