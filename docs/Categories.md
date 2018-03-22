@@ -32,12 +32,12 @@ This resource is intended for fetching all categories in one request and so for 
 
 - `available_sort_by`: Comma-separated list of sortable attribute codes.
 - `children_count`: Number of entries in `/api/rest/categories/parent/:parent`.
-- `custom_apply_to_products`
+- `custom_apply_to_products`: Boolean.
 - `custom_design`
 - `custom_design_from`
 - `custom_design_to`
 - `custom_layout_update`: An XML string.
-- `custom_use_parent_settings`
+- `custom_use_parent_settings`: Boolean.
 - `default_sort_by`: A single sortable attribute code.
 - `description`
 - `display_mode`: One of "PRODUCTS", "PAGE", "PRODUCTS_AND_PAGE".
@@ -45,9 +45,9 @@ This resource is intended for fetching all categories in one request and so for 
 - `filter_price_range`
 - `image`: Admin only. Name of image file in media catalog directory.
 - `image_url`: Fully qualified URL.
-- `include_in_menu`: Either "0" or "1".
-- `is_active`: Either "0" or "1". Only visible to admin users.
-- `is_anchor`: Either "0" or "1".
+- `include_in_menu`: Boolean.
+- `is_active`: Boolean. Only visible to admin users.
+- `is_anchor`: Boolean.
 - `landing_page`: A [CMS block](https://github.com/clockworkgeek/Magento-Extra-RESTful/blob/master/docs/Blocks.md#cms-blocks) ID. Not applicable if `display_mode` is "PRODUCTS".
 - `level`: A 'root' category is "1", it's children are all "2", and so on…
 - `meta_description`
@@ -58,8 +58,8 @@ This resource is intended for fetching all categories in one request and so for 
 - `parent_id`: The ID of this category's direct ancestor.
 - `path`: A string like "1/2/3". Each number is a category ID, the first is the hidden root, the last is this category.
 - `position`
-- `product_count`
-- `thumbnail`
+- `product_count`: Number of entries in `/api/rest/categories/:category/products`.
+- `thumbnail`: Only relevant to an XMLConnect feature since 1.9.2.4.
 - `updated_at`
 - `url`: Fully qualified URL. Not applicable to store "0" which only admin can see.
 - `url_key`
@@ -89,20 +89,20 @@ Admin only.
 The most important here are `name`, `parent_id` and `url_key`.
 
 - `available_sort_by`: Comma-separated list of sortable attribute codes.
-- `custom_apply_to_products`
+- `custom_apply_to_products`: Boolean.
 - `custom_design`
 - `custom_design_from`
 - `custom_design_to`
 - `custom_layout_update`: An XML string.
-- `custom_use_parent_settings`
+- `custom_use_parent_settings`: Boolean.
 - `default_sort_by`: A single sortable attribute code.
 - `description`
 - `display_mode`: One of "PRODUCTS", "PAGE", "PRODUCTS_AND_PAGE".
 - `filter_price_range`
 - `image`
-- `include_in_menu`: **Required**. Either "0" or "1".
-- `is_active`: **Required**. Either "0" or "1".
-- `is_anchor`: Either "0" or "1".
+- `include_in_menu`: **Required**. Boolean.
+- `is_active`: **Required**. Boolean.
+- `is_anchor`: Boolean.
 - `landing_page`: A [CMS block](https://github.com/clockworkgeek/Magento-Extra-RESTful/blob/master/docs/Blocks.md#cms-blocks) ID. Not applicable if `display_mode` is "PRODUCTS".
 - `meta_description`
 - `meta_keywords`
@@ -110,8 +110,8 @@ The most important here are `name`, `parent_id` and `url_key`.
 - `name`: **Required**.
 - `page_layout`: One of "empty", "one_column", "two_columns_left", "two_columns_right", "three_columns", or any custom page layout handle.
 - `parent_id`: **Required**. To create a 'root' category this should be "1" which is the real root category ID.
-- `position`
-- `thumbnail`
+- `position`: Integer.
+- `thumbnail`: Only relevant to an XMLConnect feature since 1.9.2.4.
 - `url_key`
 
 ## Delete
