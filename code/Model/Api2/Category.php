@@ -29,6 +29,11 @@ class Clockworkgeek_Extrarestful_Model_Api2_Category extends Clockworkgeek_Extra
             $products->addCategoryFilter($category);
             $category->setProductCount($products->getSize());
         }
+        if ($this->isReadable('url')) {
+            $category->setRequestPath(
+                $category->getUrlRewrite()->loadByIdPath('category/'.$category->getId())->getRequestPath());
+        }
+        $this->_prepareCategory($category);
 
         if ($lastMod = strtotime($category->getUpdatedAt())) {
             $this->getResponse()->setHeader('Last-Modified', date('r', $lastMod));
@@ -48,6 +53,22 @@ class Clockworkgeek_Extrarestful_Model_Api2_Category extends Clockworkgeek_Extra
 
         if ($this->isReadable('product_count')) {
             $this->_getProductCollection()->addCountToCategories($categories);
+        }
+
+        foreach ($categories as $category) {
+            $this->_prepareCategory($category);
+        }
+    }
+
+    protected function _prepareCategory(Mage_Catalog_Model_Category $category)
+    {
+        if ($this->isReadable('url') && $category->hasRequestPath()) {
+            $url = Mage::getUrl('', array(
+                '_direct' => $category->getRequestPath(),
+                // prevent accidentally starting session for SID check
+                '_nosid' => true
+            ));
+            $category->setUrl($url);
         }
     }
 
@@ -77,6 +98,10 @@ class Clockworkgeek_Extrarestful_Model_Api2_Category extends Clockworkgeek_Extra
         else {
             // global root must always be hidden
             $categories->addFieldToFilter('path', array('neq' => '1'));
+        }
+
+        if ($this->isReadable('url')) {
+            $categories->addUrlRewriteToResult();
         }
 
         return $categories;

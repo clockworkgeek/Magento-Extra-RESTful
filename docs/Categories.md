@@ -60,8 +60,8 @@ This resource is intended for fetching all categories in one request and so for 
 - `product_count`
 - `thumbnail`
 - `updated_at`
-- `url_key`: Used to generate `url_path`.
-- `url_path`: Includes ancestor categories and is relative to the site's base URL.
+- `url`: Fully qualified URL. Not applicable to store "0" which only admin can see.
+- `url_key`
 
 ### Category Products
 
