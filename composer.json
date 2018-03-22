@@ -9,5 +9,8 @@
       "name":"Daniel Deady",
       "email":"daniel@clockworkgeek.com"
     }
-  ]
+  ],
+  "require": {
+    "php": ">=5.4"
+  }
 }
