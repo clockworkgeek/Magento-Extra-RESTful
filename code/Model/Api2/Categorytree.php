@@ -31,6 +31,9 @@ class Clockworkgeek_Extrarestful_Model_Api2_Categorytree extends Clockworkgeek_E
         $this->_loadCollection($categories);
         // preload relations data
         $this->_loadParents($categories);
+        // tree is just as cacheable as other collections
+        $this->addCacheHeaders($categories->getCacheLifetime());
+
         $data = $categories->walk('toArray');
         return (array) $data;
     }
