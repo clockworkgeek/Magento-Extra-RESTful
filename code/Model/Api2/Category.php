@@ -33,6 +33,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Category extends Clockworkgeek_Extra
             $category->setRequestPath(
                 $category->getUrlRewrite()->loadByIdPath('category/'.$category->getId())->getRequestPath());
         }
+        $category->setImageUrl($category->getImageUrl());
         $this->_prepareCategory($category);
 
         if ($lastMod = strtotime($category->getUpdatedAt())) {
@@ -98,6 +99,14 @@ class Clockworkgeek_Extrarestful_Model_Api2_Category extends Clockworkgeek_Extra
         else {
             // global root must always be hidden
             $categories->addFieldToFilter('path', array('neq' => '1'));
+        }
+
+        if ($this->isReadable('image_url')) {
+            $dir = Mage::getBaseUrl('media').'catalog/category/';
+            $method = method_exists($categories, 'addExpressionAttributeToSelect') ? 'addExpressionAttributeToSelect' : 'addExpressionFieldToSelect';
+            $categories->$method('image_url', "CONCAT('{$dir}', {{image}})", 'image');
+            // map is only used by flat tables, doesn't hurt EAV tables
+            $categories->addFilterToMap('image_url', "CONCAT('{$dir}', image)");
         }
 
         if ($this->isReadable('url')) {

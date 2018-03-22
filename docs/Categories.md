@@ -43,7 +43,8 @@ This resource is intended for fetching all categories in one request and so for 
 - `display_mode`: One of "PRODUCTS", "PAGE", "PRODUCTS_AND_PAGE".
 - `entity_id`: The ID of this category.
 - `filter_price_range`
-- `image`
+- `image`: Admin only. Name of image file in media catalog directory.
+- `image_url`: Fully qualified URL.
 - `include_in_menu`: Either "0" or "1".
 - `is_active`: Either "0" or "1". Only visible to admin users.
 - `is_anchor`: Either "0" or "1".

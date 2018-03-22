@@ -199,6 +199,7 @@
                     <position>Position</position>
                     <level>Level</level>
                     <children_count>Children Count</children_count>
+                    <image_url>Image URL</image_url>
                     <product_count>Product Count</product_count>
                     <url>URL</url>
                 </attributes>
@@ -210,16 +211,19 @@
                             <path>1</path>
                             <level>1</level>
                             <children_count>1</children_count>
+                            <image_url>1</image_url>
                             <url>1</url>
                         </write>
                     </admin>
                     <customer>
                         <read>
+                            <image>1</image>
                             <is_active>1</is_active>
                         </read>
                     </customer>
                     <guest>
                         <read>
+                            <image>1</image>
                             <is_active>1</is_active>
                         </read>
                     </guest>
