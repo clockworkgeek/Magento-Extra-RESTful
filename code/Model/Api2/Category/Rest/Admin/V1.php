@@ -31,6 +31,10 @@ extends Clockworkgeek_Extrarestful_Model_Api2_Category
         }
         $this->_validateCategory($category);
 
+        if (is_array($category->getImage())) {
+        $dir = Mage::getBaseDir('media').'/catalog/category';
+            $category->setImage(Mage::helper('extrarestful')->uploadImageField($data['image'], $dir));
+        }
         return $category->save();
     }
 
@@ -49,6 +53,14 @@ extends Clockworkgeek_Extrarestful_Model_Api2_Category
         // parent_id should be required but is not EAV
         if (! $category->hasParentId()) {
             $errors['parent_id'] = true;
+        }
+
+        // non-array values, like a string filename, are still allowed
+        if (is_array($category->getImage())) {
+            $error = Mage::helper('extrarestful')->validateImageField($category->getImage());
+            if ($error) {
+                $errors['image'] = $error;
+            }
         }
 
         if ($errors) {

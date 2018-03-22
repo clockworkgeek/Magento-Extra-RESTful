@@ -99,7 +99,9 @@ The most important here are `name`, `parent_id` and `url_key`.
 - `description`
 - `display_mode`: One of "PRODUCTS", "PAGE", "PRODUCTS_AND_PAGE".
 - `filter_price_range`
-- `image`
+- `image`: Name of file in `media/catalog/category` directory, or a record like:
+  - `file_content`: Base64 encoded image file.
+  - `file_name`: Desired name of file to be saved in `media/catalog/category`, eventual name may differ.
 - `include_in_menu`: **Required**. Boolean.
 - `is_active`: **Required**. Boolean.
 - `is_anchor`: Boolean.
