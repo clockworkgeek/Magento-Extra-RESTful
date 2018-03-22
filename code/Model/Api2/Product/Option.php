@@ -31,7 +31,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Product_Option extends Clockworkgeek
     {
         parent::_loadCollection($options);
 
-        if (in_array('values', $this->getFilter()->getAttributesToInclude())) {
+        if ($this->isReadable('values')) {
             $options->addValuesToResult($this->_getStore()->getId());
             /** @var $option Mage_Catalog_Model_Product_Option */
             foreach ($options as $option) {

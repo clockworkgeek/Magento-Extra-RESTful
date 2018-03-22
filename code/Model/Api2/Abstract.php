@@ -83,6 +83,17 @@ class Clockworkgeek_Extrarestful_Model_Api2_Abstract extends Mage_Api2_Model_Res
     }
 
     /**
+     * Convenient check of an attribute against filter
+     *
+     * @param string $attribute
+     * @return boolean
+     */
+    public function isReadable($attribute)
+    {
+        return in_array($attribute, $this->getFilter()->getAttributesToInclude());
+    }
+
+    /**
      * Takes a filtered array of fields and returns URL to new entity
      *
      * Calls <code>_saveModel</code> and descendants should override that.

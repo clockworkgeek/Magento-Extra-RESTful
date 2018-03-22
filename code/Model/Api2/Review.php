@@ -18,7 +18,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Clockworkgeek_Extrare
     protected function _loadModel()
     {
         $review = parent::_loadModel();
-        if (in_array('ratings', $this->getFilter()->getAttributesToInclude())) {
+        if ($this->isReadable('ratings')) {
             $reviews = new Varien_Data_Collection();
             $reviews->addItem($review);
             $this->_addRatingsToReviews($reviews);
@@ -53,10 +53,10 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Clockworkgeek_Extrare
         $reviews->addExpressionFieldToSelect('product_id', 'entity_pk_value', array());
 
         $reviews->addStoreFilter($this->_getStore()->getId());
-        if (in_array('stores', $this->getFilter()->getAttributesToInclude())) {
+        if ($this->isReadable('stores')) {
             $reviews->addStoreData();
         }
-        if (in_array('status', $this->getFilter()->getAttributesToInclude())) {
+        if ($this->isReadable('status')) {
             $reviews->addStatusCodes();
         }
 
@@ -65,7 +65,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Review extends Clockworkgeek_Extrare
 
     protected function _loadCollection(Varien_Data_Collection_Db $reviews)
     {
-        if (in_array('ratings', $this->getFilter()->getAttributesToInclude())) {
+        if ($this->isReadable('ratings')) {
             $this->_addRatingsToReviews($reviews);
         }
         parent::_loadCollection($reviews);

@@ -24,7 +24,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Category extends Clockworkgeek_Extra
     {
         /** @var $category Mage_Catalog_Model_Category */
         $category = parent::_loadModel();
-        if (in_array('product_count', $this->getFilter()->getAttributesToInclude())) {
+        if ($this->isReadable('product_count')) {
             $products = $this->_getProductCollection();
             $products->addCategoryFilter($category);
             $category->setProductCount($products->getSize());
@@ -46,7 +46,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Category extends Clockworkgeek_Extra
     {
         parent::_loadCollection($categories);
 
-        if (in_array('product_count', $this->getFilter()->getAttributesToInclude())) {
+        if ($this->isReadable('product_count')) {
             $this->_getProductCollection()->addCountToCategories($categories);
         }
     }

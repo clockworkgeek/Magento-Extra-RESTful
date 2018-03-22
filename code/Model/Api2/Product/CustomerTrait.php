@@ -52,11 +52,10 @@ trait Clockworkgeek_Extrarestful_Model_Api2_Product_CustomerTrait
     {
         parent::_prepareProduct($product);
         $product->setCustomerGroupId(1);
-        $include = $this->getFilter()->getAttributesToInclude();
-        if (in_array('final_price_with_tax', $include)) {
+        if ($this->isReadable('final_price_with_tax')) {
             $product->setFinalPriceWithTax($this->_getPrice($product, $product->getFinalPrice(), true));
         }
-        if (in_array('final_price_without_tax', $include)) {
+        if ($this->isReadable('final_price_without_tax')) {
             $product->setFinalPriceWithoutTax($this->_getPrice($product, $product->getFinalPrice(), false));
         }
     }

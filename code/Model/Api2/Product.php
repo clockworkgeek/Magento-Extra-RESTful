@@ -96,7 +96,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Product extends Clockworkgeek_Extrar
 
         // state attribute labels used to arrange products associated with a Configurable
         // clients should be able to deduce arrangement from this and `GET /api/rest/products/:product/associated`
-        if ($product->isConfigurable() && in_array('super_attributes', $this->getFilter()->getAttributesToInclude())) {
+        if ($product->isConfigurable() && $this->isReadable('super_attributes')) {
             $attrs = array();
             foreach ($product->getTypeInstance(true)->getConfigurableAttributes($product) as $attr) {
                 $attrs[$attr->getProductAttribute()->getAttributeCode()] = $attr->getLabel();
@@ -130,7 +130,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Product extends Clockworkgeek_Extrar
             $products->addCategoryFilter($category);
         }
 
-        if (in_array('image_url', $this->getFilter()->getAttributesToInclude())) {
+        if ($this->isReadable('image_url')) {
             // addAttributeToSelect does not work with flat tables
             // must use joinAttribute which also works fine with EAV tables
             $products->joinAttribute('image', 'catalog_product/image', 'entity_id');
@@ -149,7 +149,6 @@ class Clockworkgeek_Extrarestful_Model_Api2_Product extends Clockworkgeek_Extrar
 
     protected function _prepareProduct(Mage_Catalog_Model_Product $product)
     {
-        $include = $this->getFilter()->getAttributesToInclude();
         $storeId = $this->_getStore()->getId();
         if (!$product->hasStoreId()) {
             $product->setStoreId($storeId);
@@ -159,7 +158,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Product extends Clockworkgeek_Extrar
         /** @var $attribute Mage_Catalog_Model_Resource_Eav_Attribute */
         foreach ($product->getAttributes() as $attribute) {
             $code = $attribute->getAttributeCode();
-            if (!$product->hasData($code) || !in_array($code, $include)) {
+            if (!$product->hasData($code) || !$this->isReadable($code)) {
                 continue;
             }
             if ($product->getData($code.'_value')) {
@@ -172,28 +171,28 @@ class Clockworkgeek_Extrarestful_Model_Api2_Product extends Clockworkgeek_Extrar
 
         // do not have buy_now_url because it depends on session and form_key
         // neither apply to a proper API, use a cart endpoint instead
-        if (in_array('has_custom_options', $include)) {
+        if ($this->isReadable('has_custom_options')) {
             $product->setHasCustomOptions(count($product->getOptions()) > 0);
         }
-        if (in_array('image_url', $include)) {
+        if ($this->isReadable('image_url')) {
             $product->setImageUrl((string) Mage::helper('catalog/image')->init($product, 'image'));
         }
-        if (in_array('is_in_stock', $include) && $product->getStockItem()) {
+        if ($this->isReadable('is_in_stock') && $product->getStockItem()) {
             $product->setIsInStock((bool) $product->getStockItem()->getIsInStock());
         }
-        if (in_array('is_saleable', $include)) {
+        if ($this->isReadable('is_saleable')) {
             $product->setIsSaleable((bool) $product->getIsSalable());
         }
-        if (in_array('regular_price_with_tax', $include)) {
+        if ($this->isReadable('regular_price_with_tax')) {
             $product->setRegularPriceWithTax($this->_getPrice($product, $product->getPrice(), true));
         }
-        if (in_array('regular_price_without_tax', $include)) {
+        if ($this->isReadable('regular_price_without_tax')) {
             $product->setRegularPriceWithoutTax($this->_getPrice($product, $product->getPrice(), false));
         }
-        if (in_array('required_options', $include)) {
+        if ($this->isReadable('required_options')) {
             $product->setRequiredOptions((bool) $product->getRequiredOptions());
         }
-        if (in_array('tier_price', $include)) {
+        if ($this->isReadable('tier_price')) {
             $product->setTierPrice(array_map(function($tier) use ($product) {
                 return array(
                     'qty' => @$tier['price_qty'],
@@ -202,11 +201,11 @@ class Clockworkgeek_Extrarestful_Model_Api2_Product extends Clockworkgeek_Extrar
                 );
             }, (array) $product->getData('tier_price')));
         }
-        if (in_array('total_reviews_count', $include)) {
+        if ($this->isReadable('total_reviews_count')) {
             $product->setTotalReviewsCount((int)
                 Mage::getModel('review/review')->getTotalReviews($product->getId(), true, $storeId));
         }
-        if (in_array('url', $include)) {
+        if ($this->isReadable('url')) {
             $product->setUrl($product->getUrlModel()->getUrl($product, array(
                 // prevent accidentally starting session for SID check
                 '_nosid' => true
