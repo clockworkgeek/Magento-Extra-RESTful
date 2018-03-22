@@ -29,6 +29,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Categorytree extends Clockworkgeek_E
         $this->_applyFilter($categories);
         // add product counts
         $this->_loadCollection($categories);
+        // preload relations data
         $this->_loadParents($categories);
         $data = $categories->walk('toArray');
         return (array) $data;
@@ -61,9 +62,13 @@ class Clockworkgeek_Extrarestful_Model_Api2_Categorytree extends Clockworkgeek_E
      */
     protected function _loadParents(Varien_Data_Collection_Db $categories)
     {
-        $query = $categories->getSelect();
-        $query->reset(Zend_Db_Select::COLUMNS)->columns(array('entity_id','parent_id'));
-        $this->_parents = $categories->getConnection()->fetchPairs($query);
+        // getParentId is smart and checks the path too, increasing chances that necessary data is already loaded
+        $this->_parents = $categories->walk('getParentId');
+        if (count($this->_parents) < count($categories)) {
+            $query = $categories->getSelect();
+            $query->reset(Zend_Db_Select::COLUMNS)->columns(array('entity_id','parent_id'));
+            $this->_parents = $categories->getConnection()->fetchPairs($query);
+        }
     }
 
     /**
