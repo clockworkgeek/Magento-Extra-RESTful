@@ -6,8 +6,8 @@
 - `GET /api/rest/categories/store/:store`
 - `GET /api/rest/categories/:id`
 - `GET /api/rest/categories/:id/store/:store`
-- `GET /api/rest/categories/parent/:parent`
-- `GET /api/rest/categories/parent/:parent/store/:store`
+- `GET /api/rest/categories/:id/children`
+- `GET /api/rest/categories/:id/children/store/:store`
 - `GET /api/rest/category_trees`
 - `GET /api/rest/category_trees/store/:store`
 
@@ -16,8 +16,8 @@ If omitted by guests or customers the default store is assumed.
 If omitted by admin users all categories are accessible, even if they are not assigned to any store.
 Only admin users may see inactive categories.
 
-If `:parent` is specified then only it's child categories are considered.
-This is the same as filtering the attribute `parent_id`.
+A category's "children" are it's immediate child categories.
+For a category's products see [below](#category-products).
 
 The `category_trees` resource is a special representation where only root categories are listed but each has a `children` field which is an embedded list of categories,
 each of those may also have a `children` field and so on…
@@ -31,7 +31,7 @@ This resource is intended for fetching all categories in one request and so for 
 ### Attributes
 
 - `available_sort_by`: Comma-separated list of sortable attribute codes.
-- `children_count`: Number of entries in `/api/rest/categories/parent/:parent`.
+- `children_count`: Number of entries in `/api/rest/categories/:id/children`.
 - `custom_apply_to_products`: Boolean.
 - `custom_design`
 - `custom_design_from`

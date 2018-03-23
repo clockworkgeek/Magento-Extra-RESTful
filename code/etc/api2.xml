@@ -246,11 +246,11 @@
                         <action_type>collection</action_type>
                     </route_collection_with_store>
                     <route_collection_with_parent_filter>
-                        <route>/categories/parent/:parent</route>
+                        <route>/categories/:parent/children</route>
                         <action_type>collection</action_type>
                     </route_collection_with_parent_filter>
                     <route_collection_with_parent_and_store>
-                        <route>/categories/parent/:parent/store/:store</route>
+                        <route>/categories/:parent/children/store/:store</route>
                         <action_type>collection</action_type>
                     </route_collection_with_parent_and_store>
                 </routes>
