@@ -21,7 +21,7 @@ Admin users may also retrieve collections with:
 - `identifier`: A short text ID.
 - `is_active`: Admin only. Either "0" or "1".
 - `stores`: Store IDs for which this block is enabled.
-- `title`: Normally for admin use only but visible to others too.
+- `title`: Admin only.
 - `update_time`: The last modified time.
 
 ## Create / Update

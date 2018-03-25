@@ -615,11 +615,13 @@
                     <customer>
                         <read>
                             <is_active>1</is_active>
+                            <title>1</title>
                         </read>
                     </customer>
                     <guest>
                         <read>
                             <is_active>1</is_active>
+                            <title>1</title>
                         </read>
                     </guest>
                 </exclude_attributes>
