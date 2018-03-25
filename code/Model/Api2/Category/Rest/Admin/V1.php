@@ -20,6 +20,9 @@ extends Clockworkgeek_Extrarestful_Model_Api2_Category
 
     protected function _saveModel($data)
     {
+        if (($parentId = $this->getRequest()->getParam('parent'))) {
+            $data['parent_id'] = $parentId;
+        }
         $category = parent::_loadModel();
         $category->addData($data);
 
@@ -27,12 +30,16 @@ extends Clockworkgeek_Extrarestful_Model_Api2_Category
         if (isset($data['parent_id'])) {
             /** @var $parent Mage_Catalog_Model_Category */
             $parent = Mage::getModel('catalog/category')->load($data['parent_id']);
-            $category->setPath($parent->getPath());
+            $category->setPath(trim($parent->getPath().'/'.$category->getId(), '/'));
+        }
+        // default to root when there is no path
+        if (!$category->getParentId()) {
+            $category->setParentId(1)->setPath(1);
         }
         $this->_validateCategory($category);
 
         if (is_array($category->getImage())) {
-        $dir = Mage::getBaseDir('media').'/catalog/category';
+            $dir = Mage::getBaseDir('media').'/catalog/category';
             $category->setImage(Mage::helper('extrarestful')->uploadImageField($data['image'], $dir));
         }
         return $category->save();
@@ -48,11 +55,6 @@ extends Clockworkgeek_Extrarestful_Model_Api2_Category
         }
         if (@$errors['default_sort_by'] === true) {
             unset($errors['default_sort_by']);
-        }
-
-        // parent_id should be required but is not EAV
-        if (! $category->hasParentId()) {
-            $errors['parent_id'] = true;
         }
 
         // non-array values, like a string filename, are still allowed

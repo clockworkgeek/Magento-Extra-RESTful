@@ -77,16 +77,14 @@ See [docs/Products.md](https://github.com/clockworkgeek/Magento-Extra-RESTful/bl
 
 ## Create / Update
 
-- `POST /api/rest/categories/`
-- `POST /api/rest/categories/store/:store`
+- `POST /api/rest/categories/` - Add Root Category
+- `POST /api/rest/categories/:id/children` - Add Subcategory
 - `PUT /api/rest/categories/:id`
 - `PUT /api/rest/categories/:id/store/:store`
 
 Admin only.
 
 ### Attributes
-
-The most important here are `name`, `parent_id` and `url_key`.
 
 - `available_sort_by`: Comma-separated list of sortable attribute codes.
 - `custom_apply_to_products`: Boolean.
@@ -111,10 +109,10 @@ The most important here are `name`, `parent_id` and `url_key`.
 - `meta_title`
 - `name`: **Required**.
 - `page_layout`: One of "empty", "one_column", "two_columns_left", "two_columns_right", "three_columns", or any custom page layout handle.
-- `parent_id`: **Required**. To create a 'root' category this should be "1" which is the real root category ID.
+- `parent_id`: PUT a value to move this category to another location.
 - `position`: Integer.
 - `thumbnail`: Only relevant to an XMLConnect feature since 1.9.2.4.
-- `url_key`
+- `url_key`: **Recommended**.  Root categories typically do not use this.
 
 ## Delete
 
