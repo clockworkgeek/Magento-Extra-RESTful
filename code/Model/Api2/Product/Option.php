@@ -14,6 +14,14 @@
 class Clockworkgeek_Extrarestful_Model_Api2_Product_Option extends Clockworkgeek_Extrarestful_Model_Api2_Abstract
 {
 
+    protected function _loadModel()
+    {
+        $option = parent::_loadModel();
+        $option->setIsRequire((bool) $option->getIsRequire());
+        $option->setSortOrder((int) $option->getSortOrder());
+        return $option;
+    }
+
     protected function _getCollection()
     {
         $productId = $this->getRequest()->getParam('product');
@@ -45,6 +53,8 @@ class Clockworkgeek_Extrarestful_Model_Api2_Product_Option extends Clockworkgeek
                         'sort_order',
                         'title'
                     )) + array(
+                        'price' => (float) $value->getPrice(),
+                        'sort_order' => (int) $value->getSortOrder(),
                         'value' => $value->getId()
                     );
                 }
@@ -54,6 +64,8 @@ class Clockworkgeek_Extrarestful_Model_Api2_Product_Option extends Clockworkgeek
         }
 
         foreach ($options as $option) {
+            $option->setIsRequire((bool) $option->getIsRequire());
+            $option->setSortOrder((int) $option->getSortOrder());
             if ($option->getType() != 'file') {
                 $option->unsFileExtension()->unsImageSizeX()->unsImageSizeY();
             }

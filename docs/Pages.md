@@ -21,7 +21,7 @@ That's how CMS works.
 - `custom_theme_from`
 - `custom_theme_to`
 - `identifier`: A short text ID.
-- `is_active`: Either "0" or "1".
+- `is_active`: Boolean.
 - `layout_update_xml`
 - `meta_description`
 - `meta_keywords`
@@ -53,7 +53,7 @@ Stores without a page matching an `identifier` will fall back to store 0's equiv
 - `custom_theme_from`
 - `custom_theme_to`
 - `identifier`: **Required**. A short text ID.  Unlike most IDs this can be changed after creation.  Care should be taken to avoid leaving references to the old identifier.
-- `is_active`: Either "0" or "1".
+- `is_active`: Boolean.
 - `layout_update_xml`
 - `meta_description`
 - `meta_keywords`

@@ -63,6 +63,8 @@ The product specified by `:product` must exist.
   - `title`: Store-specific text to be displayed to end user.
   - `value`: Use this ID when adding product to cart.
 
+### Example
+
 ```json
 [
     {
@@ -113,7 +115,8 @@ These lists behave exactly like `/api/rest/products` so can be filtered, ordered
 
 Only for "Grouped" and "Configurable" products.
 Simple products associated with a "Grouped" product contain an extra `qty` field which is the admin entered default quantity value.
-"Configurable" products requested at `/api/rest/products/:id` contains an extra `super_attributes` object with keys that are attribute names and values that are printable labels.  A typical exchange might go like this:
+"Configurable" products requested at `/api/rest/products/:id` contains an extra `super_attributes` object with keys that are attribute names and values that are printable labels.
+A typical exchange might go like this:
 
 ```
 GET /api/rest/products/410?attrs=name,description,super_attributes HTTP/1.1
