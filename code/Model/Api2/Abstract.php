@@ -93,6 +93,15 @@ class Clockworkgeek_Extrarestful_Model_Api2_Abstract extends Mage_Api2_Model_Res
         return in_array($attribute, $this->getFilter()->getAttributesToInclude());
     }
 
+    public function dispatch()
+    {
+        if ($this->getOperation() == self::OPERATION_RETRIEVE) {
+            // set temporary headers in case of error on the next line
+            $this->addCacheHeaders(600);
+        }
+        parent::dispatch();
+    }
+
     /**
      * Takes a filtered array of fields and returns URL to new entity
      *
