@@ -23,7 +23,7 @@ extends Clockworkgeek_Extrarestful_Model_Api2_Category
         if (($parentId = $this->getRequest()->getParam('parent'))) {
             $data['parent_id'] = $parentId;
         }
-        $category = parent::_loadModel();
+        $category = Clockworkgeek_Extrarestful_Model_Api2_Abstract::_loadModel();
         $category->addData($data);
 
         // autocorrect path if new parent is submitted
