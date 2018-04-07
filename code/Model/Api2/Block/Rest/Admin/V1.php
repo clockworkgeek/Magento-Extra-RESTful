@@ -35,13 +35,4 @@ class Clockworkgeek_Extrarestful_Model_Api2_Block_Rest_Admin_V1 extends Clockwor
         // success
         return $block->save();
     }
-
-    protected function _loadCollection(Varien_Data_Collection_Db $blocks)
-    {
-        parent::_loadCollection($blocks);
-
-        foreach ($blocks as $block) {
-            $block->setIsActive((bool) $block->getIsActive());
-        }
-    }
 }

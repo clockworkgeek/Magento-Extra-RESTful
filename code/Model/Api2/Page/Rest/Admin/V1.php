@@ -20,7 +20,6 @@ class Clockworkgeek_Extrarestful_Model_Api2_Page_Rest_Admin_V1 extends Clockwork
         if ($pageId != $page->getId() && $pageId != $page->getIdentifier()) {
             $this->_critical(self::RESOURCE_NOT_FOUND);
         }
-        $page->setIsActive((bool) $page->getIsActive());
         if (!$page->hasStores()) {
             $page->setStores((array) $page->getStoreId());
         }
@@ -75,14 +74,5 @@ class Clockworkgeek_Extrarestful_Model_Api2_Page_Rest_Admin_V1 extends Clockwork
             $pages->addStoreFilter($storeId);
         }
         return $pages;
-    }
-
-    protected function _loadCollection(Varien_Data_Collection_Db $pages)
-    {
-        parent::_loadCollection($pages);
-
-        foreach ($pages as $page) {
-            $page->setIsActive((bool) $page->getIsActive());
-        }
     }
 }

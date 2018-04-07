@@ -13,7 +13,6 @@ class Clockworkgeek_Extrarestful_Model_Api2_Store extends Clockworkgeek_Extrares
     {
         /** @var $store Mage_Core_Model_Store */
         $store = parent::_loadModel();
-        $store->setIsActive((bool) $store->getIsActive());
         $store->addData(array(
             'general_locale_code' => $store->getConfig('general/locale/code'),
             'general_locale_timezone' => $store->getConfig('general/locale/timezone'),
@@ -27,7 +26,6 @@ class Clockworkgeek_Extrarestful_Model_Api2_Store extends Clockworkgeek_Extrares
     {
         /** @var $store Mage_Core_Model_Store */
         foreach ($stores as $store) {
-            $store->setIsActive((bool) $store->getIsActive());
             $store->addData(array(
                 'unsecure_base_url' => $store->getBaseUrl(),
                 'secure_base_url' => $store->getBaseUrl(Mage_Core_Model_Store::URL_TYPE_LINK, true)

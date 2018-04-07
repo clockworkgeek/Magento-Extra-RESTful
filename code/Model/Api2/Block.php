@@ -14,7 +14,6 @@ class Clockworkgeek_Extrarestful_Model_Api2_Block extends Clockworkgeek_Extrares
      */
     protected function _loadModel()
     {
-        $this->setFilter(Mage::getModel('extrarestful/api2_block_filter', $this));
         if ($this->_needsRenderer()) {
             $this->setRenderer(Mage::getModel('extrarestful/api2_block_renderer'));
         }
@@ -28,7 +27,6 @@ class Clockworkgeek_Extrarestful_Model_Api2_Block extends Clockworkgeek_Extrares
             $this->_critical(self::RESOURCE_NOT_FOUND);
         }
 
-        $block->setIsActive((bool) $block->getIsActive());
         if ($lastMod = strtotime($block->getUpdateTime())) {
             $this->getResponse()->setHeader('Last-Modified', date('r', $lastMod));
         }

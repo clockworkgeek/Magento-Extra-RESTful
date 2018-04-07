@@ -82,6 +82,16 @@ class Clockworkgeek_Extrarestful_Model_Api2_Abstract extends Mage_Api2_Model_Res
         return $this;
     }
 
+    public function getFilter()
+    {
+        if (!$this->_filter) {
+            /** @var $filter Clockworkgeek_Extrarestful_Model_Api2_Abstract_Filter */
+            $filter = Mage::getModel('extrarestful/api2_abstract_filter', $this);
+            $this->setFilter($filter);
+        }
+        return $this->_filter;
+    }
+
     /**
      * Convenient check of an attribute against filter
      *

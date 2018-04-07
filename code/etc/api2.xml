@@ -90,6 +90,9 @@
                     <unsecure_base_url>Unsecure Base URL</unsecure_base_url>
                     <secure_base_url>Secure Base URL</secure_base_url>
                 </attributes>
+                <filters>
+                    <is_active>boolean</is_active>
+                </filters>
                 <entity_only_attributes>
                     <admin>
                         <read>
@@ -203,6 +206,11 @@
                     <product_count>Product Count</product_count>
                     <url>URL</url>
                 </attributes>
+                <filters>
+                    <children_count>int</children_count>
+                    <level>int</level>
+                    <position>int</position>
+                </filters>
                 <exclude_attributes>
                     <admin>
                         <write>
@@ -346,6 +354,15 @@
                     <price_type>Price Type</price_type>
                     <sort_order>Sort Order</sort_order>
                 </attributes>
+                <filters>
+                    <is_require>boolean</is_require>
+                    <price>float</price>
+                    <sort_order>int</sort_order>
+                    <values>
+                        <price>float</price>
+                        <sort_order>int</sort_order>
+                    </values>
+                </filters>
                 <force_attributes>
                     <guest>
                         <values>1</values>
@@ -605,6 +622,9 @@
                     <title>Title</title>
                     <update_time>Updated At</update_time>
                 </attributes>
+                <filters>
+                    <is_active>boolean</is_active>
+                </filters>
                 <exclude_attributes>
                     <admin>
                         <write>
@@ -675,6 +695,9 @@
                     <title>Title</title>
                     <update_time>Updated At</update_time>
                 </attributes>
+                <filters>
+                    <is_active>boolean</is_active>
+                </filters>
                 <exclude_attributes>
                     <admin>
                         <write>

@@ -63,16 +63,6 @@ class Clockworkgeek_Extrarestful_Model_Api2_Category extends Clockworkgeek_Extra
 
     protected function _prepareCategory(Mage_Catalog_Model_Category $category)
     {
-        $category->setChildrenCount((int) $category->getChildrenCount());
-        $category->setCustomApplyToProducts((bool) $category->getCustomApplyToProducts());
-        $category->setCustomUseParentSettings((bool) $category->getCustomUseParentSettings());
-        $category->setIncludeInMenu((bool) $category->getIncludeInMenu());
-        $category->setIsActive((bool) $category->getIsActive());
-        $category->setIsAnchor((bool) $category->getIsAnchor());
-        $category->setLevel((int) $category->getLevel());
-        $category->setPosition((int) $category->getPosition());
-        $category->setProductCount((int) $category->getProductCount());
-
         if ($this->isReadable('url') && $category->hasRequestPath()) {
             $url = Mage::getUrl('', array(
                 '_direct' => $category->getRequestPath(),
