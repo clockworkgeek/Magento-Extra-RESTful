@@ -30,7 +30,8 @@ class Clockworkgeek_Extrarestful_Model_Api2_Product extends Clockworkgeek_Extrar
      */
     public function setRequest(Mage_Api2_Model_Request $request)
     {
-        parent::setRequest($request);
+        // avoid extra RESTful method as that relies on a different filter type
+        Mage_Api2_Model_Resource::setRequest($request);
 
         $filter = $request->getFilter();
         if (is_array($filter)) {

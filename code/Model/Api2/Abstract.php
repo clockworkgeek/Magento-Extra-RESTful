@@ -82,6 +82,9 @@ class Clockworkgeek_Extrarestful_Model_Api2_Abstract extends Mage_Api2_Model_Res
         return $this;
     }
 
+    /**
+     * @return Clockworkgeek_Extrarestful_Model_Api2_Abstract_Filter
+     */
     public function getFilter()
     {
         if (!$this->_filter) {
@@ -101,6 +104,19 @@ class Clockworkgeek_Extrarestful_Model_Api2_Abstract extends Mage_Api2_Model_Res
     public function isReadable($attribute)
     {
         return in_array($attribute, $this->getFilter()->getAttributesToInclude());
+    }
+
+    public function setRequest(Mage_Api2_Model_Request $request)
+    {
+        parent::setRequest($request);
+
+        $query = $request->getFilter();
+        if (is_array($query) && method_exists($this->getFilter(), 'sanitize')) {
+            $this->getFilter()->sanitize($query);
+            $request->setQuery(Mage_Api2_Model_Request::QUERY_PARAM_FILTER, $query);
+        }
+
+        return $this;
     }
 
     public function dispatch()

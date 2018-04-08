@@ -71,7 +71,6 @@ class Clockworkgeek_Extrarestful_Model_Api2_Abstract_Filter extends Mage_Api2_Mo
                 // expect a scalar, cast to native
                 // if complex type is received there will probably be a warning
                 switch (@$spec[$attr]) {
-                    case 'bool':
                     case 'boolean':
                         $val = boolval($val);
                         break;
@@ -79,9 +78,30 @@ class Clockworkgeek_Extrarestful_Model_Api2_Abstract_Filter extends Mage_Api2_Mo
                         $val = floatval($val);
                         break;
                     case 'int':
-                    case 'integer':
                         $val = intval($val);
                         break;
+                }
+            }
+        }
+    }
+
+    /**
+     * Filters the <code>filter</code> query parameter appropriate to this filter object using data filtering
+     *
+     * This allows collections to be queried with boolean values like "true" and "false" instead of "1" and "0".
+     *
+     * @param array $query
+     * @return array unknown
+     * @see https://php.net/manual/book.filter.php
+     */
+    public function sanitize(array &$query)
+    {
+        foreach ($query as &$term) {
+            $type = filter_id(@$this->_spec[$term['attribute']]);
+            if ($type) {
+                foreach ($term as $operator => &$value) {
+                    if ($operator === 'attribute') continue;
+                    $value = filter_var($value, $type);
                 }
             }
         }
