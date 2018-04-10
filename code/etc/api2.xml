@@ -370,11 +370,11 @@
                 </force_attributes>
                 <routes>
                     <route_entity>
-                        <route>/options/:id</route>
+                        <route>/products/options/:id</route>
                         <action_type>entity</action_type>
                     </route_entity>
                     <route_entity_with_store>
-                        <route>/options/:id/store/:store</route>
+                        <route>/products/options/:id/store/:store</route>
                         <action_type>entity</action_type>
                     </route_entity_with_store>
                     <route_collection>
