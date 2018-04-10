@@ -14,6 +14,26 @@
 class Clockworkgeek_Extrarestful_Model_Api2_Product_Option extends Clockworkgeek_Extrarestful_Model_Api2_Abstract
 {
 
+    protected function _loadModel()
+    {
+        $id = $this->getRequest()->getParam('id');
+        // a collection of one is easier to load than a model in this case
+        $options = $this->getWorkingModel()->getCollection();
+        $options
+            ->addIdsToFilter($id)
+            // these methods only exist on collection
+            ->addTitleToResult($this->_getStore()->getId())
+            ->addPriceToResult($this->_getStore()->getId())
+            ->setOrder('sort_order', 'asc')
+            ->setOrder('title', 'asc');
+        $this->_loadCollection($options);
+        $option = $options->getFirstItem();
+        if ($id !== $option->getId()) {
+            $this->_critical(self::RESOURCE_NOT_FOUND);
+        }
+        return $option;
+    }
+
     protected function _getCollection()
     {
         $productId = $this->getRequest()->getParam('product');
