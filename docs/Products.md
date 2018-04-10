@@ -42,24 +42,27 @@ Unless you specifically need this behaviour you are advised to use [these routes
 
 This resource exposes the "Custom Options" as entered by admin for a particular product.
 The product specified by `:product` must exist.
+Options and values are already sorted by `sort_order` then `title`.
 
 ### Attributes
 
 - `file_extension`: Comma- or space-separated list of allowed file extensions. Only applicable if `type` is `file`.
 - `image_size_x`: A numeric value measured in pixels.  Only applicable if `type` is `file` and the uploaded file is an image.
 - `image_size_y`: A numeric value measured in pixels.  Only applicable if `type` is `file` and the uploaded file is an image.
-- `is_require`: Either "0" or "1".
-- `max_characters`: A numeric value.  Only applicable if `type` is `field` or `area`.
+- `is_require`: Boolean.
+- `max_characters`: Integer.  Only applicable if `type` is `field` or `area`.
 - `option_id`: Use this ID when adding the product to cart.
 - `price`: An optional float value to be added to the final price.  Not applicable if `type` is `drop_down`, `radio`, `checkbox`, or `multiple`.
 - `price_type`: One of these values; "fixed", "percent".
 - `sku`: A string that will be appended to the product's SKU if this option is used.
+- `sort_order`: Integer.
 - `title`: Store-specific text to be displayed to end user.
 - `type`: One of these values; "field", "area", "file", "drop_down", "radio", "checkbox", "multiple", "date", "date_time", "time".
 - `values`: A list of objects if `type` is `drop_down`, `radio`, `checkbox`, or `multiple`.  Each has these attributes:
   - `price`: An optional float value to be added to the final price.
   - `price_type`: One of these values; "fixed", "percent".
   - `sku`: A string that will be appended to the product's SKU if this value is selected.
+  - `sort_order`: Integer.
   - `title`: Store-specific text to be displayed to end user.
   - `value`: Use this ID when adding product to cart.
 
@@ -68,26 +71,27 @@ The product specified by `:product` must exist.
 ```json
 [
     {
-        "is_require": "0",
+        "is_require": false,
         "option_id": "2",
+        "product_id": "410",
         "sku": null,
-        "sort_order": "3",
+        "sort_order": 3,
         "title": "Test Custom Options",
         "type": "drop_down",
         "values": [
             {
-                "price": "59.0000",
+                "price": 59.95,
                 "price_type": "fixed",
                 "sku": "m1",
-                "sort_order": "0",
+                "sort_order": 0,
                 "title": "model 1",
                 "value": "1"
             },
             {
-                "price": "60.0000",
+                "price": 60,
                 "price_type": "fixed",
                 "sku": "m2",
-                "sort_order": "0",
+                "sort_order": 0,
                 "title": "model 2",
                 "value": "2"
             }

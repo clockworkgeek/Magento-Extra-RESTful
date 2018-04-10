@@ -356,6 +356,7 @@
                 </attributes>
                 <filters>
                     <is_require>boolean</is_require>
+                    <max_characters>int</max_characters>
                     <price>float</price>
                     <sort_order>int</sort_order>
                     <values>
