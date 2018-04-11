@@ -14,6 +14,9 @@
 class Clockworkgeek_Extrarestful_Model_Api2_Product_Option extends Clockworkgeek_Extrarestful_Model_Api2_Abstract
 {
 
+    /**
+     * @return Mage_Catalog_Model_Product_Option
+     */
     protected function _loadModel()
     {
         $id = $this->getRequest()->getParam('id');
@@ -34,9 +37,13 @@ class Clockworkgeek_Extrarestful_Model_Api2_Product_Option extends Clockworkgeek
         return $option;
     }
 
-    protected function _getCollection()
+    /**
+     * @param mixed $productId
+     * @return Mage_Catalog_Model_Product
+     */
+    protected function _loadProduct($productId = null)
     {
-        $productId = $this->getRequest()->getParam('product');
+        $productId = $productId ?: $this->getRequest()->getParam('product');
         /** @var $product Mage_Catalog_Model_Product */
         $product = Mage::getModel('catalog/product');
         $product->setStoreId($this->_getStore()->getId());
@@ -44,6 +51,12 @@ class Clockworkgeek_Extrarestful_Model_Api2_Product_Option extends Clockworkgeek
         if ($productId != $product->getId()) {
             $this->_critical(self::RESOURCE_NOT_FOUND);
         }
+        return $product;
+    }
+
+    protected function _getCollection()
+    {
+        $product = $this->_loadProduct();
         return $this->getWorkingModel()->getProductOptionCollection($product);
     }
 

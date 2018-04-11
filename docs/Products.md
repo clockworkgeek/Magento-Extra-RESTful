@@ -22,7 +22,7 @@ Host: example.com
 Version: 1
 ```
 
-## Category Products
+# Category Products
 
 - `GET /api/rest/products/category/:category_id`
 - `GET /api/rest/products/category/:category_id/store/:store`
@@ -35,7 +35,9 @@ Unless you specifically need this behaviour you are advised to use [these routes
 - `GET /api/rest/categories/:category/products`
 - `GET /api/rest/categories/:category/products/store/:store`
 
-## Product Custom Options
+# Product Custom Options
+
+## Retrieve
 
 - `GET /api/rest/products/:product/options`
 - `GET /api/rest/products/:product/options/store/:store`
@@ -47,20 +49,20 @@ Options and values are already sorted by `sort_order` then `title`.
 ### Attributes
 
 - `file_extension`: Comma- or space-separated list of allowed file extensions. Only applicable if `type` is `file`.
-- `image_size_x`: A numeric value measured in pixels.  Only applicable if `type` is `file` and the uploaded file is an image.
-- `image_size_y`: A numeric value measured in pixels.  Only applicable if `type` is `file` and the uploaded file is an image.
+- `image_size_x`: An integer measured in pixels.  Only applicable if `type` is `file` and the uploaded file is an image.
+- `image_size_y`: An integer measured in pixels.  Only applicable if `type` is `file` and the uploaded file is an image.
 - `is_require`: Boolean.
 - `max_characters`: Integer.  Only applicable if `type` is `field` or `area`.
 - `option_id`: Use this ID when adding the product to cart.
-- `price`: An optional float value to be added to the final price.  Not applicable if `type` is `drop_down`, `radio`, `checkbox`, or `multiple`.
-- `price_type`: One of these values; "fixed", "percent".
+- `price`: An optional float to be added to the final price.  Not applicable if `type` is `drop_down`, `radio`, `checkbox`, or `multiple`.
+- `price_type`: Either `fixed` or `percent`.
 - `sku`: A string that will be appended to the product's SKU if this option is used.
 - `sort_order`: Integer.
 - `title`: Store-specific text to be displayed to end user.
-- `type`: One of these values; "field", "area", "file", "drop_down", "radio", "checkbox", "multiple", "date", "date_time", "time".
+- `type`: One of these values; `field`, `area`, `file`, `drop_down`, `radio`, `checkbox`, `multiple`, `date`, `date_time`, `time`.
 - `values`: A list of objects if `type` is `drop_down`, `radio`, `checkbox`, or `multiple`.  Each has these attributes:
-  - `price`: An optional float value to be added to the final price.
-  - `price_type`: One of these values; "fixed", "percent".
+  - `price`: An optional float to be added to the final price.
+  - `price_type`: Either `fixed` or `percent`.
   - `sku`: A string that will be appended to the product's SKU if this value is selected.
   - `sort_order`: Integer.
   - `title`: Store-specific text to be displayed to end user.
@@ -100,7 +102,53 @@ Options and values are already sorted by `sort_order` then `title`.
 ]
 ```
 
-## Related Products / Up-sells / Cross-sells
+## Create/Update
+
+- `POST /api/rest/products/:product/options`
+- `POST /api/rest/products/:product/options/store/:store`
+- `PUT /api/rest/products/options/:id`
+- `PUT /api/rest/products/options/:id/store/:store`
+
+The product specified by `:product` must exist.
+The custom option specified by `:id` must exist.
+
+If `values` is specified it must contain all values to be preserved.
+Any existing values not included will be deleted from the database.
+Values are identified by their `value` so it cannot be changed.
+If `value` is not recognised then a new value record is created.
+Before updating consider loading the latest values with one of:
+
+- `GET /api/rest/products/options/:id`
+- `GET /api/rest/products/options/:id/store/:store`
+
+### Attributes
+
+- `file_extension`: Comma- or space-separated list of allowed file extensions. Only applicable if `type` is `file`.
+- `image_size_x`: An integer measured in pixels.  Only applicable if `type` is `file` and the uploaded file is an image.
+- `image_size_y`: An integer measured in pixels.  Only applicable if `type` is `file` and the uploaded file is an image.
+- `is_require`: Boolean.
+- `max_characters`: Integer.  Only applicable if `type` is `field` or `area`.
+- `price`: An optional float to be added to the final price.  Not applicable if `type` is `drop_down`, `radio`, `checkbox`, or `multiple`.
+- `price_type`: Either `fixed` or `percent`.
+- `sku`: A string that will be appended to the product's SKU if this option is used.
+- `sort_order`: Integer.
+- `title`: **Required**. Store-specific text to be displayed to end user.
+- `type`: **Required**. One of; `field`, `area`, `file`, `drop_down`, `radio`, `checkbox`, `multiple`, `date`, `date_time`, `time`.
+- `values`: A list of objects if `type` is `drop_down`, `radio`, `checkbox`, or `multiple`.  Each may have these attributes:
+  - `price`: An optional float to be added to the final price.
+  - `price_type`: **Required**. Either `fixed` or `percent`.
+  - `sku`: A string that will be appended to the product's SKU if this value is selected.
+  - `sort_order`: Integer.
+  - `title`: **Required**. Store-specific text to be displayed to end user.
+  - `value`: Use this to identify existing values to be modified.
+
+## Delete
+
+- `PUT /api/rest/products/options/:id`
+
+The custom option specified by `:id` must exist.
+
+# Related Products / Up-sells / Cross-sells
 
 - `GET /api/rest/products/:product/related`
 - `GET /api/rest/products/:product/related/store/:store`
@@ -112,7 +160,7 @@ Options and values are already sorted by `sort_order` then `title`.
 Lists products set as "Related Products", "Up-sells", or "Cross-sells", and in order of "Position" as set by the admin.
 These lists behave exactly like `/api/rest/products` so can be filtered, ordered, and paged too.
 
-## Associated Products
+# Associated Products
 
 - `GET /api/rest/products/:product/associated`
 - `GET /api/rest/products/:product/associated/store/:store`
