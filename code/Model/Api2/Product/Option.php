@@ -74,13 +74,13 @@ class Clockworkgeek_Extrarestful_Model_Api2_Product_Option extends Clockworkgeek
         }
 
         foreach ($options as $option) {
-            if ($option->getType() != 'file') {
+            if ($option->getGroupByType() != Mage_Catalog_Model_Product_Option::OPTION_GROUP_FILE) {
                 $option->unsFileExtension()->unsImageSizeX()->unsImageSizeY();
             }
-            if (!in_array($option->getType(), array('field', 'area'))) {
+            if ($option->getGroupByType() != Mage_Catalog_Model_Product_Option::OPTION_GROUP_TEXT) {
                 $option->unsMaxCharacters();
             }
-            if (in_array($option->getType(), array('drop_down', 'radio', 'checkbox', 'multiple'))) {
+            if ($option->getGroupByType() == Mage_Catalog_Model_Product_Option::OPTION_GROUP_SELECT) {
                 $option->unsPrice()->unsPriceType();
             }
             else {
