@@ -66,7 +66,7 @@ Options and values are already sorted by `sort_order` then `title`.
   - `sku`: A string that will be appended to the product's SKU if this value is selected.
   - `sort_order`: Integer.
   - `title`: Store-specific text to be displayed to end user.
-  - `value`: Use this ID when adding product to cart.
+  - `value_id`: Use this ID when adding product to cart.
 
 ### Example
 
@@ -87,7 +87,7 @@ Options and values are already sorted by `sort_order` then `title`.
                 "sku": "m1",
                 "sort_order": 0,
                 "title": "model 1",
-                "value": "1"
+                "value_id": "1"
             },
             {
                 "price": 60,
@@ -95,7 +95,7 @@ Options and values are already sorted by `sort_order` then `title`.
                 "sku": "m2",
                 "sort_order": 0,
                 "title": "model 2",
-                "value": "2"
+                "value_id": "2"
             }
         ]
     }
@@ -114,8 +114,8 @@ The custom option specified by `:id` must exist.
 
 If `values` is specified it must contain all values to be preserved.
 Any existing values not included will be deleted from the database.
-Values are identified by their `value` so it cannot be changed.
-If `value` is not recognised then a new value record is created.
+Values are identified by `value_id` so it cannot be changed.
+If `value_id` is not recognised then a new value record is created.
 Before updating consider loading the latest values with one of:
 
 - `GET /api/rest/products/options/:id`
@@ -140,7 +140,7 @@ Before updating consider loading the latest values with one of:
   - `sku`: A string that will be appended to the product's SKU if this value is selected.
   - `sort_order`: Integer.
   - `title`: **Required**. Store-specific text to be displayed to end user.
-  - `value`: Use this to identify existing values to be modified.
+  - `value_id`: Use this to identify existing values to be modified.
 
 ## Delete
 

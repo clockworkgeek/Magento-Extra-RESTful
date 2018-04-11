@@ -20,7 +20,7 @@ extends Clockworkgeek_Extrarestful_Model_Api2_Product_Option
             $removes = $option->getValues();
             $values = array();
             foreach ($data['values'] as $value) {
-                $valueId = @$value['value'];
+                $valueId = @$value['value_id'];
                 if ($option->getValueById($valueId)) {
                     // overwrite existing value record
                     $value['option_type_id'] = $valueId;

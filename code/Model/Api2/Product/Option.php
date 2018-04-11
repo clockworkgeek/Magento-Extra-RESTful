@@ -78,7 +78,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Product_Option extends Clockworkgeek
                         'sort_order',
                         'title'
                     )) + array(
-                        'value' => $value->getId()
+                        'value_id' => $value->getId()
                     );
                 }
                 // setData does not affect private member variables but will be exported by Varien_Object::toArray
