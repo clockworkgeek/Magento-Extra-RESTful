@@ -365,6 +365,12 @@
                     </values>
                 </filters>
                 <force_attributes>
+                    <admin>
+                        <values>1</values>
+                    </admin>
+                    <customer>
+                        <values>1</values>
+                    </customer>
                     <guest>
                         <values>1</values>
                     </guest>
