@@ -136,7 +136,7 @@ Before updating consider loading the latest values with one of:
 - `type`: **Required**. One of; `field`, `area`, `file`, `drop_down`, `radio`, `checkbox`, `multiple`, `date`, `date_time`, `time`.
 - `values`: A list of objects if `type` is `drop_down`, `radio`, `checkbox`, or `multiple`.  Each may have these attributes:
   - `price`: An optional float to be added to the final price.
-  - `price_type`: **Required**. Either `fixed` or `percent`.
+  - `price_type`: Either `fixed` or `percent`.
   - `sku`: A string that will be appended to the product's SKU if this value is selected.
   - `sort_order`: Integer.
   - `title`: **Required**. Store-specific text to be displayed to end user.
