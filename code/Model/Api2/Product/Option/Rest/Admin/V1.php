@@ -66,4 +66,44 @@ extends Clockworkgeek_Extrarestful_Model_Api2_Product_Option
         }
         return $option;
     }
+
+    /**
+     * Take advantage of existing <code>saveOptions</code> method when there are several options to save
+     *
+     * @see Mage_Catalog_Model_Product_Option::saveOptions()
+     */
+    protected function _multiCreate(array $options)
+    {
+        $product = $this->_loadProduct();
+        $product->setStoreId($this->_getStore()->getId());
+
+        // unlike _saveModel there is no need to align with existing options, this is create only
+        foreach ($options as $id => $option) {
+            if (!@$option['title']) {
+                $this->_error("Option #{$id} title is required", Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
+            }
+            if (!@$option['type']) {
+                $this->_error("Option #{$id} type is required", Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
+            }
+            elseif (!$product->getOptionInstance()->getGroupByType($option['type'])) {
+                $this->_error("Option #{$id} type is not recognised", Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
+            }
+
+            foreach ((array) @$option['values'] as $value) {
+                if (!@$value['title']) {
+                    $this->_error("Option #{$id} value title is required", Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
+                }
+            }
+        }
+
+        if (!$this->getResponse()->isException()) {
+            $product->getOptionInstance()
+                ->setProduct($product)
+                ->setOptions($options)
+                ->saveOptions();
+        }
+        else {
+            $this->_critical(self::RESOURCE_DATA_PRE_VALIDATION_ERROR);
+        }
+    }
 }
