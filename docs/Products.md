@@ -126,17 +126,17 @@ Before updating consider loading the latest values with one of:
 - `file_extension`: Comma- or space-separated list of allowed file extensions. Only applicable if `type` is `file`.
 - `image_size_x`: An integer measured in pixels.  Only applicable if `type` is `file` and the uploaded file is an image.
 - `image_size_y`: An integer measured in pixels.  Only applicable if `type` is `file` and the uploaded file is an image.
-- `is_require`: Boolean.
+- `is_require`: Boolean. Defaults to `true`.
 - `max_characters`: Integer.  Only applicable if `type` is `field` or `area`.
 - `price`: An optional float to be added to the final price.  Not applicable if `type` is `drop_down`, `radio`, `checkbox`, or `multiple`.
-- `price_type`: Either `fixed` or `percent`.
+- `price_type`: Either `fixed` or `percent`. Defaults to `fixed`.
 - `sku`: A string that will be appended to the product's SKU if this option is used.
 - `sort_order`: Integer.
 - `title`: **Required**. Store-specific text to be displayed to end user.
 - `type`: **Required**. One of; `field`, `area`, `file`, `drop_down`, `radio`, `checkbox`, `multiple`, `date`, `date_time`, `time`.
 - `values`: A list of objects if `type` is `drop_down`, `radio`, `checkbox`, or `multiple`.  Each may have these attributes:
   - `price`: An optional float to be added to the final price.
-  - `price_type`: Either `fixed` or `percent`.
+  - `price_type`: Either `fixed` or `percent`. Defaults to `fixed`.
   - `sku`: A string that will be appended to the product's SKU if this value is selected.
   - `sort_order`: Integer.
   - `title`: **Required**. Store-specific text to be displayed to end user.
