@@ -18,15 +18,46 @@
                 <attributes>
                     <updated_at>Updated At</updated_at>
                     <required_options>Has Required Options</required_options>
+                    <has_options>Has Options</has_options>
                 </attributes>
+                <entity_only_attributes>
+                    <admin>
+                        <read>
+                            <has_custom_options>0</has_custom_options>
+                        </read>
+                    </admin>
+                    <customer>
+                        <read>
+                            <has_custom_options>0</has_custom_options>
+                        </read>
+                    </customer>
+                    <guest>
+                        <read>
+                            <has_custom_options>0</has_custom_options>
+                        </read>
+                    </guest>
+                </entity_only_attributes>
                 <exclude_attributes>
                     <admin>
+                        <read>
+                            <has_custom_options>1</has_custom_options>
+                        </read>
                         <write>
                             <updated_at>1</updated_at>
                             <has_options>1</has_options>
                             <required_options>1</required_options>
                         </write>
                     </admin>
+                    <customer>
+                        <read>
+                            <has_custom_options>1</has_custom_options>
+                        </read>
+                    </customer>
+                    <guest>
+                        <read>
+                            <has_custom_options>1</has_custom_options>
+                        </read>
+                    </guest>
                 </exclude_attributes>
                 <force_attributes>
                     <customer>

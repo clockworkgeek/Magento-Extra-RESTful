@@ -9,7 +9,7 @@ Extra RESTful replaces [Magento's products resource](http://devdocs.magento.com/
 - Boolean and integer attributes are cast to native types for the convenience of JSON users.
 - No `buy_now_url` because it's not RESTful.
 - `updated_at` attribute so clients may filter the most recent and update their local copies efficiently.
-- `required_options` attribute so clients may know if a product can be ordered immediately without further input.
+- `has_options` and `required_options` attributes so clients may know if a product can be ordered immediately without further input.
 
 Extra RESTful products are accessed at the same URI, `/api/rest/products`, but are designated "Version 2".
 Admin users still access "Version 1" for now.

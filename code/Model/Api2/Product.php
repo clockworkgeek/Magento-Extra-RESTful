@@ -172,8 +172,8 @@ class Clockworkgeek_Extrarestful_Model_Api2_Product extends Clockworkgeek_Extrar
 
         // do not have buy_now_url because it depends on session and form_key
         // neither apply to a proper API, use a cart endpoint instead
-        if ($this->isReadable('has_custom_options')) {
-            $product->setHasCustomOptions(count($product->getOptions()) > 0);
+        if ($this->isReadable('has_options')) {
+            $product->setHasOptions((bool) $product->getHasOptions());
         }
         if ($this->isReadable('image_url')) {
             $product->setImageUrl((string) Mage::helper('catalog/image')->init($product, 'image'));
