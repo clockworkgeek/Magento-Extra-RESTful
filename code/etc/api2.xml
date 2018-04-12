@@ -367,6 +367,13 @@
                         <sort_order>int</sort_order>
                     </values>
                 </filters>
+                <exclude_attributes>
+                    <admin>
+                        <write>
+                            <option_id>1</option_id>
+                        </write>
+                    </admin>
+                </exclude_attributes>
                 <force_attributes>
                     <admin>
                         <values>1</values>
