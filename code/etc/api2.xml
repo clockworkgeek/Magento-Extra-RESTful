@@ -190,6 +190,10 @@
                     <options>Redirect Options</options>
                 </attributes>
                 <routes>
+                    <route_entity>
+                        <route>/rewrites/:id</route>
+                        <action_type>entity</action_type>
+                    </route_entity>
                     <route_collection>
                         <route>/rewrites</route>
                         <action_type>collection</action_type>
