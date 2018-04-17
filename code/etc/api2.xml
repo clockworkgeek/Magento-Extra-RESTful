@@ -177,7 +177,10 @@
                 <sort_order>50</sort_order>
                 <privileges>
                     <admin>
+                        <create>1</create>
                         <retrieve>1</retrieve>
+                        <update>1</update>
+                        <delete>1</delete>
                     </admin>
                 </privileges>
                 <attributes>
@@ -189,6 +192,13 @@
                     <target_path>Target Path</target_path>
                     <options>Redirect Options</options>
                 </attributes>
+                <exclude_attributes>
+                    <admin>
+                        <write>
+                            <url_rewrite_id>1</url_rewrite_id>
+                        </write>
+                    </admin>
+                </exclude_attributes>
                 <routes>
                     <route_entity>
                         <route>/rewrites/:id</route>
