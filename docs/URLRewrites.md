@@ -10,8 +10,6 @@ Admin only.
 ### Attributes
 
 - `category_id`
-- `description`
-- `id_path`: Begins with `product/` for product URLs and `category/` for category URLs.
 - `options`: Type of redirect.  One of "" (no), "R" (temporary), "RP" (permanent).
 - `product_id`
 - `request_path`: Incoming requests are matched against this string.

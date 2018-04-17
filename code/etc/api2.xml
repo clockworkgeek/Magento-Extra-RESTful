@@ -185,11 +185,9 @@
                     <store_id>Store ID</store_id>
                     <category_id>Category ID</category_id>
                     <product_id>Product ID</product_id>
-                    <id_path>Rewrite ID Path</id_path>
                     <request_path>Request Path</request_path>
                     <target_path>Target Path</target_path>
                     <options>Redirect Options</options>
-                    <description>Description</description>
                 </attributes>
                 <routes>
                     <route_collection>
