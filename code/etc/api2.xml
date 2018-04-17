@@ -173,7 +173,7 @@
                 <group>core</group>
                 <model>extrarestful/api2_rewrite</model>
                 <working_model>core/url_rewrite</working_model>
-                <title>Custom URL Rewrite</title>
+                <title>URL Rewrite</title>
                 <sort_order>50</sort_order>
                 <privileges>
                     <admin>
