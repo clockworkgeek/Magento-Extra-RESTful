@@ -47,7 +47,7 @@ There is an `Authorization` header because this is an admin action.
 ```http
 POST /api/rest/rewrites HTTP/1.1
 Authorization: XXXXXXXXX
-Content-Length: 75
+Content-Length: 77
 Content-Type: application/json
 Host: example.com
 
@@ -79,6 +79,36 @@ Host: example.com
 }
 
 HTTP/1.1 200 OK
+```
+
+If `request_path` is altered it is desirable to have an additional permanent rewrite from the old path to the new,
+otherwise visitors following old links or bookmarks will be shown a 404 page.
+There is currently no convenient method for doing this so two requests are necessary.
+POST must occur after PUT because it is not possible to have two rewrites with the same `request_path` and `store_id` simultaneously.
+
+```http
+PUT /api/rest/rewrites/777 HTTP/1.1
+Authorization: XXXXXXXXX
+Content-Length: 33
+Content-Type: application/json
+Host: example.com
+
+{
+    "request_path": "new-path.html"
+}
+
+POST /api/rest/rewrites HTTP/1.1
+Authorization: XXXXXXXXX
+Content-Length: 94
+Content-Type: application/json
+Host: example.com
+
+{
+    "options": "RP",
+    "request_path": "old-path.html",
+    "store_id": 1,
+    "target_path": "new-path.html"
+}
 ```
 
 ## Delete

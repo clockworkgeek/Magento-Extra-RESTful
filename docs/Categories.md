@@ -84,6 +84,12 @@ See [docs/Products.md](https://github.com/clockworkgeek/Magento-Extra-RESTful/bl
 
 Admin only.
 
+Changing either the `parent_id` or `url_key` can affect the URL rewrite rule(s) for the category being altered.
+This API has no equivalent for the "Create Permanent Redirect for old URL" option seen in admin.
+Instead, an API client should explicitly [create a URL redirect](https://github.com/clockworkgeek/Magento-Extra-RESTful/blob/master/docs/URLRewrites.md#create--update) for each store.
+Products' URLs may also be affected so an API client might [query all URL rewrites](https://github.com/clockworkgeek/Magento-Extra-RESTful/blob/master/docs/URLRewrites.md#retrieve) containg the category ID before making a change,
+then inspect them all afterwards and make permanent redirects appropriately.
+
 ### Attributes
 
 - `available_sort_by`: Comma-separated list of sortable attribute codes.
