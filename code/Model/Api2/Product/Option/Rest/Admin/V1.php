@@ -55,6 +55,9 @@ extends Clockworkgeek_Extrarestful_Model_Api2_Product_Option
         elseif (!$option->getGroupByType()) {
             $this->_error('Option type is not recognised', Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
         }
+        elseif ($option->getGroupByType() === Mage_Catalog_Model_Product_Option::OPTION_GROUP_SELECT && $option->getIsRequire() && !$option->getData('values')) {
+            $this->_error("Option type is '{$option->getType()}' and requires at least one value", Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
+        }
 
         if (!$this->getResponse()->isException()) {
             // Mage_Catalog_Model_Product_Option::saveOptions() handles changing types and values nicely
@@ -88,10 +91,18 @@ extends Clockworkgeek_Extrarestful_Model_Api2_Product_Option
             elseif (!$product->getOptionInstance()->getGroupByType($option['type'])) {
                 $this->_error("Option #{$id} type is not recognised", Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
             }
+            elseif ($product->getOptionInstance()->getGroupByType($option['type']) === Mage_Catalog_Model_Product_Option::OPTION_GROUP_SELECT) {
+                if (!is_array(@$option['values'])) {
+                    $option['values'] = array();
+                }
+                if (@$option['is_require'] && empty($option['values'])) {
+                    $this->_error("Option #{$id} type is '{$option['type']}' and requires at least one value", Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
+                }
 
-            foreach ((array) @$option['values'] as $value) {
-                if (!@$value['title']) {
-                    $this->_error("Option #{$id} value title is required", Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
+                foreach ($option['values'] as $value) {
+                    if (!@$value['title']) {
+                        $this->_error("Option #{$id} value title is required", Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
+                    }
                 }
             }
         }
