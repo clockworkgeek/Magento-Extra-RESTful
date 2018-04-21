@@ -268,6 +268,18 @@ class Clockworkgeek_Extrarestful_Model_Api2_Abstract extends Mage_Api2_Model_Res
     }
 
     /**
+     * Check if the response has any error messages yet
+     *
+     * @return boolean
+     */
+    protected function _hasErrors()
+    {
+        $messages = $this->getResponse()->getMessages();
+        $errors = @$messages[Mage_Api2_Model_Response::MESSAGE_TYPE_ERROR];
+        return is_array($errors) && $errors;
+    }
+
+    /**
      * Loads an instance of working model with an ID of <code>:id</code>
      *
      * <code>:id</code> is parsed from the URL which matches a route from <code>api2.xml</code>.

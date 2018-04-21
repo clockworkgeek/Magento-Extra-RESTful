@@ -83,38 +83,38 @@ extends Clockworkgeek_Extrarestful_Model_Api2_Product_Option
         // unlike _saveModel there is no need to align with existing options, this is create only
         foreach ($options as $id => $option) {
             if (!@$option['title']) {
-                $this->_error("Option #{$id} title is required", Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
+                $this->_errorMessage("Option #{$id} title is required", Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
             }
             if (!@$option['type']) {
-                $this->_error("Option #{$id} type is required", Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
+                $this->_errorMessage("Option #{$id} type is required", Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
             }
             elseif (!$product->getOptionInstance()->getGroupByType($option['type'])) {
-                $this->_error("Option #{$id} type is not recognised", Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
+                $this->_errorMessage("Option #{$id} type is not recognised", Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
             }
             elseif ($product->getOptionInstance()->getGroupByType($option['type']) === Mage_Catalog_Model_Product_Option::OPTION_GROUP_SELECT) {
                 if (!is_array(@$option['values'])) {
                     $option['values'] = array();
                 }
                 if (@$option['is_require'] && empty($option['values'])) {
-                    $this->_error("Option #{$id} type is '{$option['type']}' and requires at least one value", Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
+                    $this->_errorMessage("Option #{$id} type is '{$option['type']}' and requires at least one value", Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
                 }
 
                 foreach ($option['values'] as $vid => $value) {
                     if (!@$value['title']) {
-                        $this->_error("Option #{$id} value #{$vid} title is required", Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
+                        $this->_errorMessage("Option #{$id} value #{$vid} title is required", Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
                     }
                 }
             }
         }
 
-        if (!$this->getResponse()->isException()) {
+        if (!$this->_hasErrors()) {
             $product->getOptionInstance()
                 ->setProduct($product)
                 ->setOptions($options)
                 ->saveOptions();
-        }
-        else {
-            $this->_critical(self::RESOURCE_DATA_PRE_VALIDATION_ERROR);
+            foreach (array_keys($options) as $id) {
+                $this->_successMessage("Option #{$id} created", Mage_Api2_Model_Server::HTTP_CREATED);
+            }
         }
     }
 }
