@@ -19,7 +19,7 @@ extends Clockworkgeek_Extrarestful_Model_Api2_Product_Option
         if (isset($data['values']) && is_array($data['values'])) {
             $removes = $option->getValues();
             $values = array();
-            foreach ($data['values'] as $value) {
+            foreach ($data['values'] as $vid => $value) {
                 $valueId = @$value['value_id'];
                 if ($option->getValueById($valueId)) {
                     // overwrite existing value record
@@ -29,7 +29,7 @@ extends Clockworkgeek_Extrarestful_Model_Api2_Product_Option
                 else {
                     // is a new value record
                     if (!@$value['title']) {
-                        $this->_error('Value title is required', Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
+                        $this->_error("Value #{$vid} title is required", Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
                     }
                 }
                 $values[] = $value;
@@ -99,9 +99,9 @@ extends Clockworkgeek_Extrarestful_Model_Api2_Product_Option
                     $this->_error("Option #{$id} type is '{$option['type']}' and requires at least one value", Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
                 }
 
-                foreach ($option['values'] as $value) {
+                foreach ($option['values'] as $vid => $value) {
                     if (!@$value['title']) {
-                        $this->_error("Option #{$id} value title is required", Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
+                        $this->_error("Option #{$id} value #{$vid} title is required", Mage_Api2_Model_Server::HTTP_BAD_REQUEST);
                     }
                 }
             }
