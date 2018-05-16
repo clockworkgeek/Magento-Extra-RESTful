@@ -44,7 +44,7 @@ class Clockworkgeek_Extrarestful_Model_Api2_Product_Associated extends Clockwork
         if ($this->isReadable('image_url')) {
             // addAttributeToSelect does not work with flat tables
             // must use joinAttribute which also works fine with EAV tables
-            $products->joinAttribute('image', 'catalog_product/image', 'entity_id');
+            $products->joinAttribute('image', 'catalog_product/image', 'entity_id', null, 'left');
         }
         return $products;
     }
